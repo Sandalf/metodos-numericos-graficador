@@ -18,16 +18,15 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
-public class grafica {
+public class Grafica {
 
 	private JFrame frame;
 	private JTextField desde;
 	private JTextField hasta;
 	private JTextField intervalo;
 	private JTextField Exp;
-
 	
-	graficadora grafica = new graficadora("mi grafica","x","y");
+	Graficadora grafica = new Graficadora("mi grafica","x","y");
 	/**
 	 * Launch the application.
 	 */
@@ -35,7 +34,7 @@ public class grafica {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					grafica window = new grafica();
+					Grafica window = new Grafica();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +46,7 @@ public class grafica {
 	/**
 	 * Create the application.
 	 */
-	public grafica() {
+	public Grafica() {
 		initialize();
 	}
 
@@ -68,9 +67,8 @@ public class grafica {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		popupMenu.add(button);
 		
-		
+		popupMenu.add(button);	
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 36, 831, 33);
@@ -86,31 +84,24 @@ public class grafica {
 		
 		JButton Graficar = new JButton("Graficar");
 		Graficar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-					String def=Exp.getText();
-					double x0=Double.parseDouble(desde.getText());
-					double xn=Double.parseDouble(hasta.getText());
-					double d= Double.parseDouble(intervalo.getText());
-					funcion f= new funcion(def);
-					double [] x = f.rango(x0, xn, d);
-					double[] y;
-					try {
-						y = f.eval(x);
-						grafica.crearGrafica(def, x, y);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-							 
-							
-				
-					
-				
-				
+			public void actionPerformed(ActionEvent arg0) {		
+				String def=Exp.getText();
+				double x0=Double.parseDouble(desde.getText());
+				double xn=Double.parseDouble(hasta.getText());
+				double d= Double.parseDouble(intervalo.getText());
+				Funcion f= new Funcion(def);
+				double [] x = f.rango(x0, xn, d);
+				double[] y;
+				try {
+					y = f.eval(x);
+					grafica.crearGrafica(def, x, y);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
 			}
 		});
+		
 		panel_1.add(Graficar);
 		
 		desde = new JTextField();
@@ -133,24 +124,12 @@ public class grafica {
 		
 		JLabel inter = new JLabel("intervalo");
 		panel_1.add(inter);
-		
-		
-		
-		
-		
-	
-		
-		
-		
+
 		JPanel panel_2 = grafica.obtieneGrafica();
 		panel_2.setBounds(10, 80, 821, 455);
 		frame.getContentPane().add(panel_2);
-		
-		
-		
-		
-		
 	}
+	
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -168,4 +147,5 @@ public class grafica {
 			}
 		});
 	}
+	
 }

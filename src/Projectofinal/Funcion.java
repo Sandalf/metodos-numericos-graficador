@@ -2,14 +2,14 @@ package Projectofinal;
 
 import org.nfunk.jep.JEP;
 
-public class funcion {
+public class Funcion {
 	
 	  private static final double xvalue = 0;
 	  String Exp;
 	  JEP parser = new JEP();
 	  
 	  
-	  public funcion(String exp) 
+	  public Funcion(String exp) 
 	  {
 		  Exp=exp;
 		  parser.initFunTab();
@@ -18,8 +18,7 @@ public class funcion {
 		  parser.addStandardFunctions();
 		  parser.addComplex();
 		  parser.addVariable("x", xvalue);
-		  parser.parseExpression(exp);  
-		  
+		  parser.parseExpression(exp);  	  
 	  }
 	
 	 public double eval(double x) throws Exception
@@ -27,10 +26,9 @@ public class funcion {
 		 double r=Double.NaN;
 		 parser.addVariable("x", x);
 		 r=parser.getValue();
-		 return r;
-
-		 
+		 return r;	 
 	 }
+	 
 	 public double [] eval(double[] x) throws Exception
 	 {
 		 int n=x.length;
@@ -38,8 +36,7 @@ public class funcion {
 		 double[] r= new double [n];
 		 for(int i=0; i<n; i++) 
 		 {
-			 r[i]=eval(x[i]);
-			 
+			 r[i]=eval(x[i]);		 
 		 }
 		 
 		 return r;
@@ -54,12 +51,10 @@ public class funcion {
 		 for(int i=0; i<n; i++) 
 		 {
 			 r[i]=x0;
-			 x0+=d;
-			 
-			 
+			 x0+=d;			 
 		 }
-		 return r;
 		 
+		 return r;		 
 	 }
 
 }

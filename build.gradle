@@ -8,7 +8,7 @@ repositories {
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-mainClassName = 'Projectofinal.grafica'
+mainClassName = 'Projectofinal.Grafica'
 sourceSets.main.java.srcDirs = ['src']
 
 dependencies {

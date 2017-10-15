@@ -11,7 +11,7 @@ public class testingFuncion {
 		double n=5;
 			
 			Exp=Leer.next();
-		funcion f = new funcion(Exp);
+		Funcion f = new Funcion(Exp);
 		
 		System.out.println(+f.eval((double)55));
 		

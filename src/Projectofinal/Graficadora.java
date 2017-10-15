@@ -9,7 +9,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class graficadora
+public class Graficadora
 {
 	
 	 JFreeChart grafica;
@@ -18,37 +18,29 @@ public class graficadora
 	 String EtiquetaX;
 	 String EtiquetaY;
 	 
-	 public graficadora(String t,String EX,String EY) 
-	  {
-		 
+	 public Graficadora(String t,String EX,String EY) 
+	  { 
 		 titulo=t;
 		 EtiquetaX=EX;
 		 EtiquetaY=EY;
 		 grafica=ChartFactory.createXYLineChart(titulo, EtiquetaX, EtiquetaY, datos, PlotOrientation.VERTICAL, true, true, true);
 	 }
 	
-	public graficadora() 
-	{
-		
-		this("sin titulo","x","y");
-		
+	public Graficadora() 
+	{	
+		this("sin titulo","x","y");		
 	}
+	
 	public void agregarGrafica(String id,double[] x, double [] y) 
 	{
 		XYSeries s= new XYSeries(id);
 		int n=x.length;
 		for(int i =0; i<n; i++) 
-		{
-			
-			s.add(x[i],y[i]);
-			
-			
-			
+		{		
+			s.add(x[i],y[i]);		
 		}
-		datos.addSeries(s);
 		
-		
-		
+		datos.addSeries(s);	
 	}
 	
 	public void crearGrafica(String id,double [] x,double [] y) 
@@ -57,11 +49,10 @@ public class graficadora
 		agregarGrafica(id,x,y);
 		
 	}
+	
 	public JPanel obtieneGrafica() 
 	{
-		return new ChartPanel(grafica);
-		
+		return new ChartPanel(grafica);		
 	}
-	
 	
 }
