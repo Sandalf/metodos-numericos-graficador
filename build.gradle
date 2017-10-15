@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+mainClassName = 'Projectofinal.grafica'
+sourceSets.main.java.srcDirs = ['src']
+
+dependencies {
+	compile 'org.jfree:jfreechart:1.0.19'
+    compile 'com.jgoodies:jgoodies-forms:1.8.0'
+    compile group: 'jep', name: 'jep', version: '2.24'
+}
+
+jar {
+    baseName = 'gs-gradle'
+    version =  '0.1.0'
+}
