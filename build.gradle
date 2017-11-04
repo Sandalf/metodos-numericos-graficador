@@ -15,6 +15,12 @@ dependencies {
 	compile 'org.jfree:jfreechart:1.0.19'
     compile 'com.jgoodies:jgoodies-forms:1.8.0'
     compile group: 'jep', name: 'jep', version: '2.24'
+    compile files('C:/Users/cesar/Desktop/workbench - copia/path/djep-1.0.0')
+    
+}
+
+eclipse {
+    project.natures 'org.eclipse.buildship.core.gradleprojectnature'
 }
 
 jar {

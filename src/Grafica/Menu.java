@@ -71,7 +71,7 @@ public class Menu {
 		JButton btnBiseccion = new JButton("Biseccion");
 		btnBiseccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Biseccion B = new Biseccion();
+				biseccion B = new biseccion();
 				B.main(null);
 				Menu.setVisible(false);
 
