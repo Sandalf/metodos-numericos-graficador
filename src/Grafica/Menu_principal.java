@@ -1,3 +1,4 @@
+
 package Grafica;
 
 import java.awt.EventQueue;
@@ -24,7 +25,7 @@ import java.awt.Button;
 public class Menu_principal {
 
 	public JFrame Menu;
-    
+
 	/**
 	 * Launch the application.
 	 */
@@ -33,11 +34,9 @@ public class Menu_principal {
 			public void run() {
 				try {
 					Menu_principal window = new Menu_principal();
-			
-					
+
 					window.Menu.setVisible(true);
-					
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,48 +58,56 @@ public class Menu_principal {
 		Menu = new JFrame();
 		Menu.setBounds(100, 100, 566, 461);
 		Menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JPanel panel = new JPanel();
 		Menu.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 560, 21);
 		panel.add(menuBar);
-		
+
 		JMenu mnNewMenu = new JMenu("Metodos de Raices");
 		menuBar.add(mnNewMenu);
 		
+		JMenu mnMatrices = new JMenu("Matrices");
+		menuBar.add(mnMatrices);
+		
+		JButton btnGauss = new JButton("Gauss");
+		btnGauss.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Matriz matriz = new Matriz();
+				matriz.main(null);
+				Menu.setVisible(false);
+			}
+		});
+		mnMatrices.add(btnGauss);
+
 		JButton btnBiseccion = new JButton("Biseccion        ");
 		btnBiseccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				biseccion B= new biseccion();
+				biseccion B = new biseccion();
 				B.main(null);
 				Menu.setVisible(false);
-				
-				
-				
-				
-				
 			}
 		});
 		mnNewMenu.add(btnBiseccion);
-		
+
 		JButton btnNewButton = new JButton("Falsa Posicion");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Falsa_posicionI Falsa= new Falsa_posicionI();
+				Falsa_posicionI Falsa = new Falsa_posicionI();
 				Falsa.main(null);
 				Menu.setVisible(false);
-				
-				
+
 			}
 		});
 		mnNewMenu.add(btnNewButton);
-		
+
 		JButton btnNewButton_1 = new JButton("New button");
 		mnNewMenu.add(btnNewButton_1);
 	}
+
 	private static void addPopup(Component component, final JPopupMenu popup) {
 		component.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -108,11 +115,13 @@ public class Menu_principal {
 					showMenu(e);
 				}
 			}
+
 			public void mouseReleased(MouseEvent e) {
 				if (e.isPopupTrigger()) {
 					showMenu(e);
 				}
 			}
+
 			private void showMenu(MouseEvent e) {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
