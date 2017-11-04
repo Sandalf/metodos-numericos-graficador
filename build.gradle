@@ -4,6 +4,7 @@ apply plugin: 'application'
 
 repositories {
     mavenCentral()
+     
 }
 
 sourceCompatibility = 1.8
@@ -14,8 +15,9 @@ sourceSets.main.java.srcDirs = ['src']
 dependencies {
 	compile 'org.jfree:jfreechart:1.0.19'
     compile 'com.jgoodies:jgoodies-forms:1.8.0'
-    compile group: 'jep', name: 'jep', version: '2.24'
-    compile files("C:/Users/cesar/Desktop/workbench - copia/path/djep-1.0.0")
+    compile files("./build/libs/djep-1.0.0.jar")
+      compile files("./build/libs/jep-2.3.1.jar")
+    
     
 }
 
