@@ -5,33 +5,32 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Projectofinal.Biseccion;
+import Projectofinal.Falsa_posicion;
 import Projectofinal.Funcion;
 
-import javax.swing.border.LineBorder;
-import java.awt.Color;
+
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
-public class biseccion {
+public class Falsa_posicionI {
 
 	private JFrame frame;
 	private JTable table;
 	private JTextField exp;
 	private JTextField x1;
-	private JTextField x2;
-	private JTextField Iteraciones;
+	private JTextField xI;
+	private JTextField Lim;
 	private JTextField Error;
 	private JTextField Raiz;
 
@@ -42,7 +41,7 @@ public class biseccion {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					biseccion window = new biseccion();
+					Falsa_posicionI window = new Falsa_posicionI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +53,7 @@ public class biseccion {
 	/**
 	 * Create the application.
 	 */
-	public biseccion() {
+	public Falsa_posicionI() {
 		initialize();
 	}
 
@@ -116,15 +115,15 @@ public class biseccion {
 		panel.add(x1);
 		x1.setColumns(10);
 		
-		x2 = new JTextField();
-		x2.setBounds(230, 31, 45, 20);
-		panel.add(x2);
-		x2.setColumns(10);
+		xI = new JTextField();
+		xI.setBounds(230, 31, 45, 20);
+		panel.add(xI);
+		xI.setColumns(10);
 		
-		Iteraciones = new JTextField();
-		Iteraciones.setBounds(321, 31, 95, 20);
-		panel.add(Iteraciones);
-		Iteraciones.setColumns(10);
+		Lim = new JTextField();
+		Lim.setBounds(321, 31, 95, 20);
+		panel.add(Lim);
+		Lim.setColumns(10);
 		
 		Error = new JTextField();
 		Error.setBounds(459, 31, 95, 20);
@@ -139,7 +138,7 @@ public class biseccion {
 		lblX.setBounds(159, 11, 31, 14);
 		panel.add(lblX);
 		
-		JLabel lblX_1 = new JLabel("X2");
+		JLabel lblX_1 = new JLabel("XI");
 		lblX_1.setBounds(244, 11, 31, 14);
 		panel.add(lblX_1);
 		
@@ -162,25 +161,21 @@ public class biseccion {
 
 				String F = exp.getText();
 				double X1 =Double.parseDouble(x1.getText());
-				double X2 =Double.parseDouble(x2.getText());
-				int Lim = Integer.parseInt(Iteraciones.getText());
+				double XI =Double.parseDouble(xI.getText());
+				int Ite = Integer.parseInt(Lim.getText());
 				double E = Double.parseDouble(Error.getText());
 				Funcion f= new Funcion(F);
                 try {
-					if(f.eval(X1)*f.eval(X2)<0) {
+					if(f.eval(X1)*f.eval(XI)<0) {
 					
 					
-					Biseccion B = new Biseccion(F,X1,X2,E,Lim);
+					Falsa_posicion Falsa = new Falsa_posicion(F,X1,XI,E,Ite);
 					
-						try {
-							B.Inciar();
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+						
+							Falsa.Iniciar();
 					
 
-					Object[][] Resultados = B.getResultados();
+					Object[][] Resultados = Falsa.getResultados();
 					
 					
 					table.setModel(new DefaultTableModel(
@@ -194,7 +189,7 @@ public class biseccion {
 						));
    
 
-                     Raiz.setText(Double.toString(B.getRaiz()));}
+                     Raiz.setText(Double.toString(Falsa.getRaiz()));}
                      else { JOptionPane.showMessageDialog(panel, "No Existe Raiz en ese intervalo ingrese otros valores "
                      		+ "o una funcion diferente");}
 				} catch (Exception e) {
