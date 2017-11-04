@@ -4,6 +4,9 @@ apply plugin: 'application'
 
 repositories {
     mavenCentral()
+     flatDir {
+       dirs 'libs'
+   }
 }
 
 sourceCompatibility = 1.8
