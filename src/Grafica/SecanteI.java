@@ -1,28 +1,27 @@
 package Grafica;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import Projectofinal.Biseccion;
-import Projectofinal.Falsa_posicion;
-import Projectofinal.Funcion;
-
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
-public class Falsa_posicionI {
+import Projectofinal.Falsa_posicion;
+import Projectofinal.Funcion;
+import Projectofinal.Secante;
+
+public class SecanteI {
 
 	private JFrame frame;
 	private JTable table;
@@ -40,7 +39,7 @@ public class Falsa_posicionI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Falsa_posicionI window = new Falsa_posicionI();
+					SecanteI window = new SecanteI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,7 +51,7 @@ public class Falsa_posicionI {
 	/**
 	 * Create the application.
 	 */
-	public Falsa_posicionI() {
+	public SecanteI() {
 		initialize();
 	}
 
@@ -99,7 +98,7 @@ public class Falsa_posicionI {
 				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"I", "x1", "x2", "x2-x1","F(xI)-F(x)", "xI+1", "E", "F(x+1)"
+				"I", "xI", "xI-1", "F(xI)", "F(xI+1)", "xI+2"," E ", "F(xI+2)"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -115,7 +114,7 @@ public class Falsa_posicionI {
 		x1.setColumns(10);
 		
 		xI = new JTextField();
-		xI.setBounds(230, 31, 45, 20);
+		xI.setBounds(241, 31, 45, 20);
 		panel.add(xI);
 		xI.setColumns(10);
 		
@@ -133,11 +132,11 @@ public class Falsa_posicionI {
 		lblFuncion.setBounds(37, 11, 46, 14);
 		panel.add(lblFuncion);
 		
-		JLabel lblX = new JLabel("x1");
+		JLabel lblX = new JLabel("xI");
 		lblX.setBounds(159, 11, 31, 14);
 		panel.add(lblX);
 		
-		JLabel lblX_1 = new JLabel("xI");
+		JLabel lblX_1 = new JLabel("xI+1");
 		lblX_1.setBounds(244, 11, 31, 14);
 		panel.add(lblX_1);
 		
@@ -168,10 +167,10 @@ public class Falsa_posicionI {
 					if(f.eval(X1)*f.eval(XI)<0) {
 					
 					
-					Falsa_posicion Falsa = new Falsa_posicion(F,X1,XI,E,Ite);
+					Secante Falsa = new Secante(F,X1,XI,E,Ite);
 					
 						
-							Falsa.Iniciar();
+							Falsa.inicia();
 					
 
 					Object[][] Resultados = Falsa.getResultados();
@@ -182,7 +181,7 @@ public class Falsa_posicionI {
 								
 							,
 							new String[] {
-									"I", "x1", "x2", "x2-x1","F(xI)-F(x)", "xI+1", "E", "F(x+1)"
+									"I", "xI", "xI+1", "F(xI)", "F(xI+1)", "xI+2"," E ", "F(xI+2)"
 							}
             
 						));

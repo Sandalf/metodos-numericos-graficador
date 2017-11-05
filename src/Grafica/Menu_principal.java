@@ -1,4 +1,3 @@
-
 package Grafica;
 
 import java.awt.EventQueue;
@@ -21,6 +20,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JMenu;
 import java.awt.List;
 import java.awt.Button;
+import javax.swing.SwingConstants;
 
 public class Menu_principal {
 
@@ -83,7 +83,7 @@ public class Menu_principal {
 		});
 		mnMatrices.add(btnGauss);
 
-		JButton btnBiseccion = new JButton("Biseccion        ");
+		JButton btnBiseccion = new JButton("Biseccion         ");
 		btnBiseccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				biseccion B = new biseccion();
@@ -94,6 +94,7 @@ public class Menu_principal {
 		mnNewMenu.add(btnBiseccion);
 
 		JButton btnNewButton = new JButton("Falsa Posicion");
+		btnNewButton.setToolTipText("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Falsa_posicionI Falsa = new Falsa_posicionI();
@@ -104,7 +105,15 @@ public class Menu_principal {
 		});
 		mnNewMenu.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("New button");
+		JButton btnNewButton_1 = new JButton("Secante            ");
+		btnNewButton_1.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SecanteI S = new SecanteI();
+				S.main(null);
+				Menu.setVisible(false);
+			}
+		});
 		mnNewMenu.add(btnNewButton_1);
 	}
 

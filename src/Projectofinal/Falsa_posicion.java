@@ -17,7 +17,7 @@ public class Falsa_posicion {
     	this.xI=xi;
     	this.error=error;
     	this.Lim = Lim;
-		Resultados = new Double [Lim][7];
+		Resultados = new Double [Lim][8];
 		Iteracion=false;
     	
     	
@@ -34,14 +34,14 @@ public class Falsa_posicion {
         Funcion F= new Funcion(f);
         double FxI = F.eval(xI);
 		double FxIminusFx1 = F.eval(xI)-F.eval(x1);
-		
-        Resultados [0][0]=x1;
-		Resultados [0][1]=F.eval(x1);
-		Resultados [0][2]=(double) 0;
+		Resultados [0][0]=(double) x;
+        Resultados [0][1]=x1;
+		Resultados [0][2]=F.eval(x1);
 		Resultados [0][3]=(double) 0;
 		Resultados [0][4]=(double) 0;
-		Resultados [0][5]=xI-FxI*(xI-x1)/FxIminusFx1;
-		Resultados [0][6]=F.eval(XImas1);
+		Resultados [0][5]=(double) 0;
+		Resultados [0][6]=(double) 0;
+		Resultados [0][7]=(double) 0;
     
 		double errorVerdadero = E;
 		do {
@@ -55,14 +55,14 @@ public class Falsa_posicion {
     		
     		
     		XImas1 = xI-FxI*(xI-x1)/FxIminusFx1;
-    		      
-    		        Resultados [x][0]=xI;	
-    				Resultados [x][1]=F.eval(xI);
-    				Resultados [x][2]=xI-x1;
-    				Resultados [x][3]=F.eval(xI)-F.eval(x1);
-    				Resultados [x][4]=XImas1;
-    				Resultados [x][5]=E-Math.abs(XImas1-x1);
-    				Resultados [x][6]=F.eval(XImas1);
+    		        Resultados [x][0]=(double) x;	
+    		        Resultados [x][1]=xI;	
+    				Resultados [x][2]=F.eval(xI);
+    				Resultados [x][3]=xI-x1;
+    				Resultados [x][4]=F.eval(xI)-F.eval(x1);
+    				Resultados [x][5]=XImas1;
+    				Resultados [x][6]=E-Math.abs(XImas1-x1);
+    				Resultados [x][7]=F.eval(XImas1);
     		 
     		   errorVerdadero=E-Math.abs(XImas1-x1);
     		  E=Math.abs(XImas1-x1);
