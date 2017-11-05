@@ -1,4 +1,4 @@
-package Grafica;
+package grafica;
 
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
@@ -24,7 +24,7 @@ public class Grafica {
 	private JTextField Exp;
 	private String Funcion;
 
-	Graficadora grafica = new Graficadora(Funcion, "x", "y");
+	Graficadora grafica = new Graficadora("mi grafica", "x", "y");
 
 	/**
 	 * Launch the application.

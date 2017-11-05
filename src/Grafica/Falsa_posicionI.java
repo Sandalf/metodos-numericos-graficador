@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 import Projectofinal.Biseccion;
 import Projectofinal.Falsa_posicion;
 import Projectofinal.Funcion;
+import Grafica.Grafica;
+import Grafica.Menu_principal;
 
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
@@ -222,6 +224,20 @@ public class Falsa_posicionI {
 		Raiz.setBounds(10, 149, 125, 20);
 		panel.add(Raiz);
 		Raiz.setColumns(10);
+		JButton btnNewButton_1 = new JButton("Graficar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Grafica G = new Grafica(exp.getText());
+				
+				
+				
+				
+				
+			}
+		});
+		btnNewButton_1.setBounds(448, 78, 125, 28);
+		panel.add(btnNewButton_1);
 	
 	}
 }
