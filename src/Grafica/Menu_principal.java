@@ -77,7 +77,7 @@ public class Menu_principal {
 		btnGauss.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Matriz matriz = new Matriz();
-				matriz.main(null);
+				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});

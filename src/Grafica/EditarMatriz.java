@@ -1,35 +1,30 @@
 package Grafica;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.NumberFormatter;
-
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
-import java.awt.Insets;
-import java.awt.List;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.NumberFormatter;
+
+import Projectofinal.Gauss;
 
 public class EditarMatriz extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLimpiar;
 
@@ -59,8 +54,22 @@ public class EditarMatriz extends JFrame {
 		final Integer rows = rowsParam + 2;
 		final Integer columns = columnsParam + 3;
 		final ArrayList<JFormattedTextField> listOfTextFields = new ArrayList<JFormattedTextField>();
+		final ArrayList<double[][]> matricesCalculadas = new ArrayList<double[][]>();
+		final double[] solucion = new double[rowsParam];
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		// CONTROLAR EXIT
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        Matriz matriz = new Matriz(null,null);
+		        matriz.setVisible(true);
+				setVisible(false);
+				dispose();
+		    }
+		});
+		
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -136,6 +145,7 @@ public class EditarMatriz extends JFrame {
 		gbc_btnLimpiar.gridx = columns -1;
 		gbc_btnLimpiar.gridy = 1;
 		
+		// LIMPIAR CAMPOS
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listOfTextFields.forEach((field)->field.setValue(new Integer(0)));
@@ -150,6 +160,39 @@ public class EditarMatriz extends JFrame {
 		gbc_btnResolver.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnResolver.gridx = columns -1;
 		gbc_btnResolver.gridy = 2;
+		
+		// RESOLVER MATRIZ
+		btnResolver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<double[][]> matrices = new ArrayList<double[][]>();
+				double[][] matrizOrignial = new double[rowsParam][columnsParam];
+				double[][] matrizTriangulada = new double[rowsParam][columnsParam];
+				double[] solucion = new double[rowsParam];
+				int indexTextField = 0;
+			
+				for(int i = 0; i < rowsParam; i++) {
+					for(int j = 0; j < columnsParam; j++) {
+						matrizOrignial[i][j] = (double)((Integer)listOfTextFields.get(indexTextField).getValue());
+						indexTextField++;
+					}
+				}			
+				
+				Gauss gauss = new Gauss(matrizOrignial);
+
+				matricesCalculadas.add(matrizOrignial);
+
+				matrizTriangulada = gauss.triangulateMatrix(gauss.getOriginalMatrix());
+				solucion = gauss.calculateSolution(matrizTriangulada);
+				
+				matricesCalculadas.add(matrizTriangulada);
+				
+				Matriz matriz = new Matriz(matricesCalculadas,solucion);
+				matriz.setVisible(true);
+				setVisible(false);
+				dispose();
+			}
+		});
+		
 		contentPane.add(btnResolver, gbc_btnResolver);
 	}
 
