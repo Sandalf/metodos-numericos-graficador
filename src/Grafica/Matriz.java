@@ -18,8 +18,8 @@ import java.awt.FlowLayout;
 public class Matriz {
 
 	private JFrame frame;
-	private JComboBox renglonesComboBox;
-	private JComboBox columnasComboBox;
+	private JComboBox<Integer> renglonesComboBox;
+	private JComboBox<Integer> columnasComboBox;
 
 	/**
 	 * Launch the application.
@@ -55,7 +55,9 @@ public class Matriz {
 		JButton btnCrearMatriz = new JButton("Crear matriz");
 		btnCrearMatriz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarMatriz editarMatriz = new EditarMatriz();
+				Integer rows = (Integer)renglonesComboBox.getSelectedItem();
+				Integer columns = (Integer)columnasComboBox.getSelectedItem();
+				EditarMatriz editarMatriz = new EditarMatriz(rows,columns);
 				editarMatriz.setVisible(true);
 			}
 		});
@@ -64,8 +66,8 @@ public class Matriz {
 		JLabel lblDimensiones = new JLabel("Dimensiones");
 		frame.getContentPane().add(lblDimensiones);
 		
-		renglonesComboBox = new JComboBox();
-		columnasComboBox = new JComboBox();
+		renglonesComboBox = new JComboBox<Integer>();
+		columnasComboBox = new JComboBox<Integer>();
 		
 		// AGREGAR ELEMENTOS DE COMBOBOX
 		for(int i = 1; i <= 100; i++) {
