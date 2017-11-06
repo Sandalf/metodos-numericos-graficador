@@ -22,6 +22,10 @@ import java.awt.List;
 import java.awt.Button;
 import javax.swing.SwingConstants;
 
+import Grafica.Falsa_posicionI;
+import Grafica.SecanteI;
+import Grafica.biseccion;
+
 public class Menu_principal {
 
 	public JFrame Menu;
@@ -77,13 +81,13 @@ public class Menu_principal {
 		btnGauss.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Matriz matriz = new Matriz();
-				matriz.setVisible(true);
+				matriz.main(null);
 				Menu.setVisible(false);
 			}
 		});
 		mnMatrices.add(btnGauss);
 
-		JButton btnBiseccion = new JButton("Biseccion         ");
+		JButton btnBiseccion = new JButton("Biseccion            ");
 		btnBiseccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				biseccion B = new biseccion();
@@ -93,7 +97,7 @@ public class Menu_principal {
 		});
 		mnNewMenu.add(btnBiseccion);
 
-		JButton btnNewButton = new JButton("Falsa Posicion");
+		JButton btnNewButton = new JButton("Falsa Posicion   ");
 		btnNewButton.setToolTipText("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -105,7 +109,7 @@ public class Menu_principal {
 		});
 		mnNewMenu.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("Secante            ");
+		JButton btnNewButton_1 = new JButton("Secante               ");
 		btnNewButton_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -115,6 +119,19 @@ public class Menu_principal {
 			}
 		});
 		mnNewMenu.add(btnNewButton_1);
+		
+		JButton btnAproximaciones = new JButton("Aproximaciones");
+		btnAproximaciones.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Aproximaciones_Sucesivas S= new Aproximaciones_Sucesivas();
+				S.main(null);
+				Menu.setVisible(false);
+				
+				
+			}
+		});
+		mnNewMenu.add(btnAproximaciones);
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
