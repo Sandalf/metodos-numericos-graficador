@@ -56,7 +56,7 @@ public class Grafica {
 
 
 
-	public Grafica(String text) {
+	public Grafica(String text) throws Exception {
 		
 		Funcion=text;
 		initialize();
@@ -65,11 +65,19 @@ public class Grafica {
 		double xn = (double)100;
 		double d = 0.1;
 		Funcion f = new Funcion(def);
+		Funcion X = new Funcion("0");
+		Funcion Y = new Funcion("0");
 		double[] x = f.rango(x0, xn, d);
 		double[] y;
+		
+	
+		
+		
 		try {
 			y = f.eval(x);
 			grafica.crearGrafica(def, x, y);
+		
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

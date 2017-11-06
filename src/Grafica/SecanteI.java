@@ -227,7 +227,12 @@ public class SecanteI {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				Grafica G = new Grafica(exp.getText());
+				try {
+					Grafica G = new Grafica(exp.getText());
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				
 				
