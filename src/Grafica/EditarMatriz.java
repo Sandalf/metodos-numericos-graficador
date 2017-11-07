@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -13,6 +15,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
@@ -53,7 +56,7 @@ public class EditarMatriz extends JFrame {
 		// SE INCREMENTA PARA INSERTAR CABECEROS Y ESPACIADO
 		final Integer rows = rowsParam + 2;
 		final Integer columns = columnsParam + 3;
-		final ArrayList<JFormattedTextField> listOfTextFields = new ArrayList<JFormattedTextField>();
+		final ArrayList<JTextField> listOfTextFields = new ArrayList<JTextField>();
 		final ArrayList<double[][]> matricesCalculadas = new ArrayList<double[][]>();
 		final double[] solucion = new double[rowsParam];
 		
@@ -122,14 +125,28 @@ public class EditarMatriz extends JFrame {
 					contentPane.add(descLabel, gbc_matrix);
 				} else if (j != 0 && i != 0){
 					// AGREGAR TEXTFIELD
-					NumberFormat format = NumberFormat.getInstance();
-				    NumberFormatter formatter = new NumberFormatter(format);
-				    formatter.setValueClass(Integer.class);
-				    formatter.setMaximum(Integer.MAX_VALUE);
-				    formatter.setAllowsInvalid(false);
-				    formatter.setCommitsOnValidEdit(true);
-				    JFormattedTextField field = new JFormattedTextField(formatter);
-				    field.setValue(new Integer(0));
+//					NumberFormat format = NumberFormat.getInstance();
+//				    NumberFormatter formatter = new NumberFormatter(format);
+//				    formatter.setValueClass(Integer.class);
+//				    formatter.setMaximum(Integer.MAX_VALUE);
+//				    formatter.setAllowsInvalid(false);
+//				    formatter.setCommitsOnValidEdit(true);
+//				    JFormattedTextField field = new JFormattedTextField(formatter);
+					JTextField field = new JTextField();
+				    field.setText(Integer.toString(0));
+				    
+				    // VALIDAR QUE SE INGRESEN SOLO NUMEROS
+				    field.addKeyListener(new KeyAdapter() {
+						@Override
+						public void keyTyped(KeyEvent e) {
+							char c = e.getKeyChar();
+							
+							if(Character.isLetter(c) && !e.isAltDown()) {
+								e.consume();
+							}
+						}
+					});
+				    
 					gbc_matrix.gridx = j;
 					gbc_matrix.gridy = i;
 					listOfTextFields.add(field);
@@ -148,7 +165,7 @@ public class EditarMatriz extends JFrame {
 		// LIMPIAR CAMPOS
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				listOfTextFields.forEach((field)->field.setValue(new Integer(0)));
+				listOfTextFields.forEach((field)->field.setText(Integer.toString(0)));
 			}
 		});
 		
@@ -168,25 +185,24 @@ public class EditarMatriz extends JFrame {
 				double[][] matrizOrignial = new double[rowsParam][columnsParam];
 				double[][] matrizTriangulada = new double[rowsParam][columnsParam];
 				double[] solucion = new double[rowsParam];
-				int indexTextField = 0;
-			
-				for(int i = 0; i < rowsParam; i++) {
-					for(int j = 0; j < columnsParam; j++) {
-						matrizOrignial[i][j] = (double)((Integer)listOfTextFields.get(indexTextField).getValue());
-						indexTextField++;
-					}
-				}			
+				int indexTextField = 0; 
+			       
+		        for(int i = 0; i < rowsParam; i++) { 
+		          for(int j = 0; j < columnsParam; j++) { 
+		            matrizOrignial[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText()); 
+		            indexTextField++; 
+		          } 
+		        }
 				
-				Gauss gauss = new Gauss(matrizOrignial);
-
-				matricesCalculadas.add(matrizOrignial);
-
-				matrizTriangulada = gauss.triangulateMatrix(gauss.getOriginalMatrix());
-				solucion = gauss.calculateSolution(matrizTriangulada);
+				Gauss gauss = new Gauss(matrizOrignial.clone());
 				
-				matricesCalculadas.add(matrizTriangulada);
+				matrizTriangulada = gauss.triangulateMatrix(matrizOrignial.clone());
+				solucion = gauss.calculateSolution(matrizTriangulada.clone());			
 				
-				Matriz matriz = new Matriz(matricesCalculadas,solucion);
+				matrices.add(matrizOrignial.clone());
+				matrices.add(matrizTriangulada.clone());
+				
+				Matriz matriz = new Matriz(matrices,solucion);
 				matriz.setVisible(true);
 				setVisible(false);
 				dispose();
