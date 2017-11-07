@@ -10,7 +10,7 @@ public class Gauss {
 		this.originalMatrix = matrix;
 	}
 	
-	public void displayMatrix(double[][] matrix) {
+	public static void displayMatrix(double[][] matrix) {
 		for(int i = 0; i < matrix.length; i++) {
 			for(int j = 0; j < matrix[0].length; j++) {
 				System.out.print(" " + matrix[i][j] + " ");
@@ -21,21 +21,29 @@ public class Gauss {
 	}
 	
 	public double[][] triangulateMatrix(double[][] matrix) {	
+		double[][] resultado = new double[matrix.length][matrix[0].length];
 		double fm = 0;// FACTOR MULTIPLICADOR
 		double ep = 0;// ELEMENTO PIVOTE
 		
-		for(int k = 0;k < matrix.length - 1; k++) {
-			ep = matrix[k][k];
+		// CREAR COPIA DE MATRIZ
+		for(int i = 0; i < matrix.length; i++) {
+			for(int j = 0; j < matrix[0].length; j++) {
+				resultado[i][j] = matrix[i][j];
+			}
+		}
+		
+		for(int k = 0;k < resultado.length - 1; k++) {
+			ep = resultado[k][k];
 			//System.out.println("Elemento pivote: " + ep);
-			for(int i = k+1; i < matrix.length; i++) {
-				fm = matrix[i][k]/ep;
-				for(int j = 0; j < matrix[i].length; j++) {
-					matrix[i][j] =  matrix[i][j] - (fm*matrix[k][j]);
+			for(int i = k+1; i < resultado.length; i++) {
+				fm = resultado[i][k]/ep;
+				for(int j = 0; j < resultado[i].length; j++) {
+					resultado[i][j] =  resultado[i][j] - (fm*resultado[k][j]);			
 				}
-//				displayMatrix(matrix);
 			}			
 		}
-		return matrix;
+		
+		return resultado;
 	}
 	
 	public double[] calculateSolution(double[][] matrix) {
