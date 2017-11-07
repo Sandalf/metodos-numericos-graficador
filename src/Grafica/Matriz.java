@@ -119,11 +119,16 @@ public class Matriz extends JFrame {
 			// DESPLEGAR MATRICES
 			System.out.println("Matrices size: " + matrices.size());
 			int matrizIndex = 1;
-			int yPosition = 130;
+			int yPosition = 130;		
+			
+			System.out.println("Matrices original");
+			Gauss.displayMatrix(matrices.get(0));
+			System.out.println("Matrices no original");
+			Gauss.displayMatrix(matrices.get(1));
+			
 			for(double[][] matriz: matrices) {
 				System.out.println("Matriz: " + matrizIndex);
-				Gauss g = new Gauss(matriz);
-				g.displayMatrix(matriz);
+				Gauss.displayMatrix(matriz);
 				JLabel matrizLabel = new JLabel("Matriz " + Integer.toString(matrizIndex));
 				matrizLabel.setBounds(57,yPosition-20,60,30);
 				getContentPane().add(matrizLabel);
