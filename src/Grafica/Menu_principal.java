@@ -87,7 +87,7 @@ public class Menu_principal {
 		});
 		mnMatrices.add(btnGauss);
 
-		JButton btnBiseccion = new JButton("Biseccion            ");
+		JButton btnBiseccion = new JButton("Biseccion              ");
 		btnBiseccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				biseccion B = new biseccion();
@@ -97,7 +97,7 @@ public class Menu_principal {
 		});
 		mnNewMenu.add(btnBiseccion);
 
-		JButton btnNewButton = new JButton("Falsa Posicion   ");
+		JButton btnNewButton = new JButton("Falsa Posicion     ");
 		btnNewButton.setToolTipText("");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,7 +109,7 @@ public class Menu_principal {
 		});
 		mnNewMenu.add(btnNewButton);
 
-		JButton btnNewButton_1 = new JButton("Secante               ");
+		JButton btnNewButton_1 = new JButton("Secante                 ");
 		btnNewButton_1.setVerticalAlignment(SwingConstants.BOTTOM);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -120,7 +120,7 @@ public class Menu_principal {
 		});
 		mnNewMenu.add(btnNewButton_1);
 		
-		JButton btnAproximaciones = new JButton("Aproximaciones");
+		JButton btnAproximaciones = new JButton("Aproximaciones  ");
 		btnAproximaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -132,6 +132,19 @@ public class Menu_principal {
 			}
 		});
 		mnNewMenu.add(btnAproximaciones);
+		
+		JButton btnNewtonraphson = new JButton("Newton_Raphson");
+		btnNewtonraphson.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+				Newton_Raphson N= new Newton_Raphson();
+				
+				N.main(null);
+				Menu.setVisible(false);
+			}
+		});
+		mnNewMenu.add(btnNewtonraphson);
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
