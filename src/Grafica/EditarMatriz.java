@@ -7,18 +7,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.NumberFormatter;
 
 import Projectofinal.Gauss;
 
@@ -57,12 +54,10 @@ public class EditarMatriz extends JFrame {
 		final Integer rows = rowsParam + 2;
 		final Integer columns = columnsParam + 3;
 		final ArrayList<JTextField> listOfTextFields = new ArrayList<JTextField>();
-		final ArrayList<double[][]> matricesCalculadas = new ArrayList<double[][]>();
-		final double[] solucion = new double[rowsParam];
 		
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		// CONTROLAR EXIT
+		// CONTROLAR SALIDA
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -109,7 +104,15 @@ public class EditarMatriz extends JFrame {
 			for(int j = 0; j < columns - 2; j++) {
 				if(i == 0 && j != 0) {
 					// AGREGAR CABECEROS
-					JLabel descLabel = new JLabel("X" + j);
+					JLabel descLabel = null;
+					
+					// DETERMINAR SI ES UNA COLUMNA DE INCOGNITAS O DE CONSTANTES
+					if(j == columns - 3) {
+						descLabel = new JLabel("b");
+					} else {
+						descLabel = new JLabel("X" + j);
+					}
+						
 					descLabel.setHorizontalAlignment(SwingConstants.CENTER);
 					descLabel.setVerticalAlignment(SwingConstants.CENTER);
 					gbc_matrix.gridx = j;
@@ -125,13 +128,6 @@ public class EditarMatriz extends JFrame {
 					contentPane.add(descLabel, gbc_matrix);
 				} else if (j != 0 && i != 0){
 					// AGREGAR TEXTFIELD
-//					NumberFormat format = NumberFormat.getInstance();
-//				    NumberFormatter formatter = new NumberFormatter(format);
-//				    formatter.setValueClass(Integer.class);
-//				    formatter.setMaximum(Integer.MAX_VALUE);
-//				    formatter.setAllowsInvalid(false);
-//				    formatter.setCommitsOnValidEdit(true);
-//				    JFormattedTextField field = new JFormattedTextField(formatter);
 					JTextField field = new JTextField();
 				    field.setText(Integer.toString(0));
 				    
