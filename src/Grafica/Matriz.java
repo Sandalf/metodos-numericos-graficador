@@ -56,7 +56,17 @@ public class Matriz extends JFrame {
 	 */
 	private void initialize(ArrayList<double[][]> matrices,double[] solucion) {
 		setBounds(120, 100, 450, 700);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		// CONTROLAR SALIDA
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        Menu_principal.main(null);
+				setVisible(false);
+				dispose();
+		    }
+		});
 		
 		JButton btnCrearMatriz = new JButton("Crear matriz");
 		btnCrearMatriz.setBounds(323, 6, 121, 29);
@@ -81,9 +91,11 @@ public class Matriz extends JFrame {
 		columnasComboBox.setBounds(245, 6, 72, 27);
 		
 		// AGREGAR ELEMENTOS DE COMBOBOX
-		for(int i = 1; i <= 100; i++) {
+		for(int i = 2; i <= 100; i++) {
 			renglonesComboBox.addItem(new Integer(i));
-			columnasComboBox.addItem(new Integer(i));
+			if(i >= 3) {
+				columnasComboBox.addItem(new Integer(i));
+			}
 		}
 		
 		getContentPane().add(renglonesComboBox);

@@ -1,7 +1,5 @@
 package Projectofinal;
 
-import java.util.Arrays;
-
 public class Gauss {
 	
 	private double[][] originalMatrix;
@@ -34,7 +32,6 @@ public class Gauss {
 		
 		for(int k = 0;k < resultado.length - 1; k++) {
 			ep = resultado[k][k];
-			//System.out.println("Elemento pivote: " + ep);
 			for(int i = k+1; i < resultado.length; i++) {
 				fm = resultado[i][k]/ep;
 				for(int j = 0; j < resultado[i].length; j++) {
@@ -53,7 +50,6 @@ public class Gauss {
 		variables[matrix.length-1] = matrix[matrix.length-1][matrix[0].length-1]/matrix[matrix.length-1][matrix[0].length-2];
 		
 		for(int i = matrix.length - 2; i >= 0; i--) {
-			// matrix[1][3]
 			variables[i] = matrix[i][matrix[i].length-1];
 			for(int j = matrix[i].length - 2; j >= i; j--) {
 				if(i != j) {
@@ -63,8 +59,6 @@ public class Gauss {
 				}	
 			}
 		}	
-//		System.out.println("Solución: ");
-//		System.out.println(Arrays.toString(variables));
 		return variables;
 	}
 
