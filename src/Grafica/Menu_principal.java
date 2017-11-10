@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import Projectofinal.Biseccion;
 import Projectofinal.Funcion;
+import Projectofinal.MetodoMatrizEnum;
 
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -80,12 +81,22 @@ public class Menu_principal {
 		JButton btnGauss = new JButton("Gauss");
 		btnGauss.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Matriz matriz = new Matriz();
-				matriz.main(null);
+				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS);
+				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
 		mnMatrices.add(btnGauss);
+		
+		JButton btnGaussJordan = new JButton("Gauss Jordan");
+		btnGaussJordan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS_JORDAN);
+				matriz.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnMatrices.add(btnGaussJordan);
 
 		JButton btnBiseccion = new JButton("Biseccion              ");
 		btnBiseccion.addActionListener(new ActionListener() {

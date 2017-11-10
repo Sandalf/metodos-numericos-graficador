@@ -18,6 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Projectofinal.Gauss;
+import Projectofinal.GaussJordan;
+import Projectofinal.MetodoMatrizEnum;
 
 public class EditarMatriz extends JFrame {
 
@@ -49,7 +51,7 @@ public class EditarMatriz extends JFrame {
 	 */
 	public EditarMatriz() {}
 	
-	public EditarMatriz(int rowsParam, int columnsParam) {
+	public EditarMatriz(int rowsParam, int columnsParam, MetodoMatrizEnum tipoMetodo) {
 		// SE INCREMENTA PARA INSERTAR CABECEROS Y ESPACIADO
 		final Integer rows = rowsParam + 2;
 		final Integer columns = columnsParam + 3;
@@ -61,7 +63,7 @@ public class EditarMatriz extends JFrame {
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        Matriz matriz = new Matriz(null,null);
+		        Matriz matriz = new Matriz(null,null,null);
 		        matriz.setVisible(true);
 				setVisible(false);
 				dispose();
@@ -101,13 +103,13 @@ public class EditarMatriz extends JFrame {
 		gbc_matrix.weightx = 1;
 		gbc_matrix.fill = GridBagConstraints.HORIZONTAL;
 		for(int i = 0; i < rows - 1; i++) {
-			for(int j = 0; j < columns - 2; j++) {
+			for(int j = 0; j < columns - 1; j++) {
 				if(i == 0 && j != 0) {
 					// AGREGAR CABECEROS
 					JLabel descLabel = null;
 					
 					// DETERMINAR SI ES UNA COLUMNA DE INCOGNITAS O DE CONSTANTES
-					if(j == columns - 3) {
+					if(j == columns - 2) {
 						descLabel = new JLabel("b");
 					} else {
 						descLabel = new JLabel("X" + j);
@@ -179,7 +181,7 @@ public class EditarMatriz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<double[][]> matrices = new ArrayList<double[][]>();
 				double[][] matrizOrignial = new double[rowsParam][columnsParam];
-				double[][] matrizTriangulada = new double[rowsParam][columnsParam];
+				double[][] matrizFinal = new double[rowsParam][columnsParam];
 				double[] solucion = new double[rowsParam];
 				int indexTextField = 0; 
 			       
@@ -188,17 +190,27 @@ public class EditarMatriz extends JFrame {
 		            matrizOrignial[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText()); 
 		            indexTextField++; 
 		          } 
-		        }
+		        }			
 				
-				Gauss gauss = new Gauss(matrizOrignial.clone());
+				if(tipoMetodo == MetodoMatrizEnum.GAUSS) {
+					Gauss gauss = new Gauss(matrizOrignial.clone());
+					
+					matrizFinal = gauss.triangulateMatrix(matrizOrignial.clone());
+					solucion = gauss.calculateSolution(matrizFinal.clone());			
+					
+					matrices.add(matrizOrignial.clone());
+					matrices.add(matrizFinal.clone());
+				} else if(tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
+					GaussJordan gaussJordan = new GaussJordan(matrizOrignial.clone());
+					
+					matrizFinal = gaussJordan.solve(matrizOrignial.clone());
+					solucion = gaussJordan.solution(matrizFinal.clone());			
+					
+					matrices.add(matrizOrignial.clone());
+					matrices.add(matrizFinal.clone());
+				}
 				
-				matrizTriangulada = gauss.triangulateMatrix(matrizOrignial.clone());
-				solucion = gauss.calculateSolution(matrizTriangulada.clone());			
-				
-				matrices.add(matrizOrignial.clone());
-				matrices.add(matrizTriangulada.clone());
-				
-				Matriz matriz = new Matriz(matrices,solucion);
+				Matriz matriz = new Matriz(matrices,solucion,tipoMetodo);
 				matriz.setVisible(true);
 				setVisible(false);
 				dispose();
