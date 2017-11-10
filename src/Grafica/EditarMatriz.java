@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Projectofinal.Gauss;
+import Projectofinal.MetodoMatrizEnum;
 
 public class EditarMatriz extends JFrame {
 
@@ -49,7 +50,7 @@ public class EditarMatriz extends JFrame {
 	 */
 	public EditarMatriz() {}
 	
-	public EditarMatriz(int rowsParam, int columnsParam) {
+	public EditarMatriz(int rowsParam, int columnsParam, MetodoMatrizEnum tipoMetodo) {
 		// SE INCREMENTA PARA INSERTAR CABECEROS Y ESPACIADO
 		final Integer rows = rowsParam + 2;
 		final Integer columns = columnsParam + 3;
@@ -61,7 +62,7 @@ public class EditarMatriz extends JFrame {
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        Matriz matriz = new Matriz(null,null);
+		        Matriz matriz = new Matriz(null,null,null);
 		        matriz.setVisible(true);
 				setVisible(false);
 				dispose();
@@ -188,17 +189,19 @@ public class EditarMatriz extends JFrame {
 		            matrizOrignial[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText()); 
 		            indexTextField++; 
 		          } 
-		        }
+		        }			
 				
-				Gauss gauss = new Gauss(matrizOrignial.clone());
+				if(tipoMetodo == MetodoMatrizEnum.GAUSS) {
+					Gauss gauss = new Gauss(matrizOrignial.clone());
+					
+					matrizTriangulada = gauss.triangulateMatrix(matrizOrignial.clone());
+					solucion = gauss.calculateSolution(matrizTriangulada.clone());			
+					
+					matrices.add(matrizOrignial.clone());
+					matrices.add(matrizTriangulada.clone());
+				}
 				
-				matrizTriangulada = gauss.triangulateMatrix(matrizOrignial.clone());
-				solucion = gauss.calculateSolution(matrizTriangulada.clone());			
-				
-				matrices.add(matrizOrignial.clone());
-				matrices.add(matrizTriangulada.clone());
-				
-				Matriz matriz = new Matriz(matrices,solucion);
+				Matriz matriz = new Matriz(matrices,solucion,tipoMetodo);
 				matriz.setVisible(true);
 				setVisible(false);
 				dispose();

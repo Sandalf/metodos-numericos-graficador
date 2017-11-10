@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import Projectofinal.Gauss;
+import Projectofinal.MetodoMatrizEnum;
 
 public class Matriz extends JFrame {
 
@@ -30,7 +31,7 @@ public class Matriz extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Matriz frame = new Matriz();
+					Matriz frame = new Matriz(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,21 +43,23 @@ public class Matriz extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public Matriz() {
-		initialize(null,null);
+	public Matriz(MetodoMatrizEnum tipoMetodo) {
+		initialize(null,null,tipoMetodo);
 	}
 	
-	public Matriz(ArrayList<double[][]> matrices, double[] solucion) {
-		initialize(matrices,solucion);
+	public Matriz(ArrayList<double[][]> matrices, double[] solucion, MetodoMatrizEnum tipoMetodo) {
+		initialize(matrices,solucion,tipoMetodo);
 	}
 
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(ArrayList<double[][]> matrices,double[] solucion) {
+	private void initialize(ArrayList<double[][]> matrices,double[] solucion, MetodoMatrizEnum tipoMetodo) {
 		setBounds(120, 100, 450, 700);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		System.out.println("Tipo de metodo " + tipoMetodo);
 		
 		// CONTROLAR SALIDA
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -74,7 +77,7 @@ public class Matriz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Integer rows = (Integer)renglonesComboBox.getSelectedItem();
 				Integer columns = (Integer)columnasComboBox.getSelectedItem();
-				EditarMatriz editarMatriz = new EditarMatriz(rows,columns);
+				EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo);
 				editarMatriz.setVisible(true);
 				dispose();
 			}
@@ -129,7 +132,6 @@ public class Matriz extends JFrame {
 			}
 			
 			// DESPLEGAR MATRICES
-			System.out.println("Matrices size: " + matrices.size());
 			int matrizIndex = 1;
 			int yPosition = 130;		
 			
