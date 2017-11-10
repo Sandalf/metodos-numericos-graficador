@@ -47,7 +47,7 @@ public class GaussJordan {
 			for(int k = 0; k < solutionMatrix.length; k++) {
 				if(k != i) {
 					fm = solutionMatrix[k][i];
-					for(int j = 0; j < solutionMatrix.length; j++) {
+					for(int j = 0; j < solutionMatrix[0].length; j++) {
 						solutionMatrix[k][j] = solutionMatrix[k][j] - (fm * solutionMatrix[i][j]);
 					}
 				}

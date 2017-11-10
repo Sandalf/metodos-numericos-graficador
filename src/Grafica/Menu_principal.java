@@ -87,6 +87,16 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(btnGauss);
+		
+		JButton btnGaussJordan = new JButton("Gauss Jordan");
+		btnGaussJordan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS_JORDAN);
+				matriz.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnMatrices.add(btnGaussJordan);
 
 		JButton btnBiseccion = new JButton("Biseccion            ");
 		btnBiseccion.addActionListener(new ActionListener() {
