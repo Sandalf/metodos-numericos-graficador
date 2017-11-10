@@ -103,13 +103,13 @@ public class EditarMatriz extends JFrame {
 		gbc_matrix.weightx = 1;
 		gbc_matrix.fill = GridBagConstraints.HORIZONTAL;
 		for(int i = 0; i < rows - 1; i++) {
-			for(int j = 0; j < columns - 2; j++) {
+			for(int j = 0; j < columns - 1; j++) {
 				if(i == 0 && j != 0) {
 					// AGREGAR CABECEROS
 					JLabel descLabel = null;
 					
 					// DETERMINAR SI ES UNA COLUMNA DE INCOGNITAS O DE CONSTANTES
-					if(j == columns - 3) {
+					if(j == columns - 2) {
 						descLabel = new JLabel("b");
 					} else {
 						descLabel = new JLabel("X" + j);
