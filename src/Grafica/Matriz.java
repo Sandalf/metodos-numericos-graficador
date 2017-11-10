@@ -96,9 +96,7 @@ public class Matriz extends JFrame {
 		// AGREGAR ELEMENTOS DE COMBOBOX
 		for(int i = 2; i <= 100; i++) {
 			renglonesComboBox.addItem(new Integer(i));
-			if(i >= 3) {
-				columnasComboBox.addItem(new Integer(i));
-			}
+			columnasComboBox.addItem(new Integer(i));
 		}
 		
 		getContentPane().add(renglonesComboBox);
