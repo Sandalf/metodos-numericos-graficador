@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Projectofinal.Gauss;
+import Projectofinal.GaussJordan;
 import Projectofinal.MetodoMatrizEnum;
 
 public class EditarMatriz extends JFrame {
@@ -180,7 +181,7 @@ public class EditarMatriz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<double[][]> matrices = new ArrayList<double[][]>();
 				double[][] matrizOrignial = new double[rowsParam][columnsParam];
-				double[][] matrizTriangulada = new double[rowsParam][columnsParam];
+				double[][] matrizFinal = new double[rowsParam][columnsParam];
 				double[] solucion = new double[rowsParam];
 				int indexTextField = 0; 
 			       
@@ -194,11 +195,19 @@ public class EditarMatriz extends JFrame {
 				if(tipoMetodo == MetodoMatrizEnum.GAUSS) {
 					Gauss gauss = new Gauss(matrizOrignial.clone());
 					
-					matrizTriangulada = gauss.triangulateMatrix(matrizOrignial.clone());
-					solucion = gauss.calculateSolution(matrizTriangulada.clone());			
+					matrizFinal = gauss.triangulateMatrix(matrizOrignial.clone());
+					solucion = gauss.calculateSolution(matrizFinal.clone());			
 					
 					matrices.add(matrizOrignial.clone());
-					matrices.add(matrizTriangulada.clone());
+					matrices.add(matrizFinal.clone());
+				} else if(tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
+					GaussJordan gaussJordan = new GaussJordan(matrizOrignial.clone());
+					
+					matrizFinal = gaussJordan.solve(matrizOrignial.clone());
+					solucion = gaussJordan.solution(matrizFinal.clone());			
+					
+					matrices.add(matrizOrignial.clone());
+					matrices.add(matrizFinal.clone());
 				}
 				
 				Matriz matriz = new Matriz(matrices,solucion,tipoMetodo);
