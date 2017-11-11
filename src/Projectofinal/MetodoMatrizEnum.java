@@ -2,5 +2,6 @@ package Projectofinal;
 
 public enum MetodoMatrizEnum {
 	GAUSS,
-	GAUSS_JORDAN
+	GAUSS_JORDAN,
+	MONTANTE
 }
