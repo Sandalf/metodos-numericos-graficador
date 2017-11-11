@@ -107,6 +107,16 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(btnMontante);
+		
+		JButton btnCramer = new JButton("Cramer");
+		btnCramer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Matriz matriz = new Matriz(MetodoMatrizEnum.CRAMER);
+				matriz.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnMatrices.add(btnCramer);
 
 		JButton btnBiseccion = new JButton("Biseccion            ");
 		btnBiseccion.addActionListener(new ActionListener() {
