@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import Projectofinal.Gauss;
 import Projectofinal.GaussJordan;
 import Projectofinal.MetodoMatrizEnum;
+import Projectofinal.Montante;
 
 public class EditarMatriz extends JFrame {
 
@@ -180,14 +181,17 @@ public class EditarMatriz extends JFrame {
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<double[][]> matrices = new ArrayList<double[][]>();
-				double[][] matrizOrignial = new double[rowsParam][columnsParam];
-				double[][] matrizFinal = new double[rowsParam][columnsParam];
+				double[][] matrizOrignial = new double[rowsParam][columnsParam + 1];
+				double[][] matrizFinal = new double[rowsParam][columnsParam + 1];
 				double[] solucion = new double[rowsParam];
 				int indexTextField = 0; 
 			       
-		        for(int i = 0; i < rowsParam; i++) { 
-		          for(int j = 0; j < columnsParam; j++) { 
-		            matrizOrignial[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText()); 
+				System.out.println("Inputs");
+		        for(int i = 0; i < rowsParam ; i++) { 
+		          for(int j = 0; j < columnsParam + 1; j++) { 
+		            matrizOrignial[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText());
+		            System.out.println(listOfTextFields.get(indexTextField).getText());
+		            System.out.println("Tamaño: " + listOfTextFields.size());
 		            indexTextField++; 
 		          } 
 		        }			
@@ -205,6 +209,15 @@ public class EditarMatriz extends JFrame {
 					
 					matrizFinal = gaussJordan.solve(matrizOrignial.clone());
 					solucion = gaussJordan.solution(matrizFinal.clone());			
+					
+					matrices.add(matrizOrignial.clone());
+					matrices.add(matrizFinal.clone());
+				} else if(tipoMetodo == MetodoMatrizEnum.MONTANTE) {
+					System.out.println("montante");
+					Montante montante = new Montante(matrizOrignial.clone());
+					
+					matrizFinal = montante.solve(montante.getOriginalMatrix());
+					solucion = montante.solution(matrizFinal.clone());			
 					
 					matrices.add(matrizOrignial.clone());
 					matrices.add(matrizFinal.clone());
