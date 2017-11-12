@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import Projectofinal.Cramer;
 import Projectofinal.Gauss;
 import Projectofinal.GaussJordan;
 import Projectofinal.MetodoMatrizEnum;
@@ -185,13 +186,10 @@ public class EditarMatriz extends JFrame {
 				double[][] matrizFinal = new double[rowsParam][columnsParam + 1];
 				double[] solucion = new double[rowsParam];
 				int indexTextField = 0; 
-			       
-				System.out.println("Inputs");
+				
 		        for(int i = 0; i < rowsParam ; i++) { 
 		          for(int j = 0; j < columnsParam + 1; j++) { 
 		            matrizOrignial[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText());
-		            System.out.println(listOfTextFields.get(indexTextField).getText());
-		            System.out.println("Tamaño: " + listOfTextFields.size());
 		            indexTextField++; 
 		          } 
 		        }			
@@ -213,7 +211,6 @@ public class EditarMatriz extends JFrame {
 					matrices.add(matrizOrignial.clone());
 					matrices.add(matrizFinal.clone());
 				} else if(tipoMetodo == MetodoMatrizEnum.MONTANTE) {
-					System.out.println("montante");
 					Montante montante = new Montante(matrizOrignial.clone());
 					
 					matrizFinal = montante.solve(montante.getOriginalMatrix());
@@ -221,6 +218,11 @@ public class EditarMatriz extends JFrame {
 					
 					matrices.add(matrizOrignial.clone());
 					matrices.add(matrizFinal.clone());
+				} else if(tipoMetodo == MetodoMatrizEnum.CRAMER) {
+					Cramer cramer = new Cramer();
+					
+					matrices.add(matrizOrignial.clone());
+					matrizFinal = cramer.solve(matrizOrignial.clone(),solucion,matrices);
 				}
 				
 				Matriz matriz = new Matriz(matrices,solucion,tipoMetodo);
