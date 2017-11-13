@@ -9,7 +9,7 @@ public class Cramer {
 		
 	}
 	
-	public static void displayMatrix(double[][] matrix) {
+	public static void displayMatrix(Double[][] matrix) {
 		for(int i = 0; i < matrix.length; i++) {
 			for(int j = 0; j < matrix[0].length; j++) {
 				System.out.print(" " + matrix[i][j] + " ");
@@ -19,10 +19,10 @@ public class Cramer {
 		System.out.print("\n");
 	}
 	
-	public double[][] solve(double[][] matrix, double[] soluciones, ArrayList<double[][]> matrices) {
-		double[][] coeficientes = new double[matrix.length][matrix[0].length-1];
-		double[] constantes = new double[matrix.length];
-		double[][] matrixCopy = new double[coeficientes.length][coeficientes[0].length];
+	public Double[][] solve(Double[][] matrix, Double[] soluciones, ArrayList<Double[][]> matrices) {
+		Double[][] coeficientes = new Double[matrix.length][matrix[0].length-1];
+		Double[] constantes = new Double[matrix.length];
+		Double[][] matrixCopy = new Double[coeficientes.length][coeficientes[0].length];
 		double[] detx = new double[coeficientes.length];
 		double det = 0;
 		
@@ -56,7 +56,7 @@ public class Cramer {
 				for(int i = 0; i < matrixCopy.length; i++) {
 					matrixCopy[i][j] = constantes[i];
 				}
-				double[][] m = new double[matrixCopy.length][matrixCopy[0].length]; 
+				Double[][] m = new Double[matrixCopy.length][matrixCopy[0].length]; 
 				duplicate(matrixCopy,m);
 				displayMatrix(m);
 				matrices.add(m);
@@ -73,14 +73,14 @@ public class Cramer {
 		return matrixCopy;
 	}
 	
-	public void duplicate(double[][] org, double[][] cop) {
+	public void duplicate(Double[][] org, Double[][] cop) {
 		for(int i = 0; i < org.length; i++) {
 			cop[i] = org[i].clone();
 		}
 	}
 	
-	public double matrixDeterminant (double[][] matrix) {
-		double temporary[][];
+	public double matrixDeterminant (Double[][] matrix) {
+		Double temporary[][];
 		double result = 0;
 
 		if (matrix.length == 1) {
@@ -94,7 +94,7 @@ public class Cramer {
 		}
 
 		for (int i = 0; i < matrix[0].length; i++) {
-			temporary = new double[matrix.length - 1][matrix[0].length - 1];
+			temporary = new Double[matrix.length - 1][matrix[0].length - 1];
 
 			for (int j = 1; j < matrix.length; j++) {
 				for (int k = 0; k < matrix[0].length; k++) {

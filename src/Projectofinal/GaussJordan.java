@@ -4,17 +4,17 @@ import java.util.Arrays;
 
 public class GaussJordan {
 	
-	private double[][] originalMatrix;
-	private double[][] solutionMatrix;
+	private Double[][] originalMatrix;
+	private Double[][] solutionMatrix;
 	
-	public GaussJordan(double[][] om) {
-		this.originalMatrix = new double[om.length][];
+	public GaussJordan(Double[][] om) {
+		this.originalMatrix = new Double[om.length][];
 		for(int i = 0; i < om.length; i++) {
 			this.originalMatrix[i] = om[i].clone();
 		}
 	}
 	
-	public static void displayMatrix(double[][] matrix) {
+	public static void displayMatrix(Double[][] matrix) {
 		for(int i = 0; i < matrix.length; i++) {
 			for(int j = 0; j < matrix[0].length; j++) {
 				System.out.print(" " + matrix[i][j] + " ");
@@ -24,10 +24,10 @@ public class GaussJordan {
 		System.out.print("\n");
 	}
 	
-	public double[][] solve(double[][] matrix) {	
+	public Double[][] solve(Double[][] matrix) {	
 		double fm = 0;// FACTOR MULTIPLICADOR
 		
-		this.solutionMatrix = new double[matrix.length][];
+		this.solutionMatrix = new Double[matrix.length][];
 		for(int i = 0; i < matrix.length; i++) {
 			this.solutionMatrix[i] = matrix[i].clone();
 		}
@@ -57,8 +57,8 @@ public class GaussJordan {
 		return solutionMatrix;
 	}
 	
-	public double[] solution(double[][] matrix) {
-		double[] result = new double[matrix.length];
+	public Double[] solution(Double[][] matrix) {
+		Double[] result = new Double[matrix.length];
 		
 		for(int i = 0; i < matrix.length; i++) {
 			result[i] = matrix[i][matrix[0].length-1];
