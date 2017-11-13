@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import Projectofinal.Cramer;
 import Projectofinal.Gauss;
 import Projectofinal.GaussJordan;
+import Projectofinal.Jacobi;
 import Projectofinal.MetodoMatrizEnum;
 import Projectofinal.Montante;
 
@@ -181,10 +182,10 @@ public class EditarMatriz extends JFrame {
 		// RESOLVER MATRIZ
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<double[][]> matrices = new ArrayList<double[][]>();
-				double[][] matrizOrignial = new double[rowsParam][columnsParam + 1];
-				double[][] matrizFinal = new double[rowsParam][columnsParam + 1];
-				double[] solucion = new double[rowsParam];
+				ArrayList<Double[][]> matrices = new ArrayList<Double[][]>();
+				Double[][] matrizOrignial = new Double[rowsParam][columnsParam + 1];
+				Double[][] matrizFinal = new Double[rowsParam][columnsParam + 1];
+				Double[] solucion = new Double[rowsParam];
 				int indexTextField = 0; 
 				
 		        for(int i = 0; i < rowsParam ; i++) { 
@@ -223,6 +224,9 @@ public class EditarMatriz extends JFrame {
 					
 					matrices.add(matrizOrignial.clone());
 					matrizFinal = cramer.solve(matrizOrignial.clone(),solucion,matrices);
+				} else if(tipoMetodo == MetodoMatrizEnum.JACOBI) {
+					Jacobi jacobi = new Jacobi();
+					matrices.add(jacobi.solve(matrizOrignial.clone(), matrizOrignial.clone().length, 0.01, 100));
 				}
 				
 				Matriz matriz = new Matriz(matrices,solucion,tipoMetodo);

@@ -117,6 +117,16 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(btnCramer);
+		
+		JButton btnJacobi = new JButton("Jacobi");
+		btnJacobi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Matriz matriz = new Matriz(MetodoMatrizEnum.JACOBI);
+				matriz.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnMatrices.add(btnJacobi);
 
 		JButton btnBiseccion = new JButton("Biseccion            ");
 		btnBiseccion.addActionListener(new ActionListener() {

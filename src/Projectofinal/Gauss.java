@@ -2,13 +2,13 @@ package Projectofinal;
 
 public class Gauss {
 	
-	private double[][] originalMatrix;
+	private Double[][] originalMatrix;
 	
-	public Gauss (double[][] matrix) {
+	public Gauss (Double[][] matrix) {
 		this.originalMatrix = matrix;
 	}
 	
-	public static void displayMatrix(double[][] matrix) {
+	public static void displayMatrix(Double[][] matrix) {
 		for(int i = 0; i < matrix.length; i++) {
 			for(int j = 0; j < matrix[0].length; j++) {
 				System.out.print(" " + matrix[i][j] + " ");
@@ -18,8 +18,8 @@ public class Gauss {
 		System.out.print("\n");
 	}
 	
-	public double[][] triangulateMatrix(double[][] matrix) {	
-		double[][] resultado = new double[matrix.length][matrix[0].length];
+	public Double[][] triangulateMatrix(Double[][] matrix) {	
+		Double[][] resultado = new Double[matrix.length][matrix[0].length];
 		double fm = 0;// FACTOR MULTIPLICADOR
 		double ep = 0;// ELEMENTO PIVOTE
 		
@@ -43,8 +43,8 @@ public class Gauss {
 		return resultado;
 	}
 	
-	public double[] calculateSolution(double[][] matrix) {
-		double[] variables = new double[matrix.length];
+	public Double[] calculateSolution(Double[][] matrix) {
+		Double[] variables = new Double[matrix.length];
 		
 		// ULTIMA INCOGNITA
 		variables[matrix.length-1] = matrix[matrix.length-1][matrix[0].length-1]/matrix[matrix.length-1][matrix[0].length-2];
@@ -62,11 +62,11 @@ public class Gauss {
 		return variables;
 	}
 
-	public double[][] getOriginalMatrix() {
+	public Double[][] getOriginalMatrix() {
 		return originalMatrix;
 	}
 
-	public void setOriginalMatrix(double[][] originalMatrix) {
+	public void setOriginalMatrix(Double[][] originalMatrix) {
 		this.originalMatrix = originalMatrix;
 	}
 
