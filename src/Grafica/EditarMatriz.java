@@ -54,7 +54,7 @@ public class EditarMatriz extends JFrame {
 	 */
 	public EditarMatriz() {}
 	
-	public EditarMatriz(int rowsParam, int columnsParam, MetodoMatrizEnum tipoMetodo) {
+	public EditarMatriz(int rowsParam, int columnsParam, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
 		// SE INCREMENTA PARA INSERTAR CABECEROS Y ESPACIADO
 		final Integer rows = rowsParam + 2;
 		final Integer columns = columnsParam + 3;
@@ -66,7 +66,7 @@ public class EditarMatriz extends JFrame {
 		addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        Matriz matriz = new Matriz(null,null,null);
+		        Matriz matriz = new Matriz(null,null,tipoMetodo,null);
 		        matriz.setVisible(true);
 				setVisible(false);
 				dispose();
@@ -226,10 +226,11 @@ public class EditarMatriz extends JFrame {
 					matrizFinal = cramer.solve(matrizOrignial.clone(),solucion,matrices);
 				} else if(tipoMetodo == MetodoMatrizEnum.JACOBI) {
 					Jacobi jacobi = new Jacobi();
-					matrices.add(jacobi.solve(matrizOrignial.clone(), matrizOrignial.clone().length, 0.01, 100));
+					System.out.println("Error permisible: " + errorPermisible);
+					matrices.add(jacobi.solve(matrizOrignial.clone(), matrizOrignial.clone().length, errorPermisible, 100));
 				}
 				
-				Matriz matriz = new Matriz(matrices,solucion,tipoMetodo);
+				Matriz matriz = new Matriz(matrices,solucion,tipoMetodo,errorPermisible);
 				matriz.setVisible(true);
 				setVisible(false);
 				dispose();

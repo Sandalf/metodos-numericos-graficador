@@ -4,13 +4,15 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -29,6 +31,7 @@ public class Matriz extends JFrame {
 	private JComboBox<Integer> renglonesComboBox;
 	private JComboBox<Integer> columnasComboBox;
 	private JTable table;
+	private JTextField errorTextField;
 
 	/**
 	 * Launch the application.
@@ -50,18 +53,18 @@ public class Matriz extends JFrame {
 	 * Create the application.
 	 */
 	public Matriz(MetodoMatrizEnum tipoMetodo) {
-		initialize(null,null,tipoMetodo);
+		initialize(null,null,tipoMetodo,null);
 	}
 	
-	public Matriz(ArrayList<Double[][]> matrices, Double[] solucion, MetodoMatrizEnum tipoMetodo) {
-		initialize(matrices,solucion,tipoMetodo);
+	public Matriz(ArrayList<Double[][]> matrices, Double[] solucion, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
+		initialize(matrices,solucion,tipoMetodo,errorPermisible);
 	}
 
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(ArrayList<Double[][]> matrices,Double[] solucion, MetodoMatrizEnum tipoMetodo) {
+	private void initialize(ArrayList<Double[][]> matrices,Double[] solucion, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
 		setBounds(120, 100, 450, 700);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
@@ -81,11 +84,24 @@ public class Matriz extends JFrame {
 		btnCrearMatriz.setBounds(323, 6, 121, 29);
 		btnCrearMatriz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Integer rows = (Integer)renglonesComboBox.getSelectedItem();
-				Integer columns = (Integer)columnasComboBox.getSelectedItem();
-				EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo);
-				editarMatriz.setVisible(true);
-				dispose();
+				Double errorPermisible = new Double(0);
+				
+				if(tipoMetodo == MetodoMatrizEnum.JACOBI && errorTextField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
+				} else if(tipoMetodo == MetodoMatrizEnum.JACOBI && !errorTextField.getText().isEmpty()) {
+					errorPermisible = Double.parseDouble(errorTextField.getText());
+					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
+					Integer columns = (Integer)columnasComboBox.getSelectedItem();
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible);
+					editarMatriz.setVisible(true);
+					dispose();
+				} else {
+					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
+					Integer columns = (Integer)columnasComboBox.getSelectedItem();
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible);
+					editarMatriz.setVisible(true);
+					dispose();
+				}				
 			}
 		});
 		getContentPane().setLayout(null);
@@ -114,49 +130,96 @@ public class Matriz extends JFrame {
 		getContentPane().add(columnasComboBox);
 		getContentPane().add(btnCrearMatriz);
 		
-		if(tipoMetodo == MetodoMatrizEnum.JACOBI && matrices != null) {
+		
+		if(tipoMetodo == MetodoMatrizEnum.JACOBI) {
 			
 			// AJUSTAR TAMAÑO DE VENTANA
-			setBounds(120, 100, 600, 300);
+			setBounds(120, 100, 600, 350);
 			
-			// DEPLEGAR TABLA
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setBounds(10, 40, 578, 203);
-			getContentPane().add(scrollPane);
+			JLabel errorLabel = new JLabel("Error permisible:");
+			errorLabel.setBounds(57,40,160,30);
+			getContentPane().add(errorLabel);
 			
-			String[] cabeceros = new String[] {"X1", "X2", "X3", "X1", "X2", "X3", "Error"};
-			table = new JTable();
-			table.setBackground(Color.LIGHT_GRAY);
-			table.setBorder(new LineBorder(new Color(0, 0, 0)));
-			table.setModel(new DefaultTableModel(
-				new Object[][] {
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-					{null, null, null, null, null, null, null},
-				},
-				cabeceros
-			));
-			scrollPane.setViewportView(table);
+			errorTextField = new JTextField("0.1");
+			errorTextField.setBounds(180,40,60,30);
 			
-			Object[][] resultados = matrices.get(0);
-			table.setModel(new DefaultTableModel(resultados,cabeceros));
+			// SE INGRESA ERROR PERMISBLE PUESTO ANTES DE CREAR MATRIZ
+			if(errorPermisible != null) {
+				errorTextField.setText(errorPermisible.toString());
+			}
+			
+			// VALIDAR QUE SE INGRESEN SOLO NUMEROS
+			errorTextField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					char c = e.getKeyChar();
+					
+					if(Character.isLetter(c) && !e.isAltDown()) {
+						e.consume();
+					}
+				}
+			});
+			getContentPane().add(errorTextField); 
+			
+			if(matrices != null) {
+			
+				// DEPLEGAR TABLA
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setBounds(10, 80, 578, 203);
+				getContentPane().add(scrollPane);
+				
+				String[] cabeceros = new String[matrices.get(0).length];
+				System.out.println("Cabeceros length: " + cabeceros.length);
+				int xVarIndex = 0;
+				
+				// INSERTAR CABECEROS DINAMICAMENTE
+				for(int i = 0; i < cabeceros.length; i++) {
+					if(i + 1  == ((cabeceros.length-1)/2)) {
+						xVarIndex = 1;
+					} else {
+						xVarIndex++;
+					}
+					
+					if(i == cabeceros.length - 1) {
+						cabeceros[i] = "Error";
+					} else {
+						cabeceros[i] = "X" + xVarIndex;				
+					}
+				}
+				
+				table = new JTable();
+				table.setBackground(Color.LIGHT_GRAY);
+				table.setBorder(new LineBorder(new Color(0, 0, 0)));
+				table.setModel(new DefaultTableModel(
+					new Object[][] {
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+					},
+					cabeceros
+				));
+				scrollPane.setViewportView(table);
+				
+				Object[][] resultados = matrices.get(0);
+				table.setModel(new DefaultTableModel(resultados,cabeceros));
+			}
 			
 		} else {
 		
@@ -165,7 +228,7 @@ public class Matriz extends JFrame {
 				int labelHorizontalPos = 57;
 				int labelVerticalPos = 70;
 				JLabel solucionLabel = new JLabel("Solución:");
-				solucionLabel.setBounds(57,40,80,30);
+				solucionLabel.setBounds(57,50,80,30);
 				getContentPane().add(solucionLabel);
 				
 				// DESPLEGAR SOLUCION
