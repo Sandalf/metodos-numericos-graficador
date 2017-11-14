@@ -4,17 +4,17 @@ import java.util.Arrays;
 
 public class Montante {
 	
-	private double[][] originalMatrix;
-	private double[][] solutionMatrix;
+	private Double[][] originalMatrix;
+	private Double[][] solutionMatrix;
 	
-	public Montante(double[][] om) {
-		this.originalMatrix = new double[om.length][];
+	public Montante(Double[][] om) {
+		this.originalMatrix = new Double[om.length][];
 		for(int i = 0; i < om.length; i++) {
 			this.originalMatrix[i] = om[i].clone();
 		}
 	}
 	
-	public static void displayMatrix(double[][] matrix) {
+	public static void displayMatrix(Double[][] matrix) {
 		for(int i = 0; i < matrix.length; i++) {
 			for(int j = 0; j < matrix[0].length; j++) {
 				System.out.print(" " + matrix[i][j] + " ");
@@ -24,10 +24,10 @@ public class Montante {
 		System.out.print("\n");
 	}
 	
-	public double[][] solve(double[][] matrix) {
+	public Double[][] solve(Double[][] matrix) {
 		double pivoteAnt = 1;
 		
-		this.solutionMatrix = new double[matrix.length][];
+		this.solutionMatrix = new Double[matrix.length][];
 		for(int i = 0; i < matrix.length; i++) {
 			this.solutionMatrix[i] = matrix[i].clone();
 		}
@@ -49,8 +49,8 @@ public class Montante {
 		return solutionMatrix;
 	}
 	
-	public double[] solution(double[][] matrix) {
-		double[] result = new double[matrix.length];	
+	public Double[] solution(Double[][] matrix) {
+		Double[] result = new Double[matrix.length];	
 		double determinante = matrix[0][0];
 		
 		for(int i = 0; i < matrix.length; i++) {
@@ -63,19 +63,19 @@ public class Montante {
 		return result;
 	}
 
-	public double[][] getOriginalMatrix() {
+	public Double[][] getOriginalMatrix() {
 		return originalMatrix;
 	}
 
-	public void setOriginalMatrix(double[][] originalMatrix) {
+	public void setOriginalMatrix(Double[][] originalMatrix) {
 		this.originalMatrix = originalMatrix;
 	}
 
-	public double[][] getSolutionMatrix() {
+	public Double[][] getSolutionMatrix() {
 		return solutionMatrix;
 	}
 
-	public void setSolutionMatrix(double[][] solutionMatrix) {
+	public void setSolutionMatrix(Double[][] solutionMatrix) {
 		this.solutionMatrix = solutionMatrix;
 	}	
 

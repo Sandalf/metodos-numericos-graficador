@@ -1,16 +1,23 @@
 package Grafica;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Projectofinal.Gauss;
 import Projectofinal.MetodoMatrizEnum;
@@ -23,6 +30,8 @@ public class Matriz extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JComboBox<Integer> renglonesComboBox;
 	private JComboBox<Integer> columnasComboBox;
+	private JTable table;
+	private JTextField errorTextField;
 
 	/**
 	 * Launch the application.
@@ -44,18 +53,18 @@ public class Matriz extends JFrame {
 	 * Create the application.
 	 */
 	public Matriz(MetodoMatrizEnum tipoMetodo) {
-		initialize(null,null,tipoMetodo);
+		initialize(null,null,tipoMetodo,null);
 	}
 	
-	public Matriz(ArrayList<double[][]> matrices, double[] solucion, MetodoMatrizEnum tipoMetodo) {
-		initialize(matrices,solucion,tipoMetodo);
+	public Matriz(ArrayList<Double[][]> matrices, Double[] solucion, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
+		initialize(matrices,solucion,tipoMetodo,errorPermisible);
 	}
 
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(ArrayList<double[][]> matrices,double[] solucion, MetodoMatrizEnum tipoMetodo) {
+	private void initialize(ArrayList<Double[][]> matrices,Double[] solucion, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
 		setBounds(120, 100, 450, 700);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
@@ -75,11 +84,24 @@ public class Matriz extends JFrame {
 		btnCrearMatriz.setBounds(323, 6, 121, 29);
 		btnCrearMatriz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Integer rows = (Integer)renglonesComboBox.getSelectedItem();
-				Integer columns = (Integer)columnasComboBox.getSelectedItem();
-				EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo);
-				editarMatriz.setVisible(true);
-				dispose();
+				Double errorPermisible = new Double(0);
+				
+				if(tipoMetodo == MetodoMatrizEnum.JACOBI && errorTextField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
+				} else if(tipoMetodo == MetodoMatrizEnum.JACOBI && !errorTextField.getText().isEmpty()) {
+					errorPermisible = Double.parseDouble(errorTextField.getText());
+					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
+					Integer columns = (Integer)columnasComboBox.getSelectedItem();
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible);
+					editarMatriz.setVisible(true);
+					dispose();
+				} else {
+					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
+					Integer columns = (Integer)columnasComboBox.getSelectedItem();
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible);
+					editarMatriz.setVisible(true);
+					dispose();
+				}				
 			}
 		});
 		getContentPane().setLayout(null);
@@ -108,55 +130,149 @@ public class Matriz extends JFrame {
 		getContentPane().add(columnasComboBox);
 		getContentPane().add(btnCrearMatriz);
 		
-		// DESPLEGAR MATRICES
-		if(matrices != null && solucion != null) {
-			int labelHorizontalPos = 57;
-			int labelVerticalPos = 70;
-			JLabel solucionLabel = new JLabel("Solución:");
-			solucionLabel.setBounds(57,40,80,30);
-			getContentPane().add(solucionLabel);
+		
+		if(tipoMetodo == MetodoMatrizEnum.JACOBI) {
 			
-			// DESPLEGAR SOLUCION
-			for(int i = 0; i < solucion.length; i++) {
-				JLabel xLabel = new JLabel("X"+(i+1));
-				JTextField xTextField = new JTextField();
-				xTextField.setText(Double.toString(solucion[i]));
-				xLabel.setBounds(labelHorizontalPos,labelVerticalPos,30,30);
-				xTextField.setBounds(labelHorizontalPos+15,labelVerticalPos,80,30);
-				xTextField.setEditable(false);
-				labelHorizontalPos += 100;
-				getContentPane().add(xLabel);
-				getContentPane().add(xTextField);
+			// AJUSTAR TAMAÑO DE VENTANA
+			setBounds(120, 100, 600, 350);
+			
+			JLabel errorLabel = new JLabel("Error permisible:");
+			errorLabel.setBounds(57,40,160,30);
+			getContentPane().add(errorLabel);
+			
+			errorTextField = new JTextField("0.1");
+			errorTextField.setBounds(180,40,60,30);
+			
+			// SE INGRESA ERROR PERMISBLE PUESTO ANTES DE CREAR MATRIZ
+			if(errorPermisible != null) {
+				errorTextField.setText(errorPermisible.toString());
 			}
 			
+			// VALIDAR QUE SE INGRESEN SOLO NUMEROS
+			errorTextField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					char c = e.getKeyChar();
+					
+					if(Character.isLetter(c) && !e.isAltDown()) {
+						e.consume();
+					}
+				}
+			});
+			getContentPane().add(errorTextField); 
+			
+			if(matrices != null) {
+			
+				// DEPLEGAR TABLA
+				JScrollPane scrollPane = new JScrollPane();
+				scrollPane.setBounds(10, 80, 578, 203);
+				getContentPane().add(scrollPane);
+				
+				String[] cabeceros = new String[matrices.get(0).length];
+				System.out.println("Cabeceros length: " + cabeceros.length);
+				int xVarIndex = 0;
+				
+				// INSERTAR CABECEROS DINAMICAMENTE
+				for(int i = 0; i < cabeceros.length; i++) {
+					if(i + 1  == ((cabeceros.length-1)/2)) {
+						xVarIndex = 1;
+					} else {
+						xVarIndex++;
+					}
+					
+					if(i == cabeceros.length - 1) {
+						cabeceros[i] = "Error";
+					} else {
+						cabeceros[i] = "X" + xVarIndex;				
+					}
+				}
+				
+				table = new JTable();
+				table.setBackground(Color.LIGHT_GRAY);
+				table.setBorder(new LineBorder(new Color(0, 0, 0)));
+				table.setModel(new DefaultTableModel(
+					new Object[][] {
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null},
+					},
+					cabeceros
+				));
+				scrollPane.setViewportView(table);
+				
+				Object[][] resultados = matrices.get(0);
+				table.setModel(new DefaultTableModel(resultados,cabeceros));
+			}
+			
+		} else {
+		
 			// DESPLEGAR MATRICES
-			int matrizIndex = 1;
-			int yPosition = 130;		
-			
-			System.out.println("Matrices original");
-			Gauss.displayMatrix(matrices.get(0));
-			System.out.println("Matrices no original");
-			Gauss.displayMatrix(matrices.get(1));
-			
-			for(double[][] matriz: matrices) {
-				System.out.println("Matriz: " + matrizIndex);
-				Gauss.displayMatrix(matriz);
-				JLabel matrizLabel = new JLabel("Matriz " + Integer.toString(matrizIndex));
-				matrizLabel.setBounds(57,yPosition-20,60,30);
-				getContentPane().add(matrizLabel);
-				for(double[] fila: matriz) {
-					int xPosition = 57;
-					for(double elemento: fila) {
-						System.out.println(elemento);
-						JLabel el = new JLabel(Double.toString(elemento));
-						el.setBounds(xPosition,yPosition,60,30);
-						getContentPane().add(el);
-						xPosition += 60;
+			if(matrices != null && solucion != null) {
+				int labelHorizontalPos = 57;
+				int labelVerticalPos = 70;
+				JLabel solucionLabel = new JLabel("Solución:");
+				solucionLabel.setBounds(57,50,80,30);
+				getContentPane().add(solucionLabel);
+				
+				// DESPLEGAR SOLUCION
+				for(int i = 0; i < solucion.length; i++) {
+					JLabel xLabel = new JLabel("X"+(i+1));
+					JTextField xTextField = new JTextField();
+					xTextField.setText(Double.toString(solucion[i]));
+					xLabel.setBounds(labelHorizontalPos,labelVerticalPos,30,30);
+					xTextField.setBounds(labelHorizontalPos+15,labelVerticalPos,80,30);
+					xTextField.setEditable(false);
+					labelHorizontalPos += 100;
+					getContentPane().add(xLabel);
+					getContentPane().add(xTextField);
+				}
+				
+				// DESPLEGAR MATRICES
+				int matrizIndex = 1;
+				int yPosition = 130;		
+				
+				System.out.println("Matrices original");
+				Gauss.displayMatrix(matrices.get(0));
+				System.out.println("Matrices no original");
+				Gauss.displayMatrix(matrices.get(1));
+				
+				for(Double[][] matriz: matrices) {
+					System.out.println("Matriz: " + matrizIndex);
+					Gauss.displayMatrix(matriz);
+					JLabel matrizLabel = new JLabel("Matriz " + Integer.toString(matrizIndex));
+					matrizLabel.setBounds(57,yPosition-20,60,30);
+					getContentPane().add(matrizLabel);
+					for(Double[] fila: matriz) {
+						int xPosition = 57;
+						for(Double elemento: fila) {
+							System.out.println(elemento);
+							JLabel el = new JLabel(Double.toString(elemento));
+							el.setBounds(xPosition,yPosition,60,30);
+							getContentPane().add(el);
+							xPosition += 60;
+						}
+						yPosition += 30;
 					}
 					yPosition += 30;
+					matrizIndex++;
 				}
-				yPosition += 30;
-				matrizIndex++;
 			}
 		}
 	}
