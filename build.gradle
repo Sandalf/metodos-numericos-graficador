@@ -16,9 +16,8 @@ dependencies {
 	compile 'org.jfree:jfreechart:1.0.19'
     compile 'com.jgoodies:jgoodies-forms:1.8.0'
     compile files("./build/libs/djep-1.0.0.jar")
-      compile files("./build/libs/jep-2.3.1.jar")
-    
-    
+    compile files("./build/libs/jep-2.3.1.jar")
+    compile group: 'org.apache.commons', name: 'commons-math', version: '2.0'
 }
 
 eclipse {
