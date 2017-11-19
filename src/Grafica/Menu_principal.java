@@ -173,6 +173,19 @@ public class Menu_principal {
 			}
 		});
 		mnNewMenu.add(btnAproximaciones);
+		
+		JMenu mnInterpolacin = new JMenu("Interpolación");
+		menuBar.add(mnInterpolacin);
+		
+		JButton btnNewton = new JButton("Newton");
+		btnNewton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Interpolacion interpolacion = new Interpolacion();
+				interpolacion.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnInterpolacin.add(btnNewton);
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
