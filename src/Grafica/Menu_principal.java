@@ -174,6 +174,7 @@ public class Menu_principal {
 		});
 		mnNewMenu.add(btnAproximaciones);
 		
+<<<<<<< HEAD
 		JButton btnNewtonraphson = new JButton("Newton_Raphson");
 		btnNewtonraphson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -186,6 +187,20 @@ public class Menu_principal {
 			}
 		});
 		mnNewMenu.add(btnNewtonraphson);
+=======
+		JMenu mnInterpolacin = new JMenu("Interpolación");
+		menuBar.add(mnInterpolacin);
+		
+		JButton btnNewton = new JButton("Newton");
+		btnNewton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Interpolacion interpolacion = new Interpolacion();
+				interpolacion.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnInterpolacin.add(btnNewton);
+>>>>>>> master
 	}
 
 	private static void addPopup(Component component, final JPopupMenu popup) {
