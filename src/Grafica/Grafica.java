@@ -57,18 +57,33 @@ public class Grafica {
 
 
 	public Grafica(String text) throws Exception {
-		
+		double x0 ;
+		double xn ;
 		Funcion=text;
 		initialize();
 		String def = Funcion;
-		double x0 = (double)-100;
-		double xn = (double)100;
+		switch(Funcion) 
+		{
+		case "sin(x)":
+		 x0 = (double)-10;
+		 xn = (double)10;
+		break;
+		case "cos(x)":
+			 x0 = (double)-10;
+			 xn = (double)10;
+			break;
+		default:
+			 x0 = (double)-100;
+			 xn = (double)100;
+			 break;
+		}
 		double d = 0.1;
 		Funcion f = new Funcion(def);
 		Funcion X = new Funcion("0");
 		Funcion Y = new Funcion("0");
 		double[] x = f.rango(x0, xn, d);
 		double[] y;
+		
 		
 	
 		
@@ -103,11 +118,12 @@ public class Grafica {
 		Exp = new JTextField();
 		Grafica.add(Exp);
 		Exp.setColumns(10);
+		Exp.setVisible(false);
 
-		JLabel lblNewLabel = new JLabel("Funcion");
-		Grafica.add(lblNewLabel);
+		
 
 		JButton Graficar = new JButton("Graficar");
+		Graficar.setVisible(false);
 		Graficar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -133,33 +149,22 @@ public class Grafica {
 		desde = new JTextField();
 		Grafica.add(desde);
 		desde.setColumns(10);
+		desde.setVisible(false);
 
-		JLabel lblX = new JLabel("x1");
-		Grafica.add(lblX);
-
+		
 		hasta = new JTextField();
 		Grafica.add(hasta);
 		hasta.setColumns(10);
+		hasta.setVisible(false);
 
-		JLabel lblXn = new JLabel("x2");
-		Grafica.add(lblXn);
+		
 
 		JPanel panel_2 = grafica.obtieneGrafica();
 		panel_2.setBounds(10, 80, 821, 455);
 		frame.getContentPane().add(panel_2);
 
-		JButton MenuPrincipal = new JButton("Menu Principal");
-		MenuPrincipal.setBounds(10, 0, 147, 23);
-		frame.getContentPane().add(MenuPrincipal);
-		MenuPrincipal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				Menu m = new Menu();
-				//m.main(null);
-				frame.setVisible(false);
-
-			}
-		});
+		
+		
 
 	}
 }
