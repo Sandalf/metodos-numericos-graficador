@@ -112,13 +112,15 @@ public class Interpolacion extends JFrame {
 					
 					/* VALIDAR QUE PUNTO INGRESADO COINCIDA CON LA DIFERENCIA
 					 * ENTRE LOS PUNTOS ANTERIORES
-					 * */
-					
+					 * */switch(tipoMetodo) {
+					 
+				
+					 case  InterpolacionNewton:
 					if(puntos.size() >= 2 && diferenciaEntrePuntos != puntos.get(puntos.size()-1)[0] - punto[0]) {
-						if(tipoMetodo==InterpolacionEnum.InterpolacionNewton) {
+					
 					
 						JOptionPane.showMessageDialog(getContentPane(), "Las coordenadas X deben estar a la misma distancia entre si.");
-					}} else {
+					} else {
 						
 					
 						puntos.add(punto);	
@@ -134,9 +136,27 @@ public class Interpolacion extends JFrame {
 						
 						puntosTable.setModel(new DefaultTableModel(tableModel,cabeceroPuntosTable));
 					}
+					break;
+					 case Interpolacion_Lagrange:
+						 puntos.add(punto);	
+							
+							/* EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA
+							 * SER ACEPTADO COMO MODELO DE LA TABLA
+							 */
+							tableModel = new Double[puntos.size()][2];
+							
+							for(int i = 0; i <  puntos.size(); i++) { 
+								tableModel[i] = puntos.get(i);
+						    }	
+							
+							puntosTable.setModel(new DefaultTableModel(tableModel,cabeceroPuntosTable));
+							break;
+					 }	
+					 
+				}
 				}
 			}
-		});
+		);
 		btnAgregarPunto.setBounds(317, 6, 117, 29);
 		contentPane.add(btnAgregarPunto);
 		
