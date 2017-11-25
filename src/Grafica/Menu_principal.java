@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 
 import Projectofinal.Biseccion;
 import Projectofinal.Funcion;
-import Projectofinal.InterpolacionEnum;
 import Projectofinal.MetodoMatrizEnum;
 
 import java.awt.BorderLayout;
@@ -221,24 +220,12 @@ public class Menu_principal {
 		JButton btnNewton = new JButton("Newton");
 		btnNewton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Interpolacion interpolacion = new Interpolacion(InterpolacionEnum.InterpolacionNewton);
+				Interpolacion interpolacion = new Interpolacion();
 				interpolacion.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
 		mnInterpolacin.add(btnNewton);
-		
-		JButton btnLagrange = new JButton("Lagrange");
-		btnLagrange.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-		Interpolacion Lagrange = new Interpolacion(InterpolacionEnum.Interpolacion_Lagrange);
-		Lagrange.setVisible(true);
-		Menu.setVisible(false);
-		
-			}
-		});
-		mnInterpolacin.add(btnLagrange);
 
 	}
 

@@ -12,8 +12,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Projectofinal.InterpolacioNewton;
-import Projectofinal.InterpolacionEnum;
-import Projectofinal.Interpolacion_Lagrange;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -46,7 +44,7 @@ public class Interpolacion extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Interpolacion frame = new Interpolacion(null);
+					Interpolacion frame = new Interpolacion();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,7 +56,7 @@ public class Interpolacion extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Interpolacion(InterpolacionEnum tipoMetodo) {
+	public Interpolacion() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 374);
@@ -113,13 +111,9 @@ public class Interpolacion extends JFrame {
 					/* VALIDAR QUE PUNTO INGRESADO COINCIDA CON LA DIFERENCIA
 					 * ENTRE LOS PUNTOS ANTERIORES
 					 * */
-					
 					if(puntos.size() >= 2 && diferenciaEntrePuntos != puntos.get(puntos.size()-1)[0] - punto[0]) {
-						if(tipoMetodo==InterpolacionEnum.InterpolacionNewton) {
-					
 						JOptionPane.showMessageDialog(getContentPane(), "Las coordenadas X deben estar a la misma distancia entre si.");
-					}} else {
-						
+					} else {
 					
 						puntos.add(punto);	
 							
@@ -171,7 +165,6 @@ public class Interpolacion extends JFrame {
 				if (puntos.size() < 2) {
 					JOptionPane.showMessageDialog(getContentPane(), "No ha agregado suficientes puntos.");
 				} else {
-					if(tipoMetodo == InterpolacionEnum.InterpolacionNewton ) {
 					InterpolacioNewton interpolacionNewton = new InterpolacioNewton(tableModel);
 					Double soulucion = interpolacionNewton.solve(Double.parseDouble(xValue_textField.getText()));
 					Double[][] tablaDiferencias = interpolacionNewton.getTablaDiferencias();
@@ -187,12 +180,6 @@ public class Interpolacion extends JFrame {
 					
 					answer_TextField.setText(soulucion.toString());
 					diferenciasTable.setModel(new DefaultTableModel(tablaDiferencias,cabeceros));
-				}if(tipoMetodo == InterpolacionEnum.Interpolacion_Lagrange)
-				{ 
-					Interpolacion_Lagrange InterpolacionLagrange= new Interpolacion_Lagrange(tableModel);
-					Double soulucion =InterpolacionLagrange.solve(Double.parseDouble(xValue_textField.getText()));
-					answer_TextField.setText(soulucion.toString());
-				}
 				}
 			}
 		});
@@ -220,10 +207,6 @@ public class Interpolacion extends JFrame {
 		diferenciasTable.setBorder(new LineBorder(new Color(0, 0, 0)));
 		diferenciasTable.setModel(new DefaultTableModel(new Object[][] {}, cabeceroDiferenciasTable ));
 		diferenciasScrollPane.setViewportView(diferenciasTable);
-		if(tipoMetodo != InterpolacionEnum.InterpolacionNewton) 
-		{
-			diferenciasScrollPane.setVisible(false);
-		}
 		
 		JLabel lblValorDeX = new JLabel("Valor de X:");
 		lblValorDeX.setBounds(19, 45, 79, 16);
