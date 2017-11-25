@@ -8,6 +8,7 @@ public class Secante {
    private Double[][] Resultados;
    private double Raiz;
    private int Lim;
+   private boolean Bandera;
 public Secante(String f, double xI, double xImas1, double error, int lim) 
 {
 	
@@ -17,6 +18,7 @@ public Secante(String f, double xI, double xImas1, double error, int lim)
 	this.error = error;
 	this.Lim = lim;
 	Resultados = new Double [Lim][8];
+	Bandera=false;
 	
 }
     public void inicia() throws Exception 
@@ -56,9 +58,16 @@ public Secante(String f, double xI, double xImas1, double error, int lim)
 			
 			
 			x++;
+			if(x>=Lim) 
+			{
+				break;
+			}
 			
 		}while(Math.abs(E)>error);
-		
+		if(Math.abs(E)>error) 
+		{
+			Bandera=true;
+		}
 		
 		Raiz= xImas2;
     }
@@ -106,7 +115,13 @@ public Secante(String f, double xI, double xImas1, double error, int lim)
 	public void setLim(int lim) {
 		Lim = lim;
 	}
-
+	public boolean getBandera() {
+		return Bandera;
+	}
+	public void setBandera(boolean bandera) {
+		Bandera = bandera;
+	}
+   
 
 	
 	

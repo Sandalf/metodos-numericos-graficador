@@ -174,6 +174,10 @@ public class Falsa_posicionI {
 					
 						
 							Falsa.Iniciar();
+							if(Falsa.getBandera()!=false) 
+		                     {
+		                    	 JOptionPane.showMessageDialog(panel, "No se encotro la raiz en el numero de iteraciones dadas");
+		                     }
 					
 
 					Object[][] Resultados = Falsa.getResultados();

@@ -48,6 +48,7 @@ public class Interpolacion extends JFrame {
 				try {
 					Interpolacion frame = new Interpolacion(null);
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,12 +61,23 @@ public class Interpolacion extends JFrame {
 	 */
 	public Interpolacion(InterpolacionEnum tipoMetodo) {
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        Menu_principal.main(null);
+				setVisible(false);
+				dispose();
+		    }
+		});
 		setBounds(100, 100, 450, 374);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+	
+		   
 		
 		// INICIALIZAR ARREGLO DE PUNTOS
 		puntos = new ArrayList<Double[]>();

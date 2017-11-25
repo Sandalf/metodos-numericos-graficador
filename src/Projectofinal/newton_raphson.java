@@ -7,6 +7,7 @@ public class newton_raphson {
 	private int Lim;
 	private double Raiz;
 	private Double Resultados [][];
+	private Boolean Bandera;
 	
 	public newton_raphson(String F,double XI,double E,int Ite) 
 	{
@@ -16,6 +17,7 @@ public class newton_raphson {
 		error=E;
 		Lim=Ite;
 		Resultados=new Double [Lim][7];
+		Bandera=false;
 		
 		
 		
@@ -43,12 +45,18 @@ public class newton_raphson {
 	    	  XI=xImas1;
 	    	  
 	    	  x++;
+	    	  if(x>=Lim) 
+	    	  {   
+	    		  break;
+	    		  
+	    	  }
+	    	  
 	    	  
 	      }while(Math.abs(E)>error);
 	      
-	      
-	     
-	      
+	      if(Math.abs(E)>error) {
+	      Bandera=true;
+	      }
 	      
 	 
 		Raiz= xImas1;
@@ -91,6 +99,12 @@ public class newton_raphson {
 	}
 	public void setResultados(Double[][] resultados) {
 		Resultados = resultados;
+	}
+	public Boolean getBandera() {
+		return Bandera;
+	}
+	public void setBandera(Boolean bandera) {
+		Bandera = bandera;
 	}
 	
 	

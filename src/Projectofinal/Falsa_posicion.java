@@ -9,7 +9,7 @@ public class Falsa_posicion {
     Double[][] Resultados;
     double Raiz;
     int Lim;
-    Boolean Iteracion;
+    Boolean Bandera;
     public Falsa_posicion(String f,double x1,double xi,double error,int Lim)
     {
     	this.f=f;
@@ -18,7 +18,7 @@ public class Falsa_posicion {
     	this.error=error;
     	this.Lim = Lim;
 		Resultados = new Double [Lim][8];
-		Iteracion=false;
+		Bandera=false;
     	
     	
     }
@@ -73,9 +73,17 @@ public class Falsa_posicion {
     	
     		
     		x++;
+    		if(x>=Lim) 
+    		{
+    			break;
+    		}
     		
     	}while( Math.abs(errorVerdadero)>error);
     	
+		if(Math.abs(errorVerdadero)>error) 
+		{
+			Bandera=true;
+		}
     	  Raiz = XImas1;
     	
     }
@@ -158,14 +166,16 @@ public class Falsa_posicion {
 	}
 
 
-	public Boolean getIteracion() {
-		return Iteracion;
+	public Boolean getBandera() {
+		return Bandera;
 	}
 
 
-	public void setIteracion(Boolean iteracion) {
-		Iteracion = iteracion;
+	public void setBandera(Boolean bandera) {
+		Bandera = bandera;
 	}
-    
+
+
+	
     
 }

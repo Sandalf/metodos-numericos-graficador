@@ -162,6 +162,10 @@ public class Aproximaciones_Sucesivas {
 					
 						try {
 							B.inicia();
+							if(B.getBandera()!=false) 
+		                     {
+		                    	 JOptionPane.showMessageDialog(panel, "No se encotro la raiz en el numero de iteraciones dadas");
+		                     }
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

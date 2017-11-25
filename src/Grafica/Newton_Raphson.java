@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -161,6 +162,10 @@ public class Newton_Raphson {
 					
 						try {
 							B.inicia();
+							 if(B.getBandera()!=false) 
+		                     {
+		                    	 JOptionPane.showMessageDialog(panel, "No se encotro la raiz en el numero de iteraciones dadas");
+		                     }
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

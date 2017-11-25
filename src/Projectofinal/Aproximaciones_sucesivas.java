@@ -10,6 +10,7 @@ public class Aproximaciones_sucesivas
 	private double error;
 	private double Raiz;
 	private Double[][] Resultados;
+	private Boolean Bandera;
 	public Aproximaciones_sucesivas( String exp , double x0, int lim, double error) {
 		
 		this.x0 = x0;
@@ -17,6 +18,7 @@ public class Aproximaciones_sucesivas
 		this.lim = lim;
 		this.error = error;
 		Resultados = new Double [lim][7];
+		Bandera=false;
 	}
 	public void inicia() throws Exception 
 	{
@@ -42,8 +44,16 @@ public class Aproximaciones_sucesivas
 			
 			
 		 x++;
-			
+		if(x>=lim) 
+		{
+			break;
+		}	
+		 
 		}while(Math.abs(E)>error);
+		if(Math.abs(E)>error) 
+		{
+			Bandera=true;
+		}
 		
 		Raiz = xImas1;
 		
@@ -85,7 +95,13 @@ public class Aproximaciones_sucesivas
 	public void setResultados(Double[][] resultados) {
 		Resultados = resultados;
 	}
-
+	public Boolean getBandera() {
+		return Bandera;
+	}
+	public void setBandera(Boolean bandera) {
+		Bandera = bandera;
+	}
+  
 	
 	
 

@@ -9,6 +9,7 @@ public class Biseccion
         Double[][] Resultados;
         double Raiz;
         int Lim;
+        boolean Bandera;
 		public Biseccion(String f, double a, double b, double error ,int Lim) {
 			
 			this.f = f;
@@ -17,11 +18,12 @@ public class Biseccion
 			this.error = error;
 			this.Lim = Lim;
 			Resultados = new Double [Lim][7];
+			Bandera=false;
         
 		}
 	public void Inciar() throws Exception 
 	{   
-int x = 0;
+          int x = 0;
 		
 		double xm;
 		Funcion F= new Funcion(f);
@@ -56,10 +58,16 @@ int x = 0;
 			
 			
 			x++;
+			if(x>=Lim) 
+				break;
+			
 		}while(Math.abs(b-a)>error);
 	
 
-		
+		if(Math.abs(b-a)>error) 
+		{
+			Bandera=true;
+		}
 		Raiz= xm;
 	}else {
 			System.out.println("no hay raiz en ese intervalo");}
@@ -153,6 +161,13 @@ int x = 0;
 	public void setLim(int lim) {
 		Lim = lim;
 	}
+	public boolean getBandera() {
+		return Bandera;
+	}
+	public void setBandera(boolean bandera) {
+		Bandera = bandera;
+	}
+	
 
 
 }

@@ -68,6 +68,7 @@ public class biseccion {
 		frame.setBounds(100, 100, 625, 457);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
@@ -176,6 +177,10 @@ public class biseccion {
 					
 						try {
 							B.Inciar();
+							 if(B.getBandera()!=false) 
+		                     {
+		                    	 JOptionPane.showMessageDialog(panel, "No se encotro la raiz en el numero de iteraciones dadas");
+		                     }
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
