@@ -3,15 +3,14 @@ package Projectofinal;
 import org.apache.commons.math.util.MathUtils;
 
 public class DerivacionDiferenciasFinitas {
-	private static Double[][] puntos;
-	private static Double[][] tablaDiferencias;
-
-	public static void main(String[] args) {
-		double[][] p = {{0,2},{2,8},{4,62},{6,212},{8,506},{10,992}};
+	private Double[][] puntos;
+	private Double[][] tablaDiferencias;
+	
+	public DerivacionDiferenciasFinitas(Double[][] p) {
 		puntos = new Double[p.length][p[0].length];
 		tablaDiferencias = new Double[p.length][p.length];
 		
-		/* CREARA TABLE DE PUNTOS */
+		/* CREARA TABLA DE PUNTOS */
 		/* LLENAR COLUMNA 'Y' DE TABLA DE DIFERENCIAS */
 		for(int i = 0; i < p.length; i++) {
 			for(int j = 0; j < p[0].length; j++) {
@@ -20,7 +19,7 @@ public class DerivacionDiferenciasFinitas {
 					tablaDiferencias[i][j-1] = new Double(p[i][j]);
 				}
 			}
-		}
+		}	
 		
 		/* LLENAR TABLA DE DIFERENCIAS ON CEROS */
 		for(int i = 0; i < puntos.length; i++) {
@@ -30,17 +29,10 @@ public class DerivacionDiferenciasFinitas {
 				}
 			}
 		}
-		
-		displayMatrix(tablaDiferencias);
-		
-		displayMatrix(diferencias());
-		
-		System.out.println("y2: "+solve(4.0));
-		
 	}
 	
 	/* TABLA DE DIFERENCIAS FINITAS */
-	public static Double[][] diferencias() {
+	public Double[][] diferencias() {
 		
 		int row = 1;
 		for(int j = 0; j < tablaDiferencias.length-1; j++) {
@@ -54,7 +46,8 @@ public class DerivacionDiferenciasFinitas {
 	}
 	
 	/* RESOLVER FUNCION */
-	public static Double solve(Double x) {
+	public Double solve(Double x) {
+		diferencias();
 		Double k = (x - puntos[0][0])/(puntos[1][0] - puntos[0][0]);
 		Double h = (puntos[1][0]-puntos[0][0]);
 		Double y = new Double(0);
@@ -68,27 +61,24 @@ public class DerivacionDiferenciasFinitas {
 			}
 		}
 		
+		displayMatrix(tablaDiferencias);
 		switch(lastCol) {
 			case 1:
-				System.out.println("Caso 1");
 				dif1 = tablaDiferencias[0][1];
 				y = dif1;
 				break;
 			case 2:
-				System.out.println("Caso 2");
 				dif1 = tablaDiferencias[0][1];
 				dif2 = (((2 * k) - 1) * tablaDiferencias[0][2])/MathUtils.factorial((2));
 				y = dif1 + dif2;
 				break;
 			case 3:
-				System.out.println("Caso 3");
 				dif1 = tablaDiferencias[0][1];
 				dif2 = (((2 * k) - 1) * tablaDiferencias[0][2])/MathUtils.factorial((2));
 				dif3 = (((3 * Math.pow(k, 2)) - (6 * k) + 2) * tablaDiferencias[0][3])/MathUtils.factorial((3));
 				y = dif1 + dif2 + dif3;
 				break;
 			case 4:
-				System.out.println("Caso 4");
 				dif1 = tablaDiferencias[0][1];
 				dif2 = (((2 * k) - 1) * tablaDiferencias[0][2])/MathUtils.factorial((2));
 				dif3 = (((3 * Math.pow(k, 2)) - (6 * k) + 2) * tablaDiferencias[0][3])/MathUtils.factorial((3));
@@ -96,7 +86,6 @@ public class DerivacionDiferenciasFinitas {
 				y = dif1 + dif2 + dif3 + dif4;
 				break;
 			case 5:
-				System.out.println("Caso 5");
 				dif1 = tablaDiferencias[0][1];
 				dif2 = (((2 * k) - 1) * tablaDiferencias[0][2])/MathUtils.factorial((2));
 				dif3 = (((3 * Math.pow(k, 2)) - (6 * k) + 2) * tablaDiferencias[0][3])/MathUtils.factorial((3));
@@ -115,7 +104,7 @@ public class DerivacionDiferenciasFinitas {
 	}
 	
 	/* PINTAR TABLA */
-	public static void displayMatrix(Double[][] matrix) {
+	public void displayMatrix(Double[][] matrix) {
 		for(int i = 0; i < matrix.length; i++) {
 			for(int j = 0; j < matrix[0].length; j++) {
 				System.out.print(" " + matrix[i][j] + " ");
@@ -123,5 +112,40 @@ public class DerivacionDiferenciasFinitas {
 			System.out.print("\n");
 		}
 		System.out.print("\n");
+	}
+	
+	public Double[][] getPuntos() {
+		return puntos;
+	}
+
+	public void setPuntos(Double[][] puntos) {
+		this.puntos = puntos;
+	}
+
+	public Double[][] getTablaDiferencias() {
+		/* REGRESAR TABLA DE DIFERENCIAS HASTA LA ULTIMA COLUMNA
+		 * QUE NO CONTIENE CEROS
+		 */	
+		int ultimaColumna = 0;
+		for(int j = 1; j < tablaDiferencias[0].length; j++ ) {
+			if(tablaDiferencias[0][j] == 0) {
+				ultimaColumna = j;
+				break;
+			}
+		}
+			
+		Double[][] tabla = new Double[tablaDiferencias.length][ultimaColumna-1];
+		
+		for(int i = 0; i < tabla.length; i++ ) {
+			for(int j = 0; j < tabla[0].length; j++ ) {
+				tabla[i][j] = tablaDiferencias[i][j+1];
+			}
+		}
+		
+		return tabla;
+	}
+
+	public void setTablaDiferencias(Double[][] tablaDiferencias) {
+		this.tablaDiferencias = tablaDiferencias;
 	}
 }

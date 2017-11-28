@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Projectofinal.Biseccion;
+import Projectofinal.DerivacionEnum;
 import Projectofinal.Funcion;
 import Projectofinal.InterpolacionEnum;
 import Projectofinal.MetodoMatrizEnum;
@@ -239,6 +240,19 @@ public class Menu_principal {
 			}
 		});
 		mnInterpolacin.add(btnLagrange);
+		
+		JMenu mnDerivacin = new JMenu("Derivación");
+		menuBar.add(mnDerivacin);
+		
+		JButton btnDiferenciasFinitas = new JButton("Diferencias Finitas");
+		btnDiferenciasFinitas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Derivacion derivacion = new Derivacion(DerivacionEnum.DiferenciasFinitas);
+				derivacion.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnDerivacin.add(btnDiferenciasFinitas);
 
 	}
 
