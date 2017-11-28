@@ -11,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Projectofinal.Graficadora;
 import Projectofinal.InterpolacioNewton;
 import Projectofinal.InterpolacionEnum;
 import Projectofinal.Interpolacion_Lagrange;
@@ -38,6 +39,7 @@ public class Interpolacion extends JFrame {
 	private JTextField xValue_textField;
 	private JTextField answer_TextField;
 	private Double diferenciaEntrePuntos;
+	private Graficadora GraficaPuntos;
 
 	/**
 	 * Launch the application.
@@ -70,7 +72,7 @@ public class Interpolacion extends JFrame {
 				dispose();
 		    }
 		});
-		setBounds(100, 100, 450, 374);
+		setBounds(100, 100, 625, 457);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -163,13 +165,32 @@ public class Interpolacion extends JFrame {
 							
 							puntosTable.setModel(new DefaultTableModel(tableModel,cabeceroPuntosTable));
 							break;
+					 case Interpolacion_CuadradrosMinimos:
+						 puntos.add(punto);	
+							
+							/* EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA
+							 * SER ACEPTADO COMO MODELO DE LA TABLA
+							 */
+							tableModel = new Double[puntos.size()][2];
+							
+							for(int i = 0; i <  puntos.size(); i++) { 
+								tableModel[i] = puntos.get(i);
+						    }	
+							 GraficaPuntos = new Graficadora(tableModel);
+							 JPanel Grafica = GraficaPuntos.obtieneGrafica();
+								contentPane.add(Grafica);
+								Grafica.setBounds(150,115,450,300);
+								Grafica.setVisible(true);
+							
+							puntosTable.setModel(new DefaultTableModel(tableModel,cabeceroPuntosTable));
+							break;
 					 }	
 					 
 				}
 				}
 			}
 		);
-		btnAgregarPunto.setBounds(317, 6, 117, 29);
+		btnAgregarPunto.setBounds(400, 6, 150, 29);
 		contentPane.add(btnAgregarPunto);
 		
 		y_TextField = new JTextField();
@@ -195,6 +216,7 @@ public class Interpolacion extends JFrame {
 		JLabel lblY = new JLabel("Y:");
 		lblY.setBounds(164, 11, 21, 16);
 		contentPane.add(lblY);
+	
 		
 		/* RESOLVER */
 		btnResolver = new JButton("Resolver");
@@ -228,7 +250,7 @@ public class Interpolacion extends JFrame {
 				}
 			}
 		});
-		btnResolver.setBounds(317, 40, 117, 29);
+		btnResolver.setBounds(400, 40, 150, 29);
 		contentPane.add(btnResolver);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -289,7 +311,7 @@ public class Interpolacion extends JFrame {
 				puntos = new ArrayList<Double[]>();
 			}
 		});
-		btnLimpiar.setBounds(317, 77, 117, 29);
+		btnLimpiar.setBounds(400, 77, 150, 29);
 		contentPane.add(btnLimpiar);
 		
 		// INICIALIZAR VALORES

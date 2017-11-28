@@ -17,6 +17,22 @@ public class Graficadora {
 	String titulo;
 	String EtiquetaX;
 	String EtiquetaY;
+	
+	public Graficadora(Double [][] Puntos) 
+	{
+		titulo="Puntos";
+		EtiquetaX = "X";
+		EtiquetaY = "Y";
+		XYSeriesCollection Puntos1 = new XYSeriesCollection();
+		XYSeries s = new XYSeries("puntos");
+		for(int i=0; i<Puntos.length; i++) 
+		{
+			s.add(Puntos[i][0], Puntos[i][1]);
+		}
+		Puntos1.addSeries(s);
+		grafica = ChartFactory.createScatterPlot("puntos", EtiquetaX,EtiquetaY, Puntos1);
+		
+	}
 
 	public Graficadora(String t, String EX, String EY) {
 
