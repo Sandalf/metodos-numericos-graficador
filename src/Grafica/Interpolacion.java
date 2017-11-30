@@ -14,12 +14,15 @@ import javax.swing.table.DefaultTableModel;
 import Projectofinal.Graficadora;
 import Projectofinal.InterpolacioNewton;
 import Projectofinal.InterpolacionEnum;
+import Projectofinal.Interpolacion_CuadradosMinimos;
 import Projectofinal.Interpolacion_Lagrange;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -40,6 +43,7 @@ public class Interpolacion extends JFrame {
 	private JTextField answer_TextField;
 	private Double diferenciaEntrePuntos;
 	private Graficadora GraficaPuntos;
+	private JComboBox<Integer> Orden;
 
 	/**
 	 * Launch the application.
@@ -78,6 +82,22 @@ public class Interpolacion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//combo box para el orden de la funcion en el metodo de minimos cuadrados
+		Orden = new JComboBox<Integer>();
+		contentPane.add(Orden);
+		Orden.setBounds(300, 6, 40, 27);
+		JLabel OrdenF = new JLabel("Orden");
+		contentPane.add(OrdenF);
+		OrdenF.setBounds(260, 6, 40, 27);
+		for(int i=1; i<=20; i++)
+		{
+			Orden.addItem(i);
+		}
+		if(tipoMetodo != InterpolacionEnum.Interpolacion_CuadradrosMinimos) 
+		{
+			Orden.setVisible(false);
+			OrdenF.setVisible(false);
+		}
 	
 		   
 		
@@ -124,12 +144,13 @@ public class Interpolacion extends JFrame {
 						diferenciaEntrePuntos = puntos.get(0)[0] - puntos.get(1)[0];
 					}
 					
-					/* VALIDAR QUE PUNTO INGRESADO COINCIDA CON LA DIFERENCIA
-					 * ENTRE LOS PUNTOS ANTERIORES
-					 * */switch(tipoMetodo) {
+					// DEFINIR METODO POR EL QUE SE VA A RESOLVER
+					
+					 switch(tipoMetodo) {
 					 
 				
 					 case  InterpolacionNewton:
+						 // VALIDAR QUE PUNTO INGRESADO COINCIDA CON LA DIFERENCIa ENTRE LOS PUNTOS ANTERIORES
 					if(puntos.size() >= 2 && diferenciaEntrePuntos != puntos.get(puntos.size()-1)[0] - punto[0]) {
 					
 					
@@ -184,11 +205,13 @@ public class Interpolacion extends JFrame {
 							
 							puntosTable.setModel(new DefaultTableModel(tableModel,cabeceroPuntosTable));
 							break;
+					
 					 }	
 					 
 				}
 				}
-			}
+		}
+			
 		);
 		btnAgregarPunto.setBounds(400, 6, 150, 29);
 		contentPane.add(btnAgregarPunto);
@@ -247,8 +270,14 @@ public class Interpolacion extends JFrame {
 					Double soulucion =InterpolacionLagrange.solve(Double.parseDouble(xValue_textField.getText()));
 					answer_TextField.setText(soulucion.toString());
 				}
+				else if(tipoMetodo == InterpolacionEnum.Interpolacion_CuadradrosMinimos)
+				{
+				Integer OrdenFuncion = (Integer)Orden.getSelectedItem();
+				Interpolacion_CuadradosMinimos Cuadrados = new Interpolacion_CuadradosMinimos(tableModel,OrdenFuncion);
+				Double soulucion =Cuadrados.Solve(Double.parseDouble(xValue_textField.getText()));
+				answer_TextField.setText(soulucion.toString());
 				}
-			}
+			}}
 		});
 		btnResolver.setBounds(400, 40, 150, 29);
 		contentPane.add(btnResolver);

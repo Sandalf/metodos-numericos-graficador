@@ -32,7 +32,7 @@ public class GaussJordan {
 			this.solutionMatrix[i] = matrix[i].clone();
 		}
 		
-		for(int i = 0; i < solutionMatrix.length;  i++) {
+		for(int i = 0; i <solutionMatrix.length;  i++) {
 			double pivote = solutionMatrix[i][i];
 			for(int j = 0; j < solutionMatrix[0].length; j++) {
 				System.out.println("i: " + i + " j: " + j);
@@ -53,7 +53,7 @@ public class GaussJordan {
 				}
 			}
 		}
-		
+		displayMatrix(solutionMatrix);
 		return solutionMatrix;
 	}
 	
