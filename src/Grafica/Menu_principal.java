@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import Projectofinal.Biseccion;
 import Projectofinal.DerivacionEnum;
 import Projectofinal.Funcion;
+import Projectofinal.IntegracionEnum;
 import Projectofinal.InterpolacionEnum;
 import Projectofinal.MetodoMatrizEnum;
 
@@ -253,6 +254,19 @@ public class Menu_principal {
 			}
 		});
 		mnDerivacin.add(btnDiferenciasFinitas);
+		
+		JMenu mnIntegracin = new JMenu("Integración");
+		menuBar.add(mnIntegracin);
+		
+		JButton btnTrapecio = new JButton("Trapecio");
+		btnTrapecio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Integracion integracion = new Integracion(IntegracionEnum.Trapecio);
+				integracion.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnIntegracin.add(btnTrapecio);
 
 	}
 
