@@ -2,14 +2,14 @@ package Projectofinal;
 
 public class Biseccion 
 {
-        String f;
-        double a;
-        double b;
-        double error;
-        Double[][] Resultados;
-        double Raiz;
-        int Lim;
-        boolean Bandera;
+        private String f;
+        private double a;
+        private double b;
+        private double error;
+        private Double[][] Resultados;
+        private double Raiz;
+        private int Lim;
+        private boolean Bandera;
 		public Biseccion(String f, double a, double b, double error ,int Lim) {
 			
 			this.f = f;

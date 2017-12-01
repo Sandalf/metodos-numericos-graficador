@@ -242,6 +242,17 @@ public class Menu_principal {
 		});
 		mnInterpolacin.add(btnLagrange);
 		
+		JButton btnMinimoscuadrados = new JButton("MinimosCuadrados");
+		btnMinimoscuadrados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+	       Interpolacion Cuadrados= new Interpolacion(InterpolacionEnum.Interpolacion_CuadradrosMinimos);
+	       Cuadrados.setVisible(true);
+	        Menu.setVisible(false);
+	
+			}
+		});
+		mnInterpolacin.add(btnMinimoscuadrados);
+		
 		JMenu mnDerivacin = new JMenu("Derivación");
 		menuBar.add(mnDerivacin);
 		
