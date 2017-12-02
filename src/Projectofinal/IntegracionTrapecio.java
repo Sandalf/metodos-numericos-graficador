@@ -17,8 +17,7 @@ public class IntegracionTrapecio {
 		this.tabla = new Double[numPuntos][4];
 	}
 
-	public Double solve() {
-		try {
+	public Double solve() throws Exception {
 			Double[] ordenadas = new Double[numPuntos];
 			Double area = new Double(0);
 			Double h = (limSup - limInf) / (numPuntos - 1);
@@ -47,13 +46,7 @@ public class IntegracionTrapecio {
 			
 			area = area * (h/2);
 			
-			return area;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		
+			return area;		
 	}
 
 	public Funcion getFuncion() {

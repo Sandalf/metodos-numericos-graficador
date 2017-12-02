@@ -17,6 +17,7 @@ import Projectofinal.IntegracionEnum;
 import Projectofinal.IntegracionTrapecio;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -154,7 +155,7 @@ public class Integracion extends JFrame {
 		table.setBackground(Color.LIGHT_GRAY);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setModel(new DefaultTableModel(new Object[][] {},cabecero));
-		scrollPane.setColumnHeaderView(table);
+		scrollPane.setViewportView(table);
 		
 		lblFuncin = new JLabel("Función:");
 		lblFuncin.setBounds(18, 110, 61, 16);
@@ -178,26 +179,61 @@ public class Integracion extends JFrame {
 		btnResolver = new JButton("Resolver");
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String funcion = funcionTextField.getText();
-				Double limInf = Double.parseDouble(limInfTextField.getText());
-			    Double limSup = Double.parseDouble(limSupTextField.getText());
-			    Integer numPuntos = Integer.parseInt(numPuntosTextField.getText());
-				IntegracionTrapecio trapecio = new IntegracionTrapecio(funcion,limInf,limSup,numPuntos);
-				Double solucion = trapecio.solve();
-				
-				table.setModel(new DefaultTableModel(trapecio.getTabla(),cabecero));
-				solucionTextField.setText(solucion.toString());
+				try {
+					if(validar()) {
+						String funcion = funcionTextField.getText().trim();
+						Double limInf = Double.parseDouble(limInfTextField.getText());
+					    Double limSup = Double.parseDouble(limSupTextField.getText());
+					    Integer numPuntos = Integer.parseInt(numPuntosTextField.getText());
+						IntegracionTrapecio trapecio = new IntegracionTrapecio(funcion,limInf,limSup,numPuntos);
+						Double solucion = trapecio.solve();
+						
+						table.setModel(new DefaultTableModel(trapecio.getTabla(),cabecero));
+						solucionTextField.setText(solucion.toString());
+					}
+				} catch(Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar resolver la función.");
+				}
 			}
 		});
 		btnResolver.setBounds(316, 19, 117, 29);
 		contentPane.add(btnResolver);
 		
 		btnLimpiar = new JButton("Limpiar");
+		btnLimpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limSupTextField.setText("0");
+				limInfTextField.setText("0");
+				numPuntosTextField.setText("0");
+				funcionTextField.setText("");
+				solucionTextField.setText("");
+				table.setModel(new DefaultTableModel(new Object[][] {},cabecero));
+			}
+		});
 		btnLimpiar.setBounds(316, 49, 117, 29);
 		contentPane.add(btnLimpiar);
 		
 		/* INICIALIZAR VALORES */
 		limSupTextField.setText("0");
 		limInfTextField.setText("0");
+		numPuntosTextField.setText("0");
+	}
+	
+	private boolean validar() {
+		String funcion = funcionTextField.getText().trim();
+		Double limInf = Double.parseDouble(limInfTextField.getText());
+	    Double limSup = Double.parseDouble(limSupTextField.getText());
+	    Integer numPuntos = Integer.parseInt(numPuntosTextField.getText());
+		if(limInf - limSup == 0) {
+			JOptionPane.showMessageDialog(getContentPane(), "La diferencia entre los limites de la integral debe ser mayor a 0.");
+			return false;
+		} else if(funcion == "") {
+			JOptionPane.showMessageDialog(getContentPane(), "Debe ingresar un función antes de continuar.");
+			return false;
+		} else if(numPuntos <= 0) {
+			JOptionPane.showMessageDialog(getContentPane(), "Debe ingresar al menos un punto.");
+			return false;
+		}
+		return true;
 	}
 }
