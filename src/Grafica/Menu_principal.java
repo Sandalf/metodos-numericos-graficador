@@ -29,6 +29,7 @@ import javax.swing.SwingConstants;
 import Grafica.Falsa_posicionI;
 import Grafica.SecanteI;
 import Grafica.biseccion;
+import javax.swing.JMenuItem;
 
 public class Menu_principal {
 
@@ -81,10 +82,14 @@ public class Menu_principal {
 		JMenu mnMatrices = new JMenu("Matrices");
 		menuBar.add(mnMatrices);
 		
-		JButton btnGauss = new JButton("Gauss");
 		
 		
-		btnGauss.addActionListener(new ActionListener() {
+	
+		
+		
+		
+		JMenuItem mntmGauss = new JMenuItem("Gauss");
+		mntmGauss.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS);
@@ -92,64 +97,74 @@ public class Menu_principal {
 				Menu.setVisible(false);
 			}
 		});
-		mnMatrices.add(btnGauss);
+		mnMatrices.add(mntmGauss);
 		
-		JButton btnGaussJordan = new JButton("Gauss Jordan");
-		
-		btnGaussJordan.addActionListener(new ActionListener() {
+		JMenuItem mntmGaussJordan = new JMenuItem("Gauss Jordan");
+		mntmGaussJordan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS_JORDAN);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
-		mnMatrices.add(btnGaussJordan);
+		mnMatrices.add(mntmGaussJordan);
 		
-		JButton btnMontante = new JButton("Montante");
-		btnMontante.addActionListener(new ActionListener() {
+		
+		
+		JMenuItem mntmMontante = new JMenuItem("Montante");
+		mntmMontante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS.MONTANTE);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
-		mnMatrices.add(btnMontante);
+		mnMatrices.add(mntmMontante);
 		
-		JButton btnCramer = new JButton("Cramer");
-		btnCramer.addActionListener(new ActionListener() {
+		
+		
+		
+		JMenuItem mntmCramer = new JMenuItem("Cramer");
+		mntmCramer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Matriz matriz = new Matriz(MetodoMatrizEnum.CRAMER);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
-		mnMatrices.add(btnCramer);
+		mnMatrices.add(mntmCramer);
 		
-		JButton btnJacobi = new JButton("Jacobi");
-		btnJacobi.addActionListener(new ActionListener() {
+		
+		
+		
+		JMenuItem mntmJacobi = new JMenuItem("Jacobi");
+		mntmJacobi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Matriz matriz = new Matriz(MetodoMatrizEnum.JACOBI);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
-		mnMatrices.add(btnJacobi);
+		mnMatrices.add(mntmJacobi);
+		
 
-		JButton btnBiseccion = new JButton("Biseccion                          ");
-		btnBiseccion.setAlignmentX(1);
-		btnBiseccion.addActionListener(new ActionListener() {
+		
+		
+		JMenuItem mntmBisseccion = new JMenuItem("Bisseccion");
+		mntmBisseccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				biseccion B = new biseccion();
 				B.main(null);
 				Menu.setVisible(false);
 			}
 		});
-		mnNewMenu.add(btnBiseccion);
+		mnNewMenu.add(mntmBisseccion);
+		
 
-		JButton btnNewButton = new JButton("Falsa Posicion                 ");
-		btnNewButton.setToolTipText("");
-		btnNewButton.setAlignmentX(1);
-		btnNewButton.addActionListener(new ActionListener() {
+	
+		
+		JMenuItem mntmFalsaPosicion = new JMenuItem("Falsa Posicion");
+		mntmFalsaPosicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Falsa_posicionI Falsa = new Falsa_posicionI();
 				Falsa.main(null);
@@ -157,19 +172,21 @@ public class Menu_principal {
 
 			}
 		});
-		mnNewMenu.add(btnNewButton);
+		mnNewMenu.add(mntmFalsaPosicion);
+	
 
-		JButton btnNewButton_1 = new JButton("Secante                             ");
-		btnNewButton_1.setAlignmentX(1);
-		btnNewButton_1.setVerticalAlignment(SwingConstants.BOTTOM);
-		btnNewButton_1.addActionListener(new ActionListener() {
+		
+		
+		JMenuItem mntmSecante = new JMenuItem("Secante");
+		mntmSecante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SecanteI S = new SecanteI();
 				S.main(null);
 				Menu.setVisible(false);
 			}
 		});
-		mnNewMenu.add(btnNewButton_1);
+		mnNewMenu.add(mntmSecante);
+		
 		
 		JButton btnAproximaciones = new JButton("Aproximaciones              ");
 		btnAproximaciones.setAlignmentX(1);
@@ -183,12 +200,26 @@ public class Menu_principal {
 				
 			}
 		});
-		mnNewMenu.add(btnAproximaciones);
+		
+		JMenuItem mntmAproximacionesSucesivas = new JMenuItem("Aproximaciones sucesivas");
+		mntmAproximacionesSucesivas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Aproximaciones_Sucesivas S= new Aproximaciones_Sucesivas();
+				S.main(null);
+				Menu.setVisible(false);
+				
+				
+			}
+		});
+		mnNewMenu.add(mntmAproximacionesSucesivas);
+	
 		
 
-		JButton btnNewtonraphson = new JButton("Newton_Raphson            ");
-		btnNewtonraphson.setAlignmentX(1);
-		btnNewtonraphson.addActionListener(new ActionListener() {
+		
+		
+		JMenuItem mntmNewtonraphson = new JMenuItem("newton_Raphson");
+		mntmNewtonraphson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
@@ -198,19 +229,21 @@ public class Menu_principal {
 				Menu.setVisible(false);
 			}
 		});
-		mnNewMenu.add(btnNewtonraphson);
+		mnNewMenu.add(mntmNewtonraphson);
 		
-		JButton btnNewtonsegundoorden = new JButton("Newton_SegundoOrden");
-		btnNewtonsegundoorden.setAlignmentX(1);
-		mnNewMenu.add(btnNewtonsegundoorden);
 		
-		btnNewtonsegundoorden.addActionListener(new ActionListener() {
+		JMenuItem mntmNewtonsegundoorden = new JMenuItem("Newton_SegundoOrden");
+		mntmNewtonsegundoorden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Newton_SegundoOrdenI N =  new Newton_SegundoOrdenI();
 			      N.main(null);	
 				Menu.setVisible(false);
 			}
 		});
+		mnNewMenu.add(mntmNewtonsegundoorden);
+		
+		
+	
 		
 		
 		
@@ -220,18 +253,23 @@ public class Menu_principal {
 		JMenu mnInterpolacin = new JMenu("Interpolación");
 		menuBar.add(mnInterpolacin);
 		
-		JButton btnNewton = new JButton("Newton");
-		btnNewton.addActionListener(new ActionListener() {
+		
+		
+		JMenuItem mntmnewton = new JMenuItem("Newton");
+		mntmnewton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Interpolacion interpolacion = new Interpolacion(InterpolacionEnum.InterpolacionNewton);
 				interpolacion.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
-		mnInterpolacin.add(btnNewton);
+		mnInterpolacin.add(mntmnewton);
 		
-		JButton btnLagrange = new JButton("Lagrange");
-		btnLagrange.addActionListener(new ActionListener() {
+		
+		
+		
+		JMenuItem mntmLagrange = new JMenuItem("Lagrange");
+		mntmLagrange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 		Interpolacion Lagrange = new Interpolacion(InterpolacionEnum.Interpolacion_Lagrange);
@@ -240,44 +278,54 @@ public class Menu_principal {
 		
 			}
 		});
-		mnInterpolacin.add(btnLagrange);
+		mnInterpolacin.add(mntmLagrange);
 		
-		JButton btnMinimoscuadrados = new JButton("MinimosCuadrados");
-		btnMinimoscuadrados.addActionListener(new ActionListener() {
+		
+		
+		
+		JMenuItem mntmMinimosCuadrados = new JMenuItem("Minimos Cuadrados");
+		mntmMinimosCuadrados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-	       Interpolacion Cuadrados= new Interpolacion(InterpolacionEnum.Interpolacion_CuadradrosMinimos);
-	       Cuadrados.setVisible(true);
-	        Menu.setVisible(false);
-	
-			}
-		});
-		mnInterpolacin.add(btnMinimoscuadrados);
+			       Interpolacion Cuadrados= new Interpolacion(InterpolacionEnum.Interpolacion_CuadradrosMinimos);
+			       Cuadrados.setVisible(true);
+			        Menu.setVisible(false);
+			
+					}
+				});
+		mnInterpolacin.add(mntmMinimosCuadrados);
+		
 		
 		JMenu mnDerivacin = new JMenu("Derivación");
 		menuBar.add(mnDerivacin);
 		
-		JButton btnDiferenciasFinitas = new JButton("Diferencias Finitas");
-		btnDiferenciasFinitas.addActionListener(new ActionListener() {
+		
+		
+		JMenuItem mntmDiferenciasFinitas = new JMenuItem("Diferencias finitas");
+		mntmDiferenciasFinitas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Derivacion derivacion = new Derivacion(DerivacionEnum.DiferenciasFinitas);
 				derivacion.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
-		mnDerivacin.add(btnDiferenciasFinitas);
+		mnDerivacin.add(mntmDiferenciasFinitas);
+	
 		
 		JMenu mnIntegracin = new JMenu("Integración");
 		menuBar.add(mnIntegracin);
 		
-		JButton btnTrapecio = new JButton("Trapecio");
-		btnTrapecio.addActionListener(new ActionListener() {
+		
+		
+		JMenuItem mntmTrapecio = new JMenuItem("Trapecio");
+		mntmTrapecio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Integracion integracion = new Integracion(IntegracionEnum.Trapecio);
 				integracion.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
-		mnIntegracin.add(btnTrapecio);
+		mnIntegracin.add(mntmTrapecio);
+		
 
 	}
 

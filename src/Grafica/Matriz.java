@@ -56,6 +56,9 @@ public class Matriz extends JFrame {
 		initialize(null,null,tipoMetodo,null);
 	}
 	
+	/**
+	 * @wbp.parser.constructor
+	 */
 	public Matriz(ArrayList<Double[][]> matrices, Double[] solucion, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
 		initialize(matrices,solucion,tipoMetodo,errorPermisible);
 	}
@@ -276,5 +279,4 @@ public class Matriz extends JFrame {
 			}
 		}
 	}
-
 }
