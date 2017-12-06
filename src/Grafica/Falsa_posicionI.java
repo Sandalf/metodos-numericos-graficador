@@ -64,7 +64,16 @@ public class Falsa_posicionI {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 625, 457);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		      Menu_principal M = new Menu_principal();
+		        M.main(null);
+				frame.setVisible(false);
+				frame.dispose();
+		    }
+		});
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
