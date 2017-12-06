@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import Projectofinal.DerivacionNumericaPorLimites;
 import Projectofinal.EcDiferencialesEnum;
 import Projectofinal.Euler;
+import Projectofinal.EulerMejorado;
 import Projectofinal.Funcion;
 
 public class EcDiferenciales extends JFrame {
@@ -154,8 +155,7 @@ public class EcDiferenciales extends JFrame {
 		JButton btnResolver = new JButton("Resolver");
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				switch(tipoMetodo) {
-				case Euler:
+			
 				try {
 					String Exp=FxyTextField.getText();
 					double X0=Double.parseDouble(XinicialTextField.getText());
@@ -174,17 +174,23 @@ public class EcDiferenciales extends JFrame {
 					} else if(Iteraciones.getText() == "") {
 						JOptionPane.showMessageDialog(getContentPane(), "Debe ingresar una N como numero de iteraciones.");
 					} else {
+						switch(tipoMetodo){
+						case Euler:
 						
 						Euler Ec = new Euler(Exp,X0,Y0,N,X);
 						solucionFormattedTextField.setText(Ec.solve().toString());	
 						table.setModel(new DefaultTableModel(Ec.getTabla(), cabecerosTabla));
+						case EulerMejorado:
+							EulerMejorado EcMejorado = new EulerMejorado(Exp,X0,Y0,N,X);
+							solucionFormattedTextField.setText(EcMejorado.solve().toString());	
+							table.setModel(new DefaultTableModel(EcMejorado.getTabla(), cabecerosTabla));
 						
-				   }
-			} catch(Exception error) {
+							}}
+				}catch(Exception error) {
 				JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al calcular la funcion.");
 			}
 				}
-		}
+		
 		});
 		btnResolver.setBounds(250, 11, 117, 29);
 		contentPane.add(btnResolver);

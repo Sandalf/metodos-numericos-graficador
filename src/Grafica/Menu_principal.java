@@ -351,6 +351,17 @@ public class Menu_principal {
 		});
 		mnEcuacionesDiferenciales.add(mntmEuler);
 		
+		JMenuItem mntmEulermejorado = new JMenuItem("EulerMejorado");
+		mntmEulermejorado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				EcDiferenciales Ec = new EcDiferenciales(EcDiferencialesEnum.EulerMejorado);
+				Ec.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnEcuacionesDiferenciales.add(mntmEulermejorado);
+		
 
 	}
 
