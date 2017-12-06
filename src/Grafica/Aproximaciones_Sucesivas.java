@@ -70,6 +70,7 @@ public class Aproximaciones_Sucesivas {
 				frame.dispose();
 		    }
 		});
+		frame.setTitle("Aproximaciones Sucesivas");
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);

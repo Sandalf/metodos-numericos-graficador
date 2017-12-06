@@ -74,6 +74,7 @@ public class Falsa_posicionI {
 				frame.dispose();
 		    }
 		});
+		frame.setTitle("Falsa Posicion");
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);

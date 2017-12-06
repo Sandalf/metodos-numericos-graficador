@@ -71,6 +71,8 @@ public class Newton_SegundoOrdenI {
 				frame.dispose();
 		    }
 		});
+		
+		frame.setTitle("Newton De Segundo Orden");
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);

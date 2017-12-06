@@ -73,6 +73,7 @@ public class SecanteI {
 				frame.dispose();
 		    }
 		});
+		frame.setTitle("Secante");
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);

@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import Projectofinal.Biseccion;
 import Projectofinal.DerivacionEnum;
+import Projectofinal.EcDiferencialesEnum;
 import Projectofinal.Funcion;
 import Projectofinal.IntegracionEnum;
 import Projectofinal.InterpolacionEnum;
@@ -335,6 +336,20 @@ public class Menu_principal {
 			}
 		});
 		mnIntegracin.add(mntmTrapecio);
+		
+		JMenu mnEcuacionesDiferenciales = new JMenu("Ecuaciones Diferenciales");
+		menuBar.add(mnEcuacionesDiferenciales);
+		
+		JMenuItem mntmEuler = new JMenuItem("Euler");
+		mntmEuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EcDiferenciales Ec = new EcDiferenciales(EcDiferencialesEnum.Euler);
+				Ec.setVisible(true);
+				Menu.setVisible(false);
+				
+			}
+		});
+		mnEcuacionesDiferenciales.add(mntmEuler);
 		
 
 	}

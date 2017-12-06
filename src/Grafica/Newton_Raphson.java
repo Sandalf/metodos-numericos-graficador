@@ -70,6 +70,7 @@ public class Newton_Raphson {
 				frame.dispose();
 		    }
 		});
+		frame.setTitle("Newton Raphson");
 		
 		JPanel panel = new JPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);

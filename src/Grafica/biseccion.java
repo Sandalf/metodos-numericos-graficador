@@ -68,6 +68,7 @@ public class biseccion {
 		frame.setBounds(100, 100, 625, 457);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		
 		    @Override
 		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 		      Menu_principal M = new Menu_principal();
@@ -76,6 +77,8 @@ public class biseccion {
 				frame.dispose();
 		    }
 		});
+		
+		frame.setTitle("Bissecion");
 		
 		
 		JPanel panel = new JPanel();
