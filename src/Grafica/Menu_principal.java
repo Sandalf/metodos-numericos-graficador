@@ -309,6 +309,16 @@ public class Menu_principal {
 			}
 		});
 		mnDerivacin.add(mntmDiferenciasFinitas);
+		
+		JMenuItem mntmPorLimites = new JMenuItem("Por Limites");
+		mntmPorLimites.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DerivacionPorLimites derivacion = new DerivacionPorLimites();
+				derivacion.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnDerivacin.add(mntmPorLimites);
 	
 		
 		JMenu mnIntegracin = new JMenu("Integración");

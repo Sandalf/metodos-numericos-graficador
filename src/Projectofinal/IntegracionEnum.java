@@ -1,5 +1,6 @@
 package Projectofinal;
 
 public enum IntegracionEnum {
-	Trapecio
+	Trapecio,
+	TrapecioTablaValores
 }
