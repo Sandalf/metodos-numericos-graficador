@@ -56,7 +56,19 @@ public class EcDiferenciales extends JFrame {
 	 * Create the frame.
 	 */
 	public EcDiferenciales(EcDiferencialesEnum tipoMetodo) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		// CONTROLAR SALIDA
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		       Menu_principal M = new Menu_principal();
+		        M.main(null);
+				setVisible(false);
+				dispose();
+		    }
+		});
+		
 		setBounds(100, 100, 625, 457);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
