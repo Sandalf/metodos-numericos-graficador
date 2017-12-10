@@ -189,7 +189,7 @@ public class Menu_principal {
 		mnNewMenu.add(mntmSecante);
 		
 		
-		JButton btnAproximaciones = new JButton("Aproximaciones              ");
+		JButton btnAproximaciones = new JButton("Aproximaciones");
 		btnAproximaciones.setAlignmentX(1);
 		btnAproximaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -202,7 +202,7 @@ public class Menu_principal {
 			}
 		});
 		
-		JMenuItem mntmAproximacionesSucesivas = new JMenuItem("Aproximaciones sucesivas");
+		JMenuItem mntmAproximacionesSucesivas = new JMenuItem("Aproximaciones Sucesivas");
 		mntmAproximacionesSucesivas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -219,7 +219,7 @@ public class Menu_principal {
 
 		
 		
-		JMenuItem mntmNewtonraphson = new JMenuItem("newton_Raphson");
+		JMenuItem mntmNewtonraphson = new JMenuItem("Newton Raphson");
 		mntmNewtonraphson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -233,7 +233,7 @@ public class Menu_principal {
 		mnNewMenu.add(mntmNewtonraphson);
 		
 		
-		JMenuItem mntmNewtonsegundoorden = new JMenuItem("Newton_SegundoOrden");
+		JMenuItem mntmNewtonsegundoorden = new JMenuItem("Newton Segundo Orden");
 		mntmNewtonsegundoorden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Newton_SegundoOrdenI N =  new Newton_SegundoOrdenI();
@@ -251,7 +251,7 @@ public class Menu_principal {
 		
 		
 		
-		JMenu mnInterpolacin = new JMenu("Interpolación");
+		JMenu mnInterpolacin = new JMenu("Interpolacion");
 		menuBar.add(mnInterpolacin);
 		
 		
