@@ -337,6 +337,16 @@ public class Menu_principal {
 		});
 		mnIntegracin.add(mntmTrapecio);
 		
+		JMenuItem mntmSimpsion = new JMenuItem("Simpson 1/3");
+		mntmSimpsion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Integracion integracion = new Integracion(IntegracionEnum.SimpsonUnTercio);
+				integracion.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnIntegracin.add(mntmSimpsion);
+		
 		JMenu mnEcuacionesDiferenciales = new JMenu("Ecuaciones Diferenciales");
 		menuBar.add(mnEcuacionesDiferenciales);
 		
