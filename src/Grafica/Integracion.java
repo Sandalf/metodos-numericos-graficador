@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Projectofinal.DerivacionEnum;
 import Projectofinal.IntegracionEnum;
+import Projectofinal.IntegracionSimpsonUnTercio;
 import Projectofinal.IntegracionTrapecio;
 
 import javax.swing.JLabel;
@@ -24,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JFormattedTextField;
 
 public class Integracion extends JFrame {
 
@@ -79,8 +81,15 @@ public class Integracion extends JFrame {
 		contentPane.setLayout(null);
 		
 		// TITULO DE VENTANA
-		if(tipoMetodo == IntegracionEnum.Trapecio) {
-			setTitle("Trapecio");
+		switch (tipoMetodo) {
+			case Trapecio:
+				setTitle("Trapecio");
+			break;
+			case SimpsonUnTercio:
+				setTitle("Simpson 1/3");
+			break;
+			default:
+				break;
 		}
 		
 		// CABECEROS
@@ -176,23 +185,42 @@ public class Integracion extends JFrame {
 		contentPane.add(solucionTextField);
 		solucionTextField.setColumns(10);
 		
+		/* RESOLVER */
 		btnResolver = new JButton("Resolver");
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					/* VALIDAR */
 					if(validar()) {
 						String funcion = funcionTextField.getText().trim();
 						Double limInf = Double.parseDouble(limInfTextField.getText());
 					    Double limSup = Double.parseDouble(limSupTextField.getText());
 					    Integer numPuntos = Integer.parseInt(numPuntosTextField.getText());
-						IntegracionTrapecio trapecio = new IntegracionTrapecio(funcion,limInf,limSup,numPuntos);
-						Double solucion = trapecio.solve();
-						
-						table.setModel(new DefaultTableModel(trapecio.getTabla(),cabecero));
-						solucionTextField.setText(solucion.toString());
+					    
+					    /* RESOVLVER POR EL METODO DEL TRAPECIO */
+					    if(tipoMetodo == IntegracionEnum.Trapecio) {
+							IntegracionTrapecio trapecio = new IntegracionTrapecio(funcion,limInf,limSup,numPuntos);
+							Double solucion = trapecio.solve();
+							
+							table.setModel(new DefaultTableModel(trapecio.getTabla(),cabecero));
+							solucionTextField.setText(solucion.toString());
+					    } else if (tipoMetodo == IntegracionEnum.SimpsonUnTercio) {
+					    		/* VALIDAR */
+					    		if(numPuntos % 2 == 0) {
+					    			JOptionPane.showMessageDialog(getContentPane(), "El numero de puntos debe ser impar.");
+					    		} else {			    	
+						    		/* RESOVLVER POR EL METODO DEL SIMPSON 1/3 */
+						    		IntegracionSimpsonUnTercio simpsonUnTercio = new IntegracionSimpsonUnTercio(funcion,limInf,limSup,numPuntos);
+						    		Double solucion = simpsonUnTercio.solve();
+						    								
+								table.setModel(new DefaultTableModel(simpsonUnTercio.getTabla(),cabecero));
+								solucionTextField.setText(String.format(java.util.Locale.US,"%.3f", solucion));
+					    		}
+					    }
 					}
 				} catch(Exception error) {
 					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar resolver la función.");
+					System.out.println(error);
 				}
 			}
 		});
