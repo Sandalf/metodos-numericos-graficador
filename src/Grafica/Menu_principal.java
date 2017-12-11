@@ -237,7 +237,7 @@ public class Menu_principal {
 		});
 		mnInterpolacin.add(mntmMinimosCuadrados);
 
-		JMenu mnDerivacin = new JMenu("Derivación");
+		JMenu mnDerivacin = new JMenu("Derivacion");
 		menuBar.add(mnDerivacin);
 
 		JMenuItem mntmDiferenciasFinitas = new JMenuItem("Diferencias finitas");
@@ -260,7 +260,7 @@ public class Menu_principal {
 		});
 		mnDerivacin.add(mntmPorLimites);
 
-		JMenu mnIntegracin = new JMenu("Integración");
+		JMenu mnIntegracin = new JMenu("Integracion");
 		menuBar.add(mnIntegracin);
 
 		JMenuItem mntmTrapecio = new JMenuItem("Trapecio");
@@ -317,7 +317,7 @@ public class Menu_principal {
 		});
 		mnEcuacionesDiferenciales.add(mntmEuler);
 
-		JMenuItem mntmEulermejorado = new JMenuItem("EulerMejorado");
+		JMenuItem mntmEulermejorado = new JMenuItem("Euler Mejorado");
 		mntmEulermejorado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 

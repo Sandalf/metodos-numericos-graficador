@@ -171,7 +171,7 @@ public class Integracion extends JFrame {
 		contentPane.add(funcionTextField);
 		funcionTextField.setColumns(10);
 		
-		lblNewLabel = new JLabel("Solución:");
+		lblNewLabel = new JLabel("Solucion:");
 		lblNewLabel.setBounds(18, 138, 61, 16);
 		contentPane.add(lblNewLabel);
 		
@@ -207,7 +207,7 @@ public class Integracion extends JFrame {
 					    		Double[][] puntos = new Double[trapecioTablaValores.size()][4];
 					    		
 					    		for(int i = 0; i < puntos.length; i++) {
-					    			puntos[0] = trapecioTablaValores.get(i).clone();
+					    			puntos[i] = trapecioTablaValores.get(i).clone();
 					    		}
 					    		
 					    		IntegracionTrapecioTablaValores trapecio = new IntegracionTrapecioTablaValores(puntos);
@@ -236,8 +236,8 @@ public class Integracion extends JFrame {
 					    }	
 					}
 				} catch(Exception error) {
-					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar resolver la función.");
-					System.out.println(error);
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar resolver la funcion.");
+					System.out.println(error.getMessage());
 				}
 			}
 		});
