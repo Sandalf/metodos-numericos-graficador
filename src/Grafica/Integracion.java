@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,6 +24,7 @@ import Projectofinal.IntegracionEnum;
 import Projectofinal.IntegracionSimpsonTresOctavos;
 import Projectofinal.IntegracionSimpsonUnTercio;
 import Projectofinal.IntegracionTrapecio;
+import Projectofinal.IntegracionTrapecioTablaValores;
 
 public class Integracion extends JFrame {
 
@@ -37,6 +39,15 @@ public class Integracion extends JFrame {
 	private JTextField solucionTextField;
 	private JButton btnResolver;
 	private JButton btnLimpiar;
+	private JLabel lblNmeroDePuntos;
+	private JButton btnAgregarPunto;
+	private JLabel xLabel;
+	private JTextField xTextField;
+	private JLabel yLabel;
+	private JTextField yTextField;
+	private ArrayList<Double[]> trapecioTablaValores = new ArrayList<Double[]>();
+	private Double[][] trapecioTablaValoresTableModel;
+	private Double diferenciaEntrePuntos = new Double(0);
 
 	/**
 	 * Launch the application.
@@ -76,21 +87,6 @@ public class Integracion extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		// TITULO DE VENTANA
-		switch (tipoMetodo) {
-			case Trapecio:
-				setTitle("Trapecio");
-			break;
-			case SimpsonUnTercio:
-				setTitle("Simpson 1/3");
-			break;
-			case SimpsonTresOctavos:
-				setTitle("Simpson 3/8");
-			break;
-			default:
-				break;
-		}
 		
 		// CABECEROS
 		String[] cabecero = {"X","Y","Fm","Producto"};
@@ -135,12 +131,12 @@ public class Integracion extends JFrame {
 		contentPane.add(limInfTextField);
 		limInfTextField.setColumns(10);
 		
-		JLabel lblNmeroDePuntos = new JLabel("Número de puntos:");
-		lblNmeroDePuntos.setBounds(18, 82, 121, 16);
+		lblNmeroDePuntos = new JLabel("Número de puntos:");
+		lblNmeroDePuntos.setBounds(18, 83, 121, 16);
 		contentPane.add(lblNmeroDePuntos);
 		
 		numPuntosTextField = new JTextField();
-		numPuntosTextField.setBounds(148, 77, 130, 26);
+		numPuntosTextField.setBounds(148, 78, 130, 26);
 		// VALIDAR QUE SE INGRESEN SOLO NUMEROS
 		numPuntosTextField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -191,7 +187,7 @@ public class Integracion extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					/* VALIDAR */
-					if(validar()) {
+					if(validar(tipoMetodo)) {
 						String funcion = funcionTextField.getText().trim();
 						Double limInf = Double.parseDouble(limInfTextField.getText());
 					    Double limSup = Double.parseDouble(limSupTextField.getText());
@@ -204,30 +200,39 @@ public class Integracion extends JFrame {
 							
 							table.setModel(new DefaultTableModel(trapecio.getTabla(),cabecero));
 							solucionTextField.setText(solucion.toString());
+					    } else if (tipoMetodo == IntegracionEnum.TrapecioTablaValores) { 
+					    		/* AGREGAR LIMITE SUPERIOR */
+					    		limSupTextField.setText(trapecioTablaValores.get(trapecioTablaValores.size()-1)[0].toString());
+					    	
+					    		Double[][] puntos = new Double[trapecioTablaValores.size()][4];
+					    		
+					    		for(int i = 0; i < puntos.length; i++) {
+					    			puntos[0] = trapecioTablaValores.get(i).clone();
+					    		}
+					    		
+					    		IntegracionTrapecioTablaValores trapecio = new IntegracionTrapecioTablaValores(puntos);
+							Double solucion = trapecio.solve();
+							
+							table.setModel(new DefaultTableModel(trapecio.getTabla(),cabecero));
+							solucionTextField.setText(solucion.toString());
 					    } else if (tipoMetodo == IntegracionEnum.SimpsonUnTercio) {
-					    		/* VALIDAR */
-					    		if(numPuntos % 2 == 0) {
-					    			JOptionPane.showMessageDialog(getContentPane(), "El numero de puntos debe ser impar.");
-					    		} else {			    	
-						    		/* RESOVLVER POR EL METODO DEL SIMPSON 1/3 */
-						    		IntegracionSimpsonUnTercio simpsonUnTercio = new IntegracionSimpsonUnTercio(funcion,limInf,limSup,numPuntos);
-						    		Double solucion = simpsonUnTercio.solve();
-						    								
-								table.setModel(new DefaultTableModel(simpsonUnTercio.getTabla(),cabecero));
-								solucionTextField.setText(String.format(java.util.Locale.US,"%.3f", solucion));
-					    		}
-					    } else if (tipoMetodo == IntegracionEnum.SimpsonTresOctavos) {
-					    		/* VALIDAR */
-					    		if(numPuntos % 3 != 0) {
-					    			JOptionPane.showMessageDialog(getContentPane(), "El numero de puntos debe ser multiplo de 3.");
-					    		} else {			    	
-						    		/* RESOVLVER POR EL METODO DEL SIMPSON 3/8 */
-						    		IntegracionSimpsonTresOctavos simpsonTresOctavos = new IntegracionSimpsonTresOctavos(funcion,limInf,limSup,numPuntos);
-						    		Double solucion = simpsonTresOctavos.solve();
-						    								
-								table.setModel(new DefaultTableModel(simpsonTresOctavos.getTabla(),cabecero));
-								solucionTextField.setText(String.format(java.util.Locale.US,"%.3f", solucion));
-					    		}
+		    	
+					    		/* RESOVLVER POR EL METODO DEL SIMPSON 1/3 */
+					    		IntegracionSimpsonUnTercio simpsonUnTercio = new IntegracionSimpsonUnTercio(funcion,limInf,limSup,numPuntos);
+					    		Double solucion = simpsonUnTercio.solve();
+					    								
+							table.setModel(new DefaultTableModel(simpsonUnTercio.getTabla(),cabecero));
+							solucionTextField.setText(String.format(java.util.Locale.US,"%.3f", solucion));
+					    		
+					    } else if (tipoMetodo == IntegracionEnum.SimpsonTresOctavos) {	
+					    	
+					    		/* RESOVLVER POR EL METODO DEL SIMPSON 3/8 */
+					    		IntegracionSimpsonTresOctavos simpsonTresOctavos = new IntegracionSimpsonTresOctavos(funcion,limInf,limSup,numPuntos);
+					    		Double solucion = simpsonTresOctavos.solve();
+					    								
+							table.setModel(new DefaultTableModel(simpsonTresOctavos.getTabla(),cabecero));
+							solucionTextField.setText(String.format(java.util.Locale.US,"%.3f", solucion));
+							
 					    }	
 					}
 				} catch(Exception error) {
@@ -245,6 +250,8 @@ public class Integracion extends JFrame {
 				limSupTextField.setText("0");
 				limInfTextField.setText("0");
 				numPuntosTextField.setText("0");
+				xTextField.setText("0");
+				yTextField.setText("0");
 				funcionTextField.setText("");
 				solucionTextField.setText("");
 				table.setModel(new DefaultTableModel(new Object[][] {},cabecero));
@@ -253,6 +260,99 @@ public class Integracion extends JFrame {
 		btnLimpiar.setBounds(316, 49, 117, 29);
 		contentPane.add(btnLimpiar);
 		
+		/* AGREGAR PUNTO */
+		btnAgregarPunto = new JButton("Agregar Punto");
+		btnAgregarPunto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// VALIDAR QUE LAS COORDENADAS NO ESTEN VACIAS
+				if (xTextField.getText().isEmpty() || yTextField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(getContentPane(), "No debe haber coordenadas vacias.");
+				} else {
+
+					Double[] punto = new Double[2];
+					punto[0] = Double.parseDouble(xTextField.getText());
+					punto[1] = Double.parseDouble(yTextField.getText());
+					Double[] row = { punto[0], punto[1], 0.0, 0.0 };
+					
+					trapecioTablaValores.add(row);
+					
+					/*
+					 * EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA SER ACEPTADO COMO MODELO DE LA
+					 * TABLA
+					 */
+					trapecioTablaValoresTableModel = new Double[trapecioTablaValores.size()][4];
+
+					for (int i = 0; i < trapecioTablaValores.size(); i++) {
+						trapecioTablaValoresTableModel[i] = trapecioTablaValores.get(i);
+					}
+
+					table.setModel(new DefaultTableModel(trapecioTablaValoresTableModel, cabecero));
+					
+					/*
+					 * SE AGREGA LIMITE SUPERIOR
+					 */
+					if(trapecioTablaValores.size() == 1) {
+						limInfTextField.setText(trapecioTablaValores.get(0)[0].toString());
+					}
+				
+				}
+			}
+		});
+		btnAgregarPunto.setBounds(316, 79, 117, 29);
+		contentPane.add(btnAgregarPunto);
+		
+		xLabel = new JLabel("X:");
+		xLabel.setBounds(115, 83, 21, 16);
+		xLabel.setVisible(false);
+		contentPane.add(xLabel);
+		
+		xTextField = new JTextField();
+		xTextField.setText("0");
+		xTextField.setColumns(10);
+		xTextField.setBounds(148, 78, 43, 26);
+		xTextField.setVisible(false);
+		contentPane.add(xTextField);
+		
+		yLabel = new JLabel("Y:");
+		yLabel.setBounds(202, 83, 21, 16);
+		yLabel.setVisible(false);
+		contentPane.add(yLabel);
+		
+		yTextField = new JTextField();
+		yTextField.setText("0");
+		yTextField.setColumns(10);
+		yTextField.setBounds(235, 78, 43, 26);
+		yTextField.setVisible(false);
+		contentPane.add(yTextField);
+		
+		/* TITULO DE VENTANA */
+		switch (tipoMetodo) {
+			case Trapecio:
+				setTitle("Trapecio");
+			break;
+			case TrapecioTablaValores:
+				setTitle("Trapecio (Tabla de valores)");
+				lblNmeroDePuntos.setVisible(false);
+				numPuntosTextField.setVisible(false);
+				xLabel.setVisible(true);
+				xTextField.setVisible(true);
+				yLabel.setVisible(true);
+				yTextField.setVisible(true);
+				funcionTextField.setVisible(false);
+				lblFuncin.setVisible(false);
+				limSupTextField.setEnabled(false);
+				limInfTextField.setEnabled(false);
+			break;
+			case SimpsonUnTercio:
+				setTitle("Simpson 1/3");
+			break;
+			case SimpsonTresOctavos:
+				setTitle("Simpson 3/8");
+			break;
+			default:
+			break;
+		}
+		
 		/* INICIALIZAR VALORES */
 		limSupTextField.setText("0");
 		limInfTextField.setText("0");
@@ -260,7 +360,7 @@ public class Integracion extends JFrame {
 		numPuntosTextField.setText("0");
 	}
 	
-	private boolean validar() {
+	private boolean validar(IntegracionEnum tipoMetodo) {
 		String funcion = funcionTextField.getText().trim();
 		Double limInf = Double.parseDouble(limInfTextField.getText());
 	    Double limSup = Double.parseDouble(limSupTextField.getText());
@@ -268,11 +368,17 @@ public class Integracion extends JFrame {
 		if(limInf - limSup == 0) {
 			JOptionPane.showMessageDialog(getContentPane(), "La diferencia entre los limites de la integral debe ser mayor a 0.");
 			return false;
-		} else if(funcion == "") {
+		} else if(funcion.isEmpty() && tipoMetodo != IntegracionEnum.TrapecioTablaValores) {
 			JOptionPane.showMessageDialog(getContentPane(), "Debe ingresar un función antes de continuar.");
 			return false;
-		} else if(numPuntos <= 0) {
-			JOptionPane.showMessageDialog(getContentPane(), "Debe ingresar al menos un punto.");
+		} else if(numPuntos <= 0 && tipoMetodo != IntegracionEnum.TrapecioTablaValores) {
+			JOptionPane.showMessageDialog(getContentPane(), "Debe ingresar una cantidad de puntos mayor a 0.");
+			return false;
+		} else if(numPuntos % 2 == 0 && tipoMetodo == IntegracionEnum.SimpsonUnTercio) {
+    			JOptionPane.showMessageDialog(getContentPane(), "El numero de puntos debe ser impar.");
+    			return false;
+		} else if(numPuntos % 3 != 0 && tipoMetodo == IntegracionEnum.SimpsonTresOctavos) {
+			JOptionPane.showMessageDialog(getContentPane(), "El numero de puntos debe ser multiplo de 3.");
 			return false;
 		}
 		return true;

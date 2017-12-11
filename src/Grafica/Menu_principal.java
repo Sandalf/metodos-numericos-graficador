@@ -1,36 +1,26 @@
 package Grafica;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
-import Projectofinal.Biseccion;
 import Projectofinal.DerivacionEnum;
 import Projectofinal.EcDiferencialesEnum;
-import Projectofinal.Funcion;
 import Projectofinal.IntegracionEnum;
 import Projectofinal.InterpolacionEnum;
 import Projectofinal.MetodoMatrizEnum;
-
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JMenuBar;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JMenu;
-import java.awt.List;
-import java.awt.Button;
-import javax.swing.SwingConstants;
-
-import Grafica.Falsa_posicionI;
-import Grafica.SecanteI;
-import Grafica.biseccion;
-import javax.swing.JMenuItem;
 
 public class Menu_principal {
 
@@ -79,19 +69,13 @@ public class Menu_principal {
 
 		JMenu mnNewMenu = new JMenu("Metodos de Raices");
 		menuBar.add(mnNewMenu);
-		
+
 		JMenu mnMatrices = new JMenu("Matrices");
 		menuBar.add(mnMatrices);
-		
-		
-		
-	
-		
-		
-		
+
 		JMenuItem mntmGauss = new JMenuItem("Gauss");
 		mntmGauss.addActionListener(new ActionListener() {
-			
+
 			public void actionPerformed(ActionEvent e) {
 				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS);
 				matriz.setVisible(true);
@@ -99,7 +83,7 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(mntmGauss);
-		
+
 		JMenuItem mntmGaussJordan = new JMenuItem("Gauss Jordan");
 		mntmGaussJordan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,9 +93,7 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(mntmGaussJordan);
-		
-		
-		
+
 		JMenuItem mntmMontante = new JMenuItem("Montante");
 		mntmMontante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,10 +103,7 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(mntmMontante);
-		
-		
-		
-		
+
 		JMenuItem mntmCramer = new JMenuItem("Cramer");
 		mntmCramer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,10 +113,7 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(mntmCramer);
-		
-		
-		
-		
+
 		JMenuItem mntmJacobi = new JMenuItem("Jacobi");
 		mntmJacobi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -147,10 +123,7 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(mntmJacobi);
-		
 
-		
-		
 		JMenuItem mntmBisseccion = new JMenuItem("Bisseccion");
 		mntmBisseccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -160,10 +133,7 @@ public class Menu_principal {
 			}
 		});
 		mnNewMenu.add(mntmBisseccion);
-		
 
-	
-		
 		JMenuItem mntmFalsaPosicion = new JMenuItem("Falsa Posicion");
 		mntmFalsaPosicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,10 +144,7 @@ public class Menu_principal {
 			}
 		});
 		mnNewMenu.add(mntmFalsaPosicion);
-	
 
-		
-		
 		JMenuItem mntmSecante = new JMenuItem("Secante");
 		mntmSecante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -187,75 +154,56 @@ public class Menu_principal {
 			}
 		});
 		mnNewMenu.add(mntmSecante);
-		
-		
+
 		JButton btnAproximaciones = new JButton("Aproximaciones");
 		btnAproximaciones.setAlignmentX(1);
 		btnAproximaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				Aproximaciones_Sucesivas S= new Aproximaciones_Sucesivas();
+
+				Aproximaciones_Sucesivas S = new Aproximaciones_Sucesivas();
 				S.main(null);
 				Menu.setVisible(false);
-				
-				
+
 			}
 		});
-		
+
 		JMenuItem mntmAproximacionesSucesivas = new JMenuItem("Aproximaciones Sucesivas");
 		mntmAproximacionesSucesivas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				Aproximaciones_Sucesivas S= new Aproximaciones_Sucesivas();
+
+				Aproximaciones_Sucesivas S = new Aproximaciones_Sucesivas();
 				S.main(null);
 				Menu.setVisible(false);
-				
-				
+
 			}
 		});
 		mnNewMenu.add(mntmAproximacionesSucesivas);
-	
-		
 
-		
-		
 		JMenuItem mntmNewtonraphson = new JMenuItem("Newton Raphson");
 		mntmNewtonraphson.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				Newton_Raphson N= new Newton_Raphson();
-				
+
+				Newton_Raphson N = new Newton_Raphson();
+
 				N.main(null);
 				Menu.setVisible(false);
 			}
 		});
 		mnNewMenu.add(mntmNewtonraphson);
-		
-		
+
 		JMenuItem mntmNewtonsegundoorden = new JMenuItem("Newton Segundo Orden");
 		mntmNewtonsegundoorden.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Newton_SegundoOrdenI N =  new Newton_SegundoOrdenI();
-			      N.main(null);	
+				Newton_SegundoOrdenI N = new Newton_SegundoOrdenI();
+				N.main(null);
 				Menu.setVisible(false);
 			}
 		});
 		mnNewMenu.add(mntmNewtonsegundoorden);
-		
-		
-	
-		
-		
-		
-		
-		
-		
+
 		JMenu mnInterpolacin = new JMenu("Interpolacion");
 		menuBar.add(mnInterpolacin);
-		
-		
-		
+
 		JMenuItem mntmnewton = new JMenuItem("Newton");
 		mntmnewton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -265,42 +213,33 @@ public class Menu_principal {
 			}
 		});
 		mnInterpolacin.add(mntmnewton);
-		
-		
-		
-		
+
 		JMenuItem mntmLagrange = new JMenuItem("Lagrange");
 		mntmLagrange.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-		Interpolacion Lagrange = new Interpolacion(InterpolacionEnum.Interpolacion_Lagrange);
-		Lagrange.setVisible(true);
-		Menu.setVisible(false);
-		
+
+				Interpolacion Lagrange = new Interpolacion(InterpolacionEnum.Interpolacion_Lagrange);
+				Lagrange.setVisible(true);
+				Menu.setVisible(false);
+
 			}
 		});
 		mnInterpolacin.add(mntmLagrange);
-		
-		
-		
-		
+
 		JMenuItem mntmMinimosCuadrados = new JMenuItem("Minimos Cuadrados");
 		mntmMinimosCuadrados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			       Interpolacion Cuadrados= new Interpolacion(InterpolacionEnum.Interpolacion_CuadradrosMinimos);
-			       Cuadrados.setVisible(true);
-			        Menu.setVisible(false);
-			
-					}
-				});
+				Interpolacion Cuadrados = new Interpolacion(InterpolacionEnum.Interpolacion_CuadradrosMinimos);
+				Cuadrados.setVisible(true);
+				Menu.setVisible(false);
+
+			}
+		});
 		mnInterpolacin.add(mntmMinimosCuadrados);
-		
-		
+
 		JMenu mnDerivacin = new JMenu("Derivación");
 		menuBar.add(mnDerivacin);
-		
-		
-		
+
 		JMenuItem mntmDiferenciasFinitas = new JMenuItem("Diferencias finitas");
 		mntmDiferenciasFinitas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -310,7 +249,7 @@ public class Menu_principal {
 			}
 		});
 		mnDerivacin.add(mntmDiferenciasFinitas);
-		
+
 		JMenuItem mntmPorLimites = new JMenuItem("Por Limites");
 		mntmPorLimites.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -320,13 +259,10 @@ public class Menu_principal {
 			}
 		});
 		mnDerivacin.add(mntmPorLimites);
-	
-		
+
 		JMenu mnIntegracin = new JMenu("Integración");
 		menuBar.add(mnIntegracin);
-		
-		
-		
+
 		JMenuItem mntmTrapecio = new JMenuItem("Trapecio");
 		mntmTrapecio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -336,7 +272,17 @@ public class Menu_principal {
 			}
 		});
 		mnIntegracin.add(mntmTrapecio);
-		
+
+		JMenuItem mntmTrapecioTablaValores = new JMenuItem("Trapecio (Tabla de Valores)");
+		mntmTrapecioTablaValores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Integracion integracion = new Integracion(IntegracionEnum.TrapecioTablaValores);
+				integracion.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnIntegracin.add(mntmTrapecioTablaValores);
+
 		JMenuItem mntmSimpsion = new JMenuItem("Simpson 1/3");
 		mntmSimpsion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -346,7 +292,7 @@ public class Menu_principal {
 			}
 		});
 		mnIntegracin.add(mntmSimpsion);
-		
+
 		JMenuItem mntmSimpsonTresOctavos = new JMenuItem("Simpson 3/8");
 		mntmSimpsonTresOctavos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -356,32 +302,31 @@ public class Menu_principal {
 			}
 		});
 		mnIntegracin.add(mntmSimpsonTresOctavos);
-		
+
 		JMenu mnEcuacionesDiferenciales = new JMenu("Ecuaciones Diferenciales");
 		menuBar.add(mnEcuacionesDiferenciales);
-		
+
 		JMenuItem mntmEuler = new JMenuItem("Euler");
 		mntmEuler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EcDiferenciales Ec = new EcDiferenciales(EcDiferencialesEnum.Euler);
 				Ec.setVisible(true);
 				Menu.setVisible(false);
-				
+
 			}
 		});
 		mnEcuacionesDiferenciales.add(mntmEuler);
-		
+
 		JMenuItem mntmEulermejorado = new JMenuItem("EulerMejorado");
 		mntmEulermejorado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				EcDiferenciales Ec = new EcDiferenciales(EcDiferencialesEnum.EulerMejorado);
 				Ec.setVisible(true);
 				Menu.setVisible(false);
 			}
 		});
 		mnEcuacionesDiferenciales.add(mntmEulermejorado);
-		
 
 	}
 
