@@ -3,5 +3,6 @@ package Projectofinal;
 public enum IntegracionEnum {
 	Trapecio,
 	TrapecioTablaValores,
-	SimpsonUnTercio
+	SimpsonUnTercio,
+	SimpsonTresOctavos
 }

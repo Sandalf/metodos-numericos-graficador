@@ -1,31 +1,28 @@
 package Grafica;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Projectofinal.DerivacionEnum;
 import Projectofinal.IntegracionEnum;
+import Projectofinal.IntegracionSimpsonTresOctavos;
 import Projectofinal.IntegracionSimpsonUnTercio;
 import Projectofinal.IntegracionTrapecio;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JFormattedTextField;
 
 public class Integracion extends JFrame {
 
@@ -87,6 +84,9 @@ public class Integracion extends JFrame {
 			break;
 			case SimpsonUnTercio:
 				setTitle("Simpson 1/3");
+			break;
+			case SimpsonTresOctavos:
+				setTitle("Simpson 3/8");
 			break;
 			default:
 				break;
@@ -216,7 +216,19 @@ public class Integracion extends JFrame {
 								table.setModel(new DefaultTableModel(simpsonUnTercio.getTabla(),cabecero));
 								solucionTextField.setText(String.format(java.util.Locale.US,"%.3f", solucion));
 					    		}
-					    }
+					    } else if (tipoMetodo == IntegracionEnum.SimpsonTresOctavos) {
+					    		/* VALIDAR */
+					    		if(numPuntos % 3 != 0) {
+					    			JOptionPane.showMessageDialog(getContentPane(), "El numero de puntos debe ser multiplo de 3.");
+					    		} else {			    	
+						    		/* RESOVLVER POR EL METODO DEL SIMPSON 3/8 */
+						    		IntegracionSimpsonTresOctavos simpsonTresOctavos = new IntegracionSimpsonTresOctavos(funcion,limInf,limSup,numPuntos);
+						    		Double solucion = simpsonTresOctavos.solve();
+						    								
+								table.setModel(new DefaultTableModel(simpsonTresOctavos.getTabla(),cabecero));
+								solucionTextField.setText(String.format(java.util.Locale.US,"%.3f", solucion));
+					    		}
+					    }	
 					}
 				} catch(Exception error) {
 					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar resolver la función.");
@@ -244,6 +256,7 @@ public class Integracion extends JFrame {
 		/* INICIALIZAR VALORES */
 		limSupTextField.setText("0");
 		limInfTextField.setText("0");
+		funcionTextField.setText("");
 		numPuntosTextField.setText("0");
 	}
 	
