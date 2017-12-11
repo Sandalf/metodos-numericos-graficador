@@ -23,6 +23,7 @@ import Projectofinal.GaussJordan;
 import Projectofinal.Jacobi;
 import Projectofinal.MetodoMatrizEnum;
 import Projectofinal.Montante;
+import java.awt.BorderLayout;
 
 public class EditarMatriz extends JFrame {
 
@@ -32,6 +33,7 @@ public class EditarMatriz extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLimpiar;
+	private Double[][] matrizOrignialClone;
 
 	/**
 	 * Launch the application.
@@ -53,7 +55,7 @@ public class EditarMatriz extends JFrame {
 	 * Create the frame.
 	 */
 	public EditarMatriz() {}
-	
+		
 	public EditarMatriz(int rowsParam, int columnsParam, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
 		// SE INCREMENTA PARA INSERTAR CABECEROS Y ESPACIADO
 		final Integer rows = rowsParam + 2;
@@ -73,7 +75,7 @@ public class EditarMatriz extends JFrame {
 		    }
 		});
 		
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 130, 580, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

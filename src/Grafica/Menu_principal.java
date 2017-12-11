@@ -56,7 +56,7 @@ public class Menu_principal {
 	 */
 	private void initialize() {
 		Menu = new JFrame();
-		Menu.setBounds(100, 100, 566, 461);
+		Menu.setBounds(100, 130, 580, 500);
 		Menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel panel = new JPanel();

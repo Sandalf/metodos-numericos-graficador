@@ -68,7 +68,7 @@ public class Matriz extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(ArrayList<Double[][]> matrices,Double[] solucion, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
-		setBounds(120, 100, 450, 700);
+		setBounds(100, 130, 580, 500);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		System.out.println("Tipo de metodo " + tipoMetodo);

@@ -54,7 +54,15 @@ public class DerivacionPorLimites extends JFrame {
 	 * Create the frame.
 	 */
 	public DerivacionPorLimites() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				Menu_principal.main(null);
+				setVisible(false);
+				dispose();
+			}
+		});
 		setBounds(100, 100, 475, 338);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
