@@ -347,6 +347,16 @@ public class Menu_principal {
 		});
 		mnIntegracin.add(mntmSimpsion);
 		
+		JMenuItem mntmSimpsonTresOctavos = new JMenuItem("Simpson 3/8");
+		mntmSimpsonTresOctavos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Integracion integracion = new Integracion(IntegracionEnum.SimpsonTresOctavos);
+				integracion.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnIntegracin.add(mntmSimpsonTresOctavos);
+		
 		JMenu mnEcuacionesDiferenciales = new JMenu("Ecuaciones Diferenciales");
 		menuBar.add(mnEcuacionesDiferenciales);
 		
