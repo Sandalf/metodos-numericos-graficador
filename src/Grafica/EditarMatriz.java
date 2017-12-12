@@ -20,6 +20,7 @@ import javax.swing.border.EmptyBorder;
 import Projectofinal.Cramer;
 import Projectofinal.Gauss;
 import Projectofinal.GaussJordan;
+import Projectofinal.GaussSeidel;
 import Projectofinal.Jacobi;
 import Projectofinal.MetodoMatrizEnum;
 import Projectofinal.Montante;
@@ -230,6 +231,10 @@ public class EditarMatriz extends JFrame {
 					Jacobi jacobi = new Jacobi();
 					System.out.println("Error permisible: " + errorPermisible);
 					matrices.add(jacobi.solve(matrizOrignial.clone(), matrizOrignial.clone().length, errorPermisible, 100));
+				} else if(tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) {
+					GaussSeidel gaussSeidel = new GaussSeidel();
+					System.out.println("Error permisible: " + errorPermisible);
+					matrices.add(gaussSeidel.solve(matrizOrignial.clone(), errorPermisible));
 				}
 				
 				Matriz matriz = new Matriz(matrices,solucion,tipoMetodo,errorPermisible);

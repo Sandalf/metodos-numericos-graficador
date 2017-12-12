@@ -89,9 +89,9 @@ public class Matriz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Double errorPermisible = new Double(0);
 				
-				if(tipoMetodo == MetodoMatrizEnum.JACOBI && errorTextField.getText().isEmpty()) {
+				if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL)  && errorTextField.getText().isEmpty()) {
 					JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
-				} else if(tipoMetodo == MetodoMatrizEnum.JACOBI && !errorTextField.getText().isEmpty()) {
+				} else if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) && !errorTextField.getText().isEmpty()) {
 					errorPermisible = Double.parseDouble(errorTextField.getText());
 					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
 					Integer columns = (Integer)columnasComboBox.getSelectedItem();
@@ -134,7 +134,7 @@ public class Matriz extends JFrame {
 		getContentPane().add(btnCrearMatriz);
 		
 		
-		if(tipoMetodo == MetodoMatrizEnum.JACOBI) {
+		if(tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) {
 			
 			// AJUSTAR TAMAÑO DE VENTANA
 			setBounds(120, 100, 600, 350);
