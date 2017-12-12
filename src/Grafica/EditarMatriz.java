@@ -230,13 +230,13 @@ public class EditarMatriz extends JFrame {
 				Double[][] matrizFinal = new Double[rowsParam][columnsParam + 1];
 				Double[] solucion = new Double[rowsParam];
 				int indexTextField = 0; 
-				
+				if(matrizAux == null) {
 		        for(int i = 0; i < rowsParam ; i++) { 
 		          for(int j = 0; j < columnsParam + 1; j++) { 
 		            matrizOrignial[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText());
 		            indexTextField++; 
 		          } 
-		        }
+		        }}
 		        
 		        switch(bandera) {
 		        
@@ -303,15 +303,15 @@ public class EditarMatriz extends JFrame {
 						matrizFinal = gaussJordan.solve(matrizAux.clone());
 						solucion = gaussJordan.solution(matrizFinal.clone());			
 						
-						matrices.add(matrizOrignial.clone());
+						matrices.add(matrizAux.clone());
 						matrices.add(matrizFinal.clone());
 					} else if(tipoMetodo == MetodoMatrizEnum.MONTANTE) {
 						Montante montante = new Montante(matrizAux.clone());
 						
-						matrizFinal = montante.solve(montante.getOriginalMatrix());
+						matrizFinal = montante.solve(matrizAux.clone());
 						solucion = montante.solution(matrizFinal.clone());			
 						
-						matrices.add(matrizOrignial.clone());
+						matrices.add(matrizAux.clone());
 						matrices.add(matrizFinal.clone());
 					} else if(tipoMetodo == MetodoMatrizEnum.CRAMER) {
 						Cramer cramer = new Cramer();

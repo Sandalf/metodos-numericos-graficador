@@ -147,15 +147,15 @@ public class Matriz extends JFrame {
 					JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
 				} else if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) && !errorTextField.getText().isEmpty()) {
 					errorPermisible = Double.parseDouble(errorTextField.getText());
-					int rows = MatrixAux.length-1;
-					int columns = MatrixAux[0].length-1;
+					int rows = MatrixAux.length;
+					int columns = MatrixAux[0].length;
 					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
 					editarMatriz.setVisible(true);
 					
 					dispose();
 				} else {
-					Integer rows = MatrixAux.length-1;
-					Integer columns = MatrixAux[0].length-1;
+					Integer rows = MatrixAux.length;
+					Integer columns = MatrixAux[0].length;
 					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
 					editarMatriz.setVisible(true);
 					dispose();
