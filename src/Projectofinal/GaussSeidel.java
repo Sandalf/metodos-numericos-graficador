@@ -3,67 +3,85 @@ package Projectofinal;
 import java.util.ArrayList;
 
 public class GaussSeidel {
+	
+	private Double[][] tabla;
+	private ArrayList<Double[]> datos;
+	
+	public GaussSeidel() {
+		this.datos = new ArrayList<Double[]>();
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Double[][] m = {{4.0,-1.0,1.0,3.0},{-1.0,4.0,1.0,-2.0},{2.0,1.0,5.0,3.0}};
-		solve(m);
+		//solve(m);
 	}
 	
-	public static Double[][] solve(Double[][] matrix) {
-		ArrayList<Double[]> tabla = new ArrayList<Double[]>();
-		Double[] row = new Double[6];
-		Double error = new Double(0);
+	public Double[][] solve(Double[][] matrix, Double ep) {
+		int xVars = matrix.length;
+		Double[] row = new Double[(xVars*2)+1];
+		Double[] x = new Double[xVars];
+		Double delta = new Double(0);
+		Double error = ep;
 		boolean fin = false;
 		int iterador = 0;
 		
-		for(int index = 0; index < row.length; index++) {
-			if(index <= 2) {
-				row[index] = new Double(0);
-			}
-		}
-		
-		for(int i = 0; i < matrix.length; i++) {
-			Double y = new Double(matrix[i][matrix[0].length-1]);
-			//System.out.println("y1: " + y);
-			for(int j = 3; j < matrix[0].length; j++) {
-				if(i != j) {
-					//System.out.println("y -= ("+matrix[i][j]+"*"+row[j-3]+")");
-					y -= (matrix[i][j]*row[j-3]);
-				}					
-			}
-			//System.out.println("y: " + y + " ,mii: " + matrix[i][i]);
-			row[i+3] = y/matrix[i][i];
-		}
-		
-		tabla.add(row);
-		
-		setTabla(tabla);
-		
 		do {
-			row = new Double[6];
+			row = new Double[xVars*2];
+			
+			/* INICIALIZAR VARIABLES EN CEROS */
+			if(iterador == 0) {
+				for(int h = 0; h < x.length; h++) {
+					row[h] = x[h] = new Double(0);
+				}
+			}
 			
 			for(int i = 0; i < matrix.length; i++) {
+				Double y = new Double(matrix[i][matrix[0].length-1]);
+				for(int j = 0; j < matrix[0].length-1; j++) {
+					if(i != j) {
+						y -= (matrix[i][j]*x[j]);
+					}					
+				}
 				
+				y = y/matrix[i][i];
+				row[i+xVars] = y;
+				delta = Math.abs(x[i]-y);
+				
+				if(delta <= error) {
+					fin = true;
+				}
+				
+				/* GUARDAR CALCULO ANTERIOR */
+				row[i] = x[i];
+				x[i] = y;
 			}
 			
+			/* INSERTAR ERROR */
+			row[row.length-1] = delta;
+			
+			datos.add(row);
+			
 			iterador++;
-		}while(fin);
+		}while(!fin);
 		
+		this.setTabla(datos);
 		
-		return null;
+		return getTabla();
 	}
 	
-	public static void setTabla(ArrayList<Double[]> datos) {
-		Double[][] tabla = new Double[datos.size()][datos.get(0).length];
+	public void setTabla(ArrayList<Double[]> datos) {
+		tabla = new Double[datos.size()][datos.get(0).length];
 		int i = 0;
 
 		for (Double[] row : datos) {
 			tabla[i] = row.clone();
 			i++;
 		}
-		
-		displayMatrix(tabla);
+	}
+	
+	public Double[][] getTabla() {
+		return this.tabla;
 	}
 	
 	/* PINTAR TABLA */

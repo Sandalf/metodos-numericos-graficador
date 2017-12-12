@@ -123,6 +123,16 @@ public class Menu_principal {
 			}
 		});
 		mnMatrices.add(mntmJacobi);
+		
+		JMenuItem mntmGaussSeidel = new JMenuItem("Gauss Seidel");
+		mntmGaussSeidel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS_SEIDEL);
+				matriz.setVisible(true);
+				Menu.setVisible(false);
+			}
+		});
+		mnMatrices.add(mntmGaussSeidel);
 
 		JMenuItem mntmBisseccion = new JMenuItem("Bisseccion");
 		mntmBisseccion.addActionListener(new ActionListener() {

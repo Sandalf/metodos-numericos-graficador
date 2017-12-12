@@ -5,5 +5,6 @@ public enum MetodoMatrizEnum {
 	GAUSS_JORDAN,
 	MONTANTE,
 	CRAMER,
-	JACOBI
+	JACOBI,
+	GAUSS_SEIDEL
 }
