@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -34,7 +36,10 @@ public class EditarMatriz extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JButton btnLimpiar;
-	private Double[][] matrizOrignialClone;
+	private Double[][] matrizOriginal;
+	private Double[][] matrizAux;
+	private String bandera;
+	
 
 	/**
 	 * Launch the application.
@@ -57,8 +62,17 @@ public class EditarMatriz extends JFrame {
 	 */
 	public EditarMatriz() {}
 		
-	public EditarMatriz(int rowsParam, int columnsParam, MetodoMatrizEnum tipoMetodo, Double errorPermisible) {
+	public EditarMatriz(int rowsParam, int columnsParam, MetodoMatrizEnum tipoMetodo, Double errorPermisible,Double [][] MatrizAux) {
 		// SE INCREMENTA PARA INSERTAR CABECEROS Y ESPACIADO
+		this.matrizAux=MatrizAux;
+		if(matrizAux != null) 
+		{
+			bandera="mA";
+			
+		}else
+			bandera="mO";
+		
+		
 		final Integer rows = rowsParam + 2;
 		final Integer columns = columnsParam + 3;
 		final ArrayList<JTextField> listOfTextFields = new ArrayList<JTextField>();
@@ -109,6 +123,7 @@ public class EditarMatriz extends JFrame {
 		gbc_matrix.weightx = 1;
 		gbc_matrix.fill = GridBagConstraints.HORIZONTAL;
 		for(int i = 0; i < rows - 1; i++) {
+			int c=0 ,k=0;
 			for(int j = 0; j < columns - 1; j++) {
 				if(i == 0 && j != 0) {
 					// AGREGAR CABECEROS
@@ -137,9 +152,28 @@ public class EditarMatriz extends JFrame {
 				} else if (j != 0 && i != 0){
 					// AGREGAR TEXTFIELD
 					JTextField field = new JTextField();
-				    field.setText(Integer.toString(0));
+					if(matrizAux ==null)
+				    field.setText(Integer.toString(0));else 
+				    {
+				    	
+				    	
+				    } 
 				    
-				    // VALIDAR QUE SE INGRESEN SOLO NUMEROS
+				    	
+				    
+				  
+				    
+				    
+				 
+					 //VOLVER NULL LOS TEXT FIELDS CON UN CLICK
+					 field.addMouseListener(new MouseAdapter() {
+						   @Override
+						   public void mouseClicked(MouseEvent e) 
+						   {
+							   field.setText(null);
+						   }
+					   });
+					   // VALIDAR QUE SE INGRESEN SOLO NUMEROS
 				    field.addKeyListener(new KeyAdapter() {
 						@Override
 						public void keyTyped(KeyEvent e) {
@@ -149,14 +183,19 @@ public class EditarMatriz extends JFrame {
 								e.consume();
 							}
 						}
+						
 					});
+				
+				  
 				    
 					gbc_matrix.gridx = j;
 					gbc_matrix.gridy = i;
 					listOfTextFields.add(field);
 					contentPane.add(field, gbc_matrix);
 				}
+			
 			}
+			
 		}
 		
 		btnLimpiar = new JButton("Limpiar");
@@ -182,11 +221,12 @@ public class EditarMatriz extends JFrame {
 		gbc_btnResolver.gridx = columns -1;
 		gbc_btnResolver.gridy = 2;
 		
+		
 		// RESOLVER MATRIZ
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<Double[][]> matrices = new ArrayList<Double[][]>();
-				Double[][] matrizOrignial = new Double[rowsParam][columnsParam + 1];
+				Double [][] matrizOrignial = new Double[rowsParam][columnsParam + 1];
 				Double[][] matrizFinal = new Double[rowsParam][columnsParam + 1];
 				Double[] solucion = new Double[rowsParam];
 				int indexTextField = 0; 
@@ -196,9 +236,12 @@ public class EditarMatriz extends JFrame {
 		            matrizOrignial[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText());
 		            indexTextField++; 
 		          } 
-		        }			
-				
-				if(tipoMetodo == MetodoMatrizEnum.GAUSS) {
+		        }
+		        
+		        switch(bandera) {
+		        
+		        case "mO" : {
+				if(tipoMetodo == MetodoMatrizEnum.GAUSS ) {
 					Gauss gauss = new Gauss(matrizOrignial.clone());
 					
 					matrizFinal = gauss.triangulateMatrix(matrizOrignial.clone());
@@ -206,7 +249,8 @@ public class EditarMatriz extends JFrame {
 					
 					matrices.add(matrizOrignial.clone());
 					matrices.add(matrizFinal.clone());
-				} else if(tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
+				}
+				else if(tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
 					GaussJordan gaussJordan = new GaussJordan(matrizOrignial.clone());
 					
 					matrizFinal = gaussJordan.solve(matrizOrignial.clone());
@@ -241,10 +285,98 @@ public class EditarMatriz extends JFrame {
 				matriz.setVisible(true);
 				setVisible(false);
 				dispose();
+		        }
+				
+		        case "mA" : {
+		        	if(tipoMetodo == MetodoMatrizEnum.GAUSS ) {
+						Gauss gauss = new Gauss(matrizAux.clone());
+						
+						matrizFinal = gauss.triangulateMatrix(matrizAux.clone());
+						solucion = gauss.calculateSolution(matrizFinal.clone());			
+						
+						matrices.add(matrizAux.clone());
+						matrices.add(matrizFinal.clone());
+					}
+					else if(tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
+						GaussJordan gaussJordan = new GaussJordan(matrizAux.clone());
+						
+						matrizFinal = gaussJordan.solve(matrizAux.clone());
+						solucion = gaussJordan.solution(matrizFinal.clone());			
+						
+						matrices.add(matrizOrignial.clone());
+						matrices.add(matrizFinal.clone());
+					} else if(tipoMetodo == MetodoMatrizEnum.MONTANTE) {
+						Montante montante = new Montante(matrizAux.clone());
+						
+						matrizFinal = montante.solve(montante.getOriginalMatrix());
+						solucion = montante.solution(matrizFinal.clone());			
+						
+						matrices.add(matrizOrignial.clone());
+						matrices.add(matrizFinal.clone());
+					} else if(tipoMetodo == MetodoMatrizEnum.CRAMER) {
+						Cramer cramer = new Cramer();
+						
+						matrices.add(matrizAux.clone());
+						matrizFinal = cramer.solve(matrizAux.clone(),solucion,matrices);
+					} else if(tipoMetodo == MetodoMatrizEnum.JACOBI) {
+						Jacobi jacobi = new Jacobi();
+						System.out.println("Error permisible: " + errorPermisible);
+						matrices.add(jacobi.solve(matrizAux.clone(), matrizAux.clone().length, errorPermisible, 100));
+					} else if(tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) {
+						GaussSeidel gaussSeidel = new GaussSeidel();
+						System.out.println("Error permisible: " + errorPermisible);
+						matrices.add(gaussSeidel.solve(matrizAux.clone(), errorPermisible));
+					}
+					
+					Matriz matrizA = new Matriz(matrices,solucion,tipoMetodo,errorPermisible);
+					matrizA.setVisible(true);
+					setVisible(false);
+					dispose();
+		        }
+		        }
+		        
 			}
+		        
+			
+			
+			
 		});
 		
 		contentPane.add(btnResolver, gbc_btnResolver);
+
+		JButton btnGuardar = new JButton("Guardar Matriz");
+		GridBagConstraints gbc_btnGuardar = new GridBagConstraints();
+		gbc_btnGuardar.weightx = 1;
+		gbc_btnGuardar.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnGuardar.gridx = columns -1;
+		gbc_btnGuardar.gridy = 4;
+		
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				matrizOriginal = new Double[rowsParam][columnsParam + 1];
+				int indexTextField = 0; 
+				 for(int i = 0; i < rowsParam ; i++) { 
+			          for(int j = 0; j < columnsParam + 1; j++) { 
+			            matrizOriginal[i][j] = Double.parseDouble(listOfTextFields.get(indexTextField).getText());
+			            indexTextField++; 
+			          } 
+			        }
+				Menu_principal.setMatrixOriginal(matrizOriginal);
+				
+				
+			}});
+		
+		contentPane.add(btnGuardar, gbc_btnGuardar);
+		
+	}
+
+	public Double[][] getMatrizOrignial() {
+		return matrizOriginal;
+	}
+
+	public void setMatrizOrignial(Double[][] matrizOrignial) {
+		this.matrizOriginal = matrizOrignial;
 	}
 
 }

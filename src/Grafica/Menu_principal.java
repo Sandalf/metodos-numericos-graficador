@@ -25,6 +25,7 @@ import Projectofinal.MetodoMatrizEnum;
 public class Menu_principal {
 
 	public JFrame Menu;
+	public static Double [][] MatrizAux;
 
 	/**
 	 * Launch the application.
@@ -49,7 +50,10 @@ public class Menu_principal {
 	 */
 	public Menu_principal() {
 		initialize();
+	
 	}
+
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -77,7 +81,7 @@ public class Menu_principal {
 		mntmGauss.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS);
+				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS,MatrizAux);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
@@ -87,7 +91,7 @@ public class Menu_principal {
 		JMenuItem mntmGaussJordan = new JMenuItem("Gauss Jordan");
 		mntmGaussJordan.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS_JORDAN);
+				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS_JORDAN,MatrizAux);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
@@ -97,7 +101,7 @@ public class Menu_principal {
 		JMenuItem mntmMontante = new JMenuItem("Montante");
 		mntmMontante.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS.MONTANTE);
+				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS.MONTANTE,MatrizAux);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
@@ -107,7 +111,7 @@ public class Menu_principal {
 		JMenuItem mntmCramer = new JMenuItem("Cramer");
 		mntmCramer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Matriz matriz = new Matriz(MetodoMatrizEnum.CRAMER);
+				Matriz matriz = new Matriz(MetodoMatrizEnum.CRAMER,MatrizAux);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
@@ -117,7 +121,7 @@ public class Menu_principal {
 		JMenuItem mntmJacobi = new JMenuItem("Jacobi");
 		mntmJacobi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Matriz matriz = new Matriz(MetodoMatrizEnum.JACOBI);
+				Matriz matriz = new Matriz(MetodoMatrizEnum.JACOBI,MatrizAux);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
@@ -127,7 +131,7 @@ public class Menu_principal {
 		JMenuItem mntmGaussSeidel = new JMenuItem("Gauss Seidel");
 		mntmGaussSeidel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS_SEIDEL);
+				Matriz matriz = new Matriz(MetodoMatrizEnum.GAUSS_SEIDEL,MatrizAux);
 				matriz.setVisible(true);
 				Menu.setVisible(false);
 			}
@@ -358,5 +362,10 @@ public class Menu_principal {
 				popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 		});
+	}
+
+	public static void setMatrixOriginal(Double[][] matrixAux) {
+		MatrizAux=matrixAux;
+		
 	}
 }

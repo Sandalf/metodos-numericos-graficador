@@ -32,6 +32,7 @@ public class Matriz extends JFrame {
 	private JComboBox<Integer> columnasComboBox;
 	private JTable table;
 	private JTextField errorTextField;
+	private Double [][] MatrixAux;
 
 	/**
 	 * Launch the application.
@@ -40,7 +41,7 @@ public class Matriz extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Matriz frame = new Matriz(null);
+					Matriz frame = new Matriz(null,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -52,8 +53,9 @@ public class Matriz extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public Matriz(MetodoMatrizEnum tipoMetodo) {
+	public Matriz(MetodoMatrizEnum tipoMetodo,Double [][] MatrixAux) {
 		initialize(null,null,tipoMetodo,null);
+		this.MatrixAux=MatrixAux;
 	}
 	
 	/**
@@ -95,14 +97,16 @@ public class Matriz extends JFrame {
 					errorPermisible = Double.parseDouble(errorTextField.getText());
 					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
 					Integer columns = (Integer)columnasComboBox.getSelectedItem();
-					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible);
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
 					editarMatriz.setVisible(true);
+					
 					dispose();
 				} else {
 					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
 					Integer columns = (Integer)columnasComboBox.getSelectedItem();
-					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible);
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
 					editarMatriz.setVisible(true);
+					
 					dispose();
 				}				
 			}
@@ -133,6 +137,36 @@ public class Matriz extends JFrame {
 		getContentPane().add(columnasComboBox);
 		getContentPane().add(btnCrearMatriz);
 		
+		JButton btnMatrixAux = new JButton("Matriz Aux");
+		btnMatrixAux .addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+                 Double errorPermisible = new Double(0);
+				
+				if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL)  && errorTextField.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
+				} else if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) && !errorTextField.getText().isEmpty()) {
+					errorPermisible = Double.parseDouble(errorTextField.getText());
+					int rows = MatrixAux.length-1;
+					int columns = MatrixAux[0].length-1;
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
+					editarMatriz.setVisible(true);
+					
+					dispose();
+				} else {
+					Integer rows = MatrixAux.length-1;
+					Integer columns = MatrixAux[0].length-1;
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
+					editarMatriz.setVisible(true);
+					dispose();
+				}				
+				
+			}
+		});
+		btnMatrixAux .setBounds(165, 83, 155, 27);
+		getContentPane().add(btnMatrixAux );
+		if(matrices != null) 
+			btnMatrixAux.setVisible(false);
 		
 		if(tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) {
 			
@@ -165,6 +199,7 @@ public class Matriz extends JFrame {
 			getContentPane().add(errorTextField); 
 			
 			if(matrices != null) {
+				
 			
 				// DEPLEGAR TABLA
 				JScrollPane scrollPane = new JScrollPane();
@@ -276,7 +311,12 @@ public class Matriz extends JFrame {
 					yPosition += 30;
 					matrizIndex++;
 				}
+				
+				
+				
 			}
 		}
 	}
+
+	
 }
