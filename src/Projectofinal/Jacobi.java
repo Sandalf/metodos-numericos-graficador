@@ -16,7 +16,7 @@ public class Jacobi {
 	}
 	
 	public Double[][] solve(Double[][] matrix, int numVars, double error, int maxIterations) {
-		Double[][] result = new Double[numVars+numVars+1][maxIterations];
+		Double[][] result = new Double[maxIterations][numVars+numVars+1];
 		boolean end;
 		double[] xVars = new double[numVars];
 		double[] yVars = new double[numVars];
@@ -65,7 +65,6 @@ public class Jacobi {
 			
 		} while(end);
 		
-
 		return result;
 	}
 	
