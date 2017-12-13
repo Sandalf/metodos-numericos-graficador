@@ -13,7 +13,10 @@ public class GaussSeidel {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		GaussSeidel gaussSeidel = new GaussSeidel();
 		Double[][] m = {{4.0,-1.0,1.0,3.0},{-1.0,4.0,1.0,-2.0},{2.0,1.0,5.0,3.0}};
+		gaussSeidel.solve(m, 0.001);
+		displayMatrix(gaussSeidel.getTabla());
 		//solve(m);
 	}
 	
@@ -27,7 +30,7 @@ public class GaussSeidel {
 		int iterador = 0;
 		
 		do {
-			row = new Double[xVars*2];
+			row = new Double[(xVars*2)+1];
 			
 			/* INICIALIZAR VARIABLES EN CEROS */
 			if(iterador == 0) {
