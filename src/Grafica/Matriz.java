@@ -206,13 +206,13 @@ public class Matriz extends JFrame {
 				scrollPane.setBounds(10, 80, 578, 203);
 				getContentPane().add(scrollPane);
 				
-				String[] cabeceros = new String[matrices.get(0).length];
+				String[] cabeceros = new String[matrices.get(0)[0].length];
 				System.out.println("Cabeceros length: " + cabeceros.length);
 				int xVarIndex = 0;
 				
 				// INSERTAR CABECEROS DINAMICAMENTE
 				for(int i = 0; i < cabeceros.length; i++) {
-					if(i + 1  == ((cabeceros.length-1)/2)) {
+					if(xVarIndex == ((cabeceros.length-1)/2)) {
 						xVarIndex = 1;
 					} else {
 						xVarIndex++;
@@ -228,31 +228,7 @@ public class Matriz extends JFrame {
 				table = new JTable();
 				table.setBackground(Color.LIGHT_GRAY);
 				table.setBorder(new LineBorder(new Color(0, 0, 0)));
-				table.setModel(new DefaultTableModel(
-					new Object[][] {
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null},
-					},
-					cabeceros
-				));
+				table.setModel(new DefaultTableModel(new Object[][] {},cabeceros));
 				scrollPane.setViewportView(table);
 				
 				Object[][] resultados = matrices.get(0);
