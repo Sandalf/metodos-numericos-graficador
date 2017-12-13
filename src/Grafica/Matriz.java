@@ -97,14 +97,14 @@ public class Matriz extends JFrame {
 					errorPermisible = Double.parseDouble(errorTextField.getText());
 					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
 					Integer columns = (Integer)columnasComboBox.getSelectedItem();
-					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,null);
 					editarMatriz.setVisible(true);
 					
 					dispose();
 				} else {
 					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
 					Integer columns = (Integer)columnasComboBox.getSelectedItem();
-					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
+					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,null);
 					editarMatriz.setVisible(true);
 					
 					dispose();
@@ -148,14 +148,14 @@ public class Matriz extends JFrame {
 				} else if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) && !errorTextField.getText().isEmpty()) {
 					errorPermisible = Double.parseDouble(errorTextField.getText());
 					int rows = MatrixAux.length;
-					int columns = MatrixAux[0].length;
+					int columns = MatrixAux[0].length-1;
 					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
 					editarMatriz.setVisible(true);
 					
 					dispose();
 				} else {
 					Integer rows = MatrixAux.length;
-					Integer columns = MatrixAux[0].length;
+					Integer columns = MatrixAux[0].length-1;
 					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
 					editarMatriz.setVisible(true);
 					dispose();
@@ -265,7 +265,7 @@ public class Matriz extends JFrame {
 			if(matrices != null && solucion != null) {
 				int labelHorizontalPos = 57;
 				int labelVerticalPos = 70;
-				JLabel solucionLabel = new JLabel("Solución:");
+				JLabel solucionLabel = new JLabel("Solucion:");
 				solucionLabel.setBounds(57,50,80,30);
 				getContentPane().add(solucionLabel);
 				

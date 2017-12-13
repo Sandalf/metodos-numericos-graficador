@@ -64,6 +64,7 @@ public class EditarMatriz extends JFrame {
 		
 	public EditarMatriz(int rowsParam, int columnsParam, MetodoMatrizEnum tipoMetodo, Double errorPermisible,Double [][] MatrizAux) {
 		// SE INCREMENTA PARA INSERTAR CABECEROS Y ESPACIADO
+		// DETERMINAR SI LA MATRIZ AUXILIAR ES IGUAL O DIFERENTE DE NULL
 		this.matrizAux=MatrizAux;
 		if(matrizAux != null) 
 		{
@@ -197,7 +198,21 @@ public class EditarMatriz extends JFrame {
 			}
 			
 		}
-		
+		if(matrizAux != null) {
+			int C=0;
+		for(int i =0;   i<matrizAux.length; i++ ) 
+		{    int j=0;
+			while(j<matrizAux[0].length) 
+		    {
+			   
+				listOfTextFields.get(C).setText(matrizAux[i][j].toString());
+				
+				j++;
+				C++;
+		    }
+			
+		}
+		}
 		btnLimpiar = new JButton("Limpiar");
 		GridBagConstraints gbc_btnLimpiar = new GridBagConstraints();
 		gbc_btnLimpiar.weightx = 1;
