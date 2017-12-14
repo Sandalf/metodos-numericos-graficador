@@ -21,6 +21,9 @@ import Projectofinal.EcDiferencialesEnum;
 import Projectofinal.IntegracionEnum;
 import Projectofinal.InterpolacionEnum;
 import Projectofinal.MetodoMatrizEnum;
+import javax.swing.JLabel;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
+import java.awt.Font;
 
 public class Menu_principal {
 
@@ -341,6 +344,43 @@ public class Menu_principal {
 			}
 		});
 		mnEcuacionesDiferenciales.add(mntmEulermejorado);
+		
+		JLabel lblNewJgoodiesTitle = DefaultComponentFactory.getInstance().createTitle("Metodos Numericos");
+		lblNewJgoodiesTitle.setFont(new Font("Bodoni MT", Font.PLAIN, 22));
+		lblNewJgoodiesTitle.setBounds(161, 52, 259, 39);
+		panel.add(lblNewJgoodiesTitle);
+		
+		JLabel lblNewJgoodiesLabel = DefaultComponentFactory.getInstance().createLabel("Integrantes");
+		lblNewJgoodiesLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewJgoodiesLabel.setBounds(225, 244, 137, 21);
+		panel.add(lblNewJgoodiesLabel);
+		
+		JLabel lblProfesor = DefaultComponentFactory.getInstance().createTitle("Profesor :  Jesus Astolgo Rodriguez Valenzuela");
+		lblProfesor.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblProfesor.setBounds(100, 102, 381, 28);
+		panel.add(lblProfesor);
+		
+		JLabel lblCarreraIngEn = DefaultComponentFactory.getInstance().createTitle("Carrera: Ing. en Sistemas Computacionales");
+		lblCarreraIngEn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCarreraIngEn.setBounds(123, 152, 321, 21);
+		panel.add(lblCarreraIngEn);
+		
+		JLabel lblSemestre = DefaultComponentFactory.getInstance().createLabel("Semestre 99");
+		lblSemestre.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblSemestre.setBounds(218, 184, 160, 36);
+		panel.add(lblSemestre);
+		
+		JLabel lblNewJgoodiesTitle_1 = DefaultComponentFactory.getInstance().createTitle("Dinorah Estephania Guzman Alvarado");
+		lblNewJgoodiesTitle_1.setBounds(168, 276, 223, 14);
+		panel.add(lblNewJgoodiesTitle_1);
+		
+		JLabel lblLuisAlfonsoSandoval = DefaultComponentFactory.getInstance().createTitle("Luis Alfonso Sandoval Huerta");
+		lblLuisAlfonsoSandoval.setBounds(187, 301, 204, 14);
+		panel.add(lblLuisAlfonsoSandoval);
+		
+		JLabel lblCesarLudovicoAngulo = DefaultComponentFactory.getInstance().createTitle("Cesar Ludovico Angulo Castro");
+		lblCesarLudovicoAngulo.setBounds(188, 326, 245, 14);
+		panel.add(lblCesarLudovicoAngulo);
 
 	}
 

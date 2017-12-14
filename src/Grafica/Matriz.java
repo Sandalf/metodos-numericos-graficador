@@ -166,7 +166,7 @@ public class Matriz extends JFrame {
 						dispose();
 					}
 				} catch(Exception error) {
-					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar cargar la matriz auxiliar.");
+					JOptionPane.showMessageDialog(getContentPane(), "no tiene niguna metriz guardada en la matriz auxiliar.");
 					System.out.println(error.getMessage());
 				}
 				
