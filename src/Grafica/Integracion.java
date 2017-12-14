@@ -47,7 +47,6 @@ public class Integracion extends JFrame {
 	private JTextField yTextField;
 	private ArrayList<Double[]> trapecioTablaValores = new ArrayList<Double[]>();
 	private Double[][] trapecioTablaValoresTableModel;
-	private Double diferenciaEntrePuntos = new Double(0);
 
 	/**
 	 * Launch the application.
@@ -247,14 +246,19 @@ public class Integracion extends JFrame {
 		btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limSupTextField.setText("0");
-				limInfTextField.setText("0");
-				numPuntosTextField.setText("0");
-				xTextField.setText("0");
-				yTextField.setText("0");
-				funcionTextField.setText("");
-				solucionTextField.setText("");
-				table.setModel(new DefaultTableModel(new Object[][] {},cabecero));
+				try {
+					limSupTextField.setText("0");
+					limInfTextField.setText("0");
+					numPuntosTextField.setText("0");
+					xTextField.setText("0");
+					yTextField.setText("0");
+					funcionTextField.setText("");
+					solucionTextField.setText("");
+					table.setModel(new DefaultTableModel(new Object[][] {},cabecero));
+				} catch(Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar limpiar.");
+					System.out.println(error.getMessage());
+				}
 			}
 		});
 		btnLimpiar.setBounds(316, 49, 117, 29);
@@ -264,41 +268,47 @@ public class Integracion extends JFrame {
 		btnAgregarPunto = new JButton("Agregar Punto");
 		btnAgregarPunto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// VALIDAR QUE LAS COORDENADAS NO ESTEN VACIAS
-				if (xTextField.getText().isEmpty() || yTextField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(getContentPane(), "No debe haber coordenadas vacias.");
-				} else {
-
-					Double[] punto = new Double[2];
-					punto[0] = Double.parseDouble(xTextField.getText());
-					punto[1] = Double.parseDouble(yTextField.getText());
-					Double[] row = { punto[0], punto[1], 0.0, 0.0 };
+				try {
+					// VALIDAR QUE LAS COORDENADAS NO ESTEN VACIAS
+					if (xTextField.getText().isEmpty() || yTextField.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "No debe haber coordenadas vacias.");
+					} else {
+	
+						Double[] punto = new Double[2];
+						punto[0] = Double.parseDouble(xTextField.getText());
+						punto[1] = Double.parseDouble(yTextField.getText());
+						Double[] row = { punto[0], punto[1], 0.0, 0.0 };
+						
+						trapecioTablaValores.add(row);
+						
+						/*
+						 * EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA SER ACEPTADO COMO MODELO DE LA
+						 * TABLA
+						 */
+						trapecioTablaValoresTableModel = new Double[trapecioTablaValores.size()][4];
+	
+						for (int i = 0; i < trapecioTablaValores.size(); i++) {
+							trapecioTablaValoresTableModel[i] = trapecioTablaValores.get(i);
+						}
+	
+						table.setModel(new DefaultTableModel(trapecioTablaValoresTableModel, cabecero));
+						
+						/*
+						 * SE AGREGA LIMITE SUPERIOR
+						 */
+						if(trapecioTablaValores.size() == 1) {
+							limInfTextField.setText(trapecioTablaValores.get(0)[0].toString());
+						}
 					
-					trapecioTablaValores.add(row);
-					
-					/*
-					 * EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA SER ACEPTADO COMO MODELO DE LA
-					 * TABLA
-					 */
-					trapecioTablaValoresTableModel = new Double[trapecioTablaValores.size()][4];
-
-					for (int i = 0; i < trapecioTablaValores.size(); i++) {
-						trapecioTablaValoresTableModel[i] = trapecioTablaValores.get(i);
 					}
-
-					table.setModel(new DefaultTableModel(trapecioTablaValoresTableModel, cabecero));
-					
-					/*
-					 * SE AGREGA LIMITE SUPERIOR
-					 */
-					if(trapecioTablaValores.size() == 1) {
-						limInfTextField.setText(trapecioTablaValores.get(0)[0].toString());
-					}
-				
+				} catch(Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar agregar el punto.");
+					System.out.println(error.getMessage());
 				}
 			}
 		});
 		btnAgregarPunto.setBounds(316, 79, 117, 29);
+		btnAgregarPunto.setVisible(false);
 		contentPane.add(btnAgregarPunto);
 		
 		xLabel = new JLabel("X:");
@@ -342,6 +352,7 @@ public class Integracion extends JFrame {
 				lblFuncin.setVisible(false);
 				limSupTextField.setEnabled(false);
 				limInfTextField.setEnabled(false);
+				btnAgregarPunto.setVisible(true);
 			break;
 			case SimpsonUnTercio:
 				setTitle("Simpson 1/3");

@@ -89,26 +89,31 @@ public class Matriz extends JFrame {
 		btnCrearMatriz.setBounds(323, 6, 121, 29);
 		btnCrearMatriz.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Double errorPermisible = new Double(0);
-				
-				if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL)  && errorTextField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
-				} else if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) && !errorTextField.getText().isEmpty()) {
-					errorPermisible = Double.parseDouble(errorTextField.getText());
-					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
-					Integer columns = (Integer)columnasComboBox.getSelectedItem();
-					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,null);
-					editarMatriz.setVisible(true);
+				try {
+					Double errorPermisible = new Double(0);
 					
-					dispose();
-				} else {
-					Integer rows = (Integer)renglonesComboBox.getSelectedItem();
-					Integer columns = (Integer)columnasComboBox.getSelectedItem();
-					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,null);
-					editarMatriz.setVisible(true);
-					
-					dispose();
-				}				
+					if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL)  && errorTextField.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
+					} else if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) && !errorTextField.getText().isEmpty()) {
+						errorPermisible = Double.parseDouble(errorTextField.getText());
+						Integer rows = (Integer)renglonesComboBox.getSelectedItem();
+						Integer columns = (Integer)columnasComboBox.getSelectedItem();
+						EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,null);
+						editarMatriz.setVisible(true);
+						
+						dispose();
+					} else {
+						Integer rows = (Integer)renglonesComboBox.getSelectedItem();
+						Integer columns = (Integer)columnasComboBox.getSelectedItem();
+						EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,null);
+						editarMatriz.setVisible(true);
+						
+						dispose();
+					}
+				} catch(Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar crear la matriz.");
+					System.out.println(error.getMessage());
+				}
 			}
 		});
 		getContentPane().setLayout(null);
@@ -140,26 +145,30 @@ public class Matriz extends JFrame {
 		JButton btnMatrixAux = new JButton("Matriz Aux");
 		btnMatrixAux .addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-                 Double errorPermisible = new Double(0);
-				
-				if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL)  && errorTextField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
-				} else if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) && !errorTextField.getText().isEmpty()) {
-					errorPermisible = Double.parseDouble(errorTextField.getText());
-					int rows = MatrixAux.length;
-					int columns = MatrixAux[0].length-1;
-					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
-					editarMatriz.setVisible(true);
+				try {
+	                 Double errorPermisible = new Double(0);
 					
-					dispose();
-				} else {
-					Integer rows = MatrixAux.length;
-					Integer columns = MatrixAux[0].length-1;
-					EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
-					editarMatriz.setVisible(true);
-					dispose();
-				}				
+					if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL)  && errorTextField.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "Deber ingresar el error permisible.");
+					} else if((tipoMetodo == MetodoMatrizEnum.JACOBI || tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) && !errorTextField.getText().isEmpty()) {
+						errorPermisible = Double.parseDouble(errorTextField.getText());
+						int rows = MatrixAux.length;
+						int columns = MatrixAux[0].length-1;
+						EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
+						editarMatriz.setVisible(true);
+						
+						dispose();
+					} else {
+						Integer rows = MatrixAux.length;
+						Integer columns = MatrixAux[0].length-1;
+						EditarMatriz editarMatriz = new EditarMatriz(rows,columns,tipoMetodo,errorPermisible,MatrixAux);
+						editarMatriz.setVisible(true);
+						dispose();
+					}
+				} catch(Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar cargar la matriz auxiliar.");
+					System.out.println(error.getMessage());
+				}
 				
 			}
 		});
