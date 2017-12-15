@@ -19,11 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Projectofinal.DerivacionEnum;
-import Projectofinal.Gauss;
 import Projectofinal.MetodoMatrizEnum;
-import javax.swing.JPanel;
-import javax.swing.ScrollPaneConstants;
 
 public class Matriz extends JFrame {
 
@@ -36,6 +32,11 @@ public class Matriz extends JFrame {
 	private JTable table;
 	private JTextField errorTextField;
 	private Double [][] MatrixAux;
+	private int matrixIndex;
+	private JButton btnAnterior;
+	private JButton btnSiguiente;
+	private JLabel matrizLabel;
+	private ArrayList<JLabel> labelsMatrizPaginacion = new ArrayList<JLabel>();
 
 	/**
 	 * Launch the application.
@@ -197,8 +198,9 @@ public class Matriz extends JFrame {
 				
 			}
 		});
-		btnMatrixAux .setBounds(165, 83, 155, 27);
+		btnMatrixAux .setBounds(444, 7, 121, 27);
 		getContentPane().add(btnMatrixAux );
+		
 		if(matrices != null) 
 			btnMatrixAux.setVisible(false);
 		
@@ -270,13 +272,16 @@ public class Matriz extends JFrame {
 			}
 			
 		} else {
+			
+			// INICIALIZAR PAGINACION DE MATRICES
+			matrixIndex = 0;
 		
 			// DESPLEGAR MATRICES
 			if(matrices != null && solucion != null) {
 				int labelHorizontalPos = 57;
-				int labelVerticalPos = 70;
+				int labelVerticalPos = 120;
 				JLabel solucionLabel = new JLabel("Solucion:");
-				solucionLabel.setBounds(57,50,80,30);
+				solucionLabel.setBounds(57,90,80,30);
 				getContentPane().add(solucionLabel);
 				
 				// DESPLEGAR SOLUCION
@@ -292,39 +297,87 @@ public class Matriz extends JFrame {
 					getContentPane().add(xTextField);
 				}
 				
-				// DESPLEGAR MATRICES
-				int matrizIndex = 1;
-				int yPosition = 130;		
+				JLabel lblVerMatrices = new JLabel("Ver Matrices: " + matrices.size() + " matrices");
+				lblVerMatrices.setBounds(57, 39, 210, 16);
+				getContentPane().add(lblVerMatrices);
 				
-				System.out.println("Matrices original");
-				Gauss.displayMatrix(matrices.get(0));
-				System.out.println("Matrices no original");
-				Gauss.displayMatrix(matrices.get(1));
-				
-				for(Double[][] matriz: matrices) {
-					System.out.println("Matriz: " + matrizIndex);
-					Gauss.displayMatrix(matriz);
-					JLabel matrizLabel = new JLabel("Matriz " + Integer.toString(matrizIndex));
-					matrizLabel.setBounds(57,yPosition-20,60,30);
-					getContentPane().add(matrizLabel);
-					for(Double[] fila: matriz) {
-						int xPosition = 57;
-						for(Double elemento: fila) {
-							System.out.println(elemento);
-							JLabel el = new JLabel(Double.toString(elemento));
-							el.setBounds(xPosition,yPosition,60,30);
-							getContentPane().add(el);
-							xPosition += 60;
-						}
-						yPosition += 30;
+				/* VER SIGUIENTE MATRIZ */
+				btnSiguiente = new JButton("Siguiente");
+				btnSiguiente.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						matrixIndex += 1;
+						paginarMatriz(matrices,matrixIndex);
 					}
-					yPosition += 30;
-					matrizIndex++;
-				}
+				});
+				btnSiguiente.setBounds(176, 63, 117, 29);
+				getContentPane().add(btnSiguiente);
 				
+				/* VER MATRIZ ANTERIOR */
+				btnAnterior = new JButton("Anterior");
+				btnAnterior.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						matrixIndex -= 1;
+						paginarMatriz(matrices,matrixIndex);
+					}
+				});
+				btnAnterior.setBounds(47, 63, 117, 29);
+				getContentPane().add(btnAnterior);
 				
-				
+				paginarMatriz(matrices,matrixIndex);			
 			}
 		}
+	}
+	
+	public void paginarMatriz(ArrayList<Double[][]> matrices, int index) {
+		
+		/* HABILITAR O DESHABILITAR BOTONES DE PAGINACION */
+		if (matrixIndex == 0) {
+			btnAnterior.setEnabled(false);
+		} else {
+			btnAnterior.setEnabled(true);
+		}
+		
+		if(matrixIndex == matrices.size()-1) {
+			btnSiguiente.setEnabled(false);
+		} else {
+			btnSiguiente.setEnabled(true);
+		}
+		
+		/* ELIMINAR COMPONENTES PREVIOS */
+		if(matrizLabel != null) { 
+			getContentPane().remove(matrizLabel);
+		}
+		
+		if(!labelsMatrizPaginacion.isEmpty()) {
+			for(JLabel label : labelsMatrizPaginacion) {
+				getContentPane().remove(label);
+			}
+			labelsMatrizPaginacion.clear();
+		}
+		
+		matrizLabel = new JLabel("Matriz " + Integer.toString(matrixIndex+1));
+		matrizLabel.setBounds(57,160,60,30);
+		getContentPane().add(matrizLabel);
+	
+		Double[][] matriz = matrices.get(matrixIndex);
+		int yPosition = 180;	
+		
+		/* PINTAR MATRIZ */
+		for(Double[] fila: matriz) {
+			int xPosition = 57;
+			for(Double elemento: fila) {
+				System.out.println(elemento);
+				JLabel el = new JLabel(Double.toString(elemento));
+				el.setBounds(xPosition,yPosition,60,30);
+				getContentPane().add(el);
+				labelsMatrizPaginacion.add(el);			
+				xPosition += 60;
+			}
+			yPosition += 30;
+		}
+		
+		/* ACTUALIZAR PANEL */
+		getContentPane().revalidate();
+		getContentPane().repaint();
 	}
 }
