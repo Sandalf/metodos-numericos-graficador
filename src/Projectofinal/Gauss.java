@@ -18,7 +18,7 @@ public class Gauss {
 		System.out.print("\n");
 	}
 	
-	public Double[][] triangulateMatrix(Double[][] matrix) {	
+	public Double[][] triangulateMatrix(Double[][] matrix) throws Exception  {	
 		Double[][] resultado = new Double[matrix.length][matrix[0].length];
 		double fm = 0;// FACTOR MULTIPLICADOR
 		double ep = 0;// ELEMENTO PIVOTE
@@ -43,7 +43,7 @@ public class Gauss {
 		return resultado;
 	}
 	
-	public Double[] calculateSolution(Double[][] matrix) {
+	public Double[] calculateSolution(Double[][] matrix) throws Exception {
 		Double[] variables = new Double[matrix.length];
 		
 		// ULTIMA INCOGNITA

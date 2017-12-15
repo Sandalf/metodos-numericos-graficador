@@ -54,7 +54,7 @@ public class Interpolacion extends JFrame {
 				try {
 					Interpolacion frame = new Interpolacion(null);
 					frame.setVisible(true);
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -69,53 +69,49 @@ public class Interpolacion extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        Menu_principal.main(null);
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				Menu_principal.main(null);
 				setVisible(false);
 				dispose();
-		    }
+			}
 		});
 		setBounds(100, 100, 625, 457);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		//combo box para el orden de la funcion en el metodo de minimos cuadrados
+
+		// combo box para el orden de la funcion en el metodo de minimos cuadrados
 		Orden = new JComboBox<Integer>();
 		contentPane.add(Orden);
 		Orden.setBounds(300, 6, 40, 27);
 		JLabel OrdenF = new JLabel("Orden");
 		contentPane.add(OrdenF);
 		OrdenF.setBounds(260, 6, 40, 27);
-		for(int i=1; i<=20; i++)
-		{
+		for (int i = 1; i <= 20; i++) {
 			Orden.addItem(i);
 		}
-		if(tipoMetodo != InterpolacionEnum.Interpolacion_CuadradrosMinimos) 
-		{
+		if (tipoMetodo != InterpolacionEnum.Interpolacion_CuadradrosMinimos) {
 			Orden.setVisible(false);
 			OrdenF.setVisible(false);
 		}
-	
-		   
-		
+
 		// INICIALIZAR ARREGLO DE PUNTOS
 		puntos = new ArrayList<Double[]>();
-		
+
 		// CABECEROS
-		String[] cabeceroPuntosTable = {"X","Y"};
-		String[] cabeceroDiferenciasTable = {"Diferencias"};
-		
+		String[] cabeceroPuntosTable = { "X", "Y" };
+		String[] cabeceroDiferenciasTable = { "Diferencias" };
+
 		x_TextField = new JTextField();
 		// VALIDAR QUE SE INGRESEN SOLO NUMEROS
 		x_TextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				
-				if(Character.isLetter(c) && !e.isAltDown()) {
+
+				if (Character.isLetter(c) && !e.isAltDown()) {
 					e.consume();
 				}
 			}
@@ -123,107 +119,115 @@ public class Interpolacion extends JFrame {
 		x_TextField.setBounds(101, 6, 43, 26);
 		contentPane.add(x_TextField);
 		x_TextField.setColumns(10);
-		
+
 		// AGREGAR PUNTOS
 		JButton btnAgregarPunto = new JButton("Agregar Punto");
 		btnAgregarPunto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				// VALIDAR QUE LAS COORDENADAS NO ESTEN VACIAS
-				if(x_TextField.getText().isEmpty() || y_TextField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(getContentPane(), "No debe haber coordenadas vacias.");
-				} else {
-					
-					Double[] punto = new Double[2];
-					punto[0] = Double.parseDouble(x_TextField.getText());
-					punto[1] = Double.parseDouble(y_TextField.getText());	
-					
-					/* CALCULAR DIFERENCIA ENTRE PUNTOS
-					 * */
-					if(puntos.size() == 2) {
-						diferenciaEntrePuntos = puntos.get(0)[0] - puntos.get(1)[0];
-					}
-					
-					// DEFINIR METODO POR EL QUE SE VA A RESOLVER
-					
-					 switch(tipoMetodo) {
-					 
-				
-					 case  InterpolacionNewton:
-						 // VALIDAR QUE PUNTO INGRESADO COINCIDA CON LA DIFERENCIa ENTRE LOS PUNTOS ANTERIORES
-					if(puntos.size() >= 2 && diferenciaEntrePuntos != puntos.get(puntos.size()-1)[0] - punto[0]) {
-					
-					
-						JOptionPane.showMessageDialog(getContentPane(), "Las coordenadas X deben estar a la misma distancia entre si.");
+				try {
+					// VALIDAR QUE LAS COORDENADAS NO ESTEN VACIAS
+					if (x_TextField.getText().isEmpty() || y_TextField.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(getContentPane(), "No debe haber coordenadas vacias.");
 					} else {
-						
-					
-						puntos.add(punto);	
-							
-						/* EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA
-						 * SER ACEPTADO COMO MODELO DE LA TABLA
+
+						Double[] punto = new Double[2];
+						punto[0] = Double.parseDouble(x_TextField.getText());
+						punto[1] = Double.parseDouble(y_TextField.getText());
+
+						/*
+						 * CALCULAR DIFERENCIA ENTRE PUNTOS
 						 */
-						tableModel = new Double[puntos.size()][2];
-						
-						for(int i = 0; i <  puntos.size(); i++) { 
-							tableModel[i] = puntos.get(i);
-					    }	
-						
-						puntosTable.setModel(new DefaultTableModel(tableModel,cabeceroPuntosTable));
+						if (puntos.size() == 2) {
+							diferenciaEntrePuntos = puntos.get(0)[0] - puntos.get(1)[0];
+						}
+
+						// DEFINIR METODO POR EL QUE SE VA A RESOLVER
+
+						switch (tipoMetodo) {
+
+						case InterpolacionNewton:
+							// VALIDAR QUE PUNTO INGRESADO COINCIDA CON LA DIFERENCIa ENTRE LOS PUNTOS
+							// ANTERIORES
+							if (puntos.size() >= 2
+									&& diferenciaEntrePuntos != puntos.get(puntos.size() - 1)[0] - punto[0]) {
+
+								JOptionPane.showMessageDialog(getContentPane(),
+										"Las coordenadas X deben estar a la misma distancia entre si.");
+							} else {
+
+								puntos.add(punto);
+
+								/*
+								 * EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA SER ACEPTADO COMO MODELO DE LA
+								 * TABLA
+								 */
+								tableModel = new Double[puntos.size()][2];
+
+								for (int i = 0; i < puntos.size(); i++) {
+									tableModel[i] = puntos.get(i);
+								}
+
+								puntosTable.setModel(new DefaultTableModel(tableModel, cabeceroPuntosTable));
+							}
+							break;
+						case Interpolacion_Lagrange:
+							puntos.add(punto);
+
+							/*
+							 * EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA SER ACEPTADO COMO MODELO DE LA
+							 * TABLA
+							 */
+							tableModel = new Double[puntos.size()][2];
+
+							for (int i = 0; i < puntos.size(); i++) {
+								tableModel[i] = puntos.get(i);
+							}
+
+							puntosTable.setModel(new DefaultTableModel(tableModel, cabeceroPuntosTable));
+							break;
+						case Interpolacion_CuadradrosMinimos:
+							puntos.add(punto);
+
+							/*
+							 * EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA SER ACEPTADO COMO MODELO DE LA
+							 * TABLA
+							 */
+							tableModel = new Double[puntos.size()][2];
+
+							for (int i = 0; i < puntos.size(); i++) {
+								tableModel[i] = puntos.get(i);
+							}
+							GraficaPuntos = new Graficadora(tableModel);
+							JPanel Grafica = GraficaPuntos.obtieneGrafica();
+							contentPane.add(Grafica);
+							Grafica.setBounds(150, 115, 450, 300);
+							Grafica.setVisible(true);
+
+							puntosTable.setModel(new DefaultTableModel(tableModel, cabeceroPuntosTable));
+							break;
+
+						}
+
 					}
-					break;
-					 case Interpolacion_Lagrange:
-						 puntos.add(punto);	
-							
-							/* EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA
-							 * SER ACEPTADO COMO MODELO DE LA TABLA
-							 */
-							tableModel = new Double[puntos.size()][2];
-							
-							for(int i = 0; i <  puntos.size(); i++) { 
-								tableModel[i] = puntos.get(i);
-						    }	
-							
-							puntosTable.setModel(new DefaultTableModel(tableModel,cabeceroPuntosTable));
-							break;
-					 case Interpolacion_CuadradrosMinimos:
-						 puntos.add(punto);	
-							
-							/* EL ARRAYLIST SE DEBE CONVETIR A ARREGLO PARA
-							 * SER ACEPTADO COMO MODELO DE LA TABLA
-							 */
-							tableModel = new Double[puntos.size()][2];
-							
-							for(int i = 0; i <  puntos.size(); i++) { 
-								tableModel[i] = puntos.get(i);
-						    }	
-							 GraficaPuntos = new Graficadora(tableModel);
-							 JPanel Grafica = GraficaPuntos.obtieneGrafica();
-								contentPane.add(Grafica);
-								Grafica.setBounds(150,115,450,300);
-								Grafica.setVisible(true);
-							
-							puntosTable.setModel(new DefaultTableModel(tableModel,cabeceroPuntosTable));
-							break;
-					
-					 }	
-					 
+				} catch (Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar agregar punto.");
+					System.out.println(error.getMessage());
 				}
-				}
+			}
 		}
-			
+
 		);
 		btnAgregarPunto.setBounds(400, 6, 150, 29);
 		contentPane.add(btnAgregarPunto);
-		
+
 		y_TextField = new JTextField();
 		// VALIDAR QUE SE INGRESEN SOLO NUMEROS
 		y_TextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
-				
-				if(Character.isLetter(c) && !e.isAltDown()) {
+
+				if (Character.isLetter(c) && !e.isAltDown()) {
 					e.consume();
 				}
 			}
@@ -231,118 +235,128 @@ public class Interpolacion extends JFrame {
 		y_TextField.setBounds(188, 6, 43, 26);
 		contentPane.add(y_TextField);
 		y_TextField.setColumns(10);
-		
+
 		JLabel lblX = new JLabel("X:");
 		lblX.setBounds(76, 11, 21, 16);
 		contentPane.add(lblX);
-		
+
 		JLabel lblY = new JLabel("Y:");
 		lblY.setBounds(164, 11, 21, 16);
 		contentPane.add(lblY);
-	
-		
+
 		/* RESOLVER */
 		btnResolver = new JButton("Resolver");
 		btnResolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (puntos.size() < 2) {
-					JOptionPane.showMessageDialog(getContentPane(), "No ha agregado suficientes puntos.");
-				} else {
-					if(tipoMetodo == InterpolacionEnum.InterpolacionNewton ) {
-					InterpolacioNewton interpolacionNewton = new InterpolacioNewton(tableModel);
-					Double soulucion = interpolacionNewton.solve(Double.parseDouble(xValue_textField.getText()));
-					Double[][] tablaDiferencias = interpolacionNewton.getTablaDiferencias();
-					String[] cabeceros = new String[tablaDiferencias[0].length];
-					
-					for(int i = 0; i < tablaDiferencias[0].length; i++) {
-						if(i == 0) {
-							cabeceros[i] = "Δy";
-						} else {
-							cabeceros[i] = "Δy"+(i+1);
+				try {
+					if (puntos.size() < 2) {
+						JOptionPane.showMessageDialog(getContentPane(), "No ha agregado suficientes puntos.");
+					} else {
+						if (tipoMetodo == InterpolacionEnum.InterpolacionNewton) {
+							InterpolacioNewton interpolacionNewton = new InterpolacioNewton(tableModel);
+							Double soulucion = interpolacionNewton
+									.solve(Double.parseDouble(xValue_textField.getText()));
+							Double[][] tablaDiferencias = interpolacionNewton.getTablaDiferencias();
+							String[] cabeceros = new String[tablaDiferencias[0].length];
+
+							for (int i = 0; i < tablaDiferencias[0].length; i++) {
+								if (i == 0) {
+									cabeceros[i] = "Δy";
+								} else {
+									cabeceros[i] = "Δy" + (i + 1);
+								}
+							}
+
+							answer_TextField.setText(soulucion.toString());
+							diferenciasTable.setModel(new DefaultTableModel(tablaDiferencias, cabeceros));
+						}
+						if (tipoMetodo == InterpolacionEnum.Interpolacion_Lagrange) {
+							Interpolacion_Lagrange InterpolacionLagrange = new Interpolacion_Lagrange(tableModel);
+							Double soulucion = InterpolacionLagrange
+									.solve(Double.parseDouble(xValue_textField.getText()));
+							answer_TextField.setText(soulucion.toString());
+						} else if (tipoMetodo == InterpolacionEnum.Interpolacion_CuadradrosMinimos) {
+							Integer OrdenFuncion = (Integer) Orden.getSelectedItem();
+							Interpolacion_CuadradosMinimos Cuadrados = new Interpolacion_CuadradosMinimos(tableModel,
+									OrdenFuncion);
+							Double soulucion = Cuadrados.Solve(Double.parseDouble(xValue_textField.getText()));
+							answer_TextField.setText(soulucion.toString());
 						}
 					}
-					
-					answer_TextField.setText(soulucion.toString());
-					diferenciasTable.setModel(new DefaultTableModel(tablaDiferencias,cabeceros));
-				}if(tipoMetodo == InterpolacionEnum.Interpolacion_Lagrange)
-				{ 
-					Interpolacion_Lagrange InterpolacionLagrange= new Interpolacion_Lagrange(tableModel);
-					Double soulucion =InterpolacionLagrange.solve(Double.parseDouble(xValue_textField.getText()));
-					answer_TextField.setText(soulucion.toString());
+				} catch (Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar resolver.");
+					System.out.println(error.getMessage());
 				}
-				else if(tipoMetodo == InterpolacionEnum.Interpolacion_CuadradrosMinimos)
-				{
-				Integer OrdenFuncion = (Integer)Orden.getSelectedItem();
-				Interpolacion_CuadradosMinimos Cuadrados = new Interpolacion_CuadradosMinimos(tableModel,OrdenFuncion);
-				Double soulucion =Cuadrados.Solve(Double.parseDouble(xValue_textField.getText()));
-				answer_TextField.setText(soulucion.toString());
-				}
-			}}
+			}
 		});
 		btnResolver.setBounds(400, 40, 150, 29);
 		contentPane.add(btnResolver);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(19,135,100,200);
+		scrollPane.setBounds(19, 135, 100, 200);
 		contentPane.add(scrollPane);
-		
+
 		puntosTable = new JTable();
 		puntosTable.setEnabled(false);
 		puntosTable.setBackground(Color.LIGHT_GRAY);
 		puntosTable.setBorder(new LineBorder(new Color(0, 0, 0)));
-		puntosTable.setModel(new DefaultTableModel(new Object[][] {},cabeceroPuntosTable));
+		puntosTable.setModel(new DefaultTableModel(new Object[][] {}, cabeceroPuntosTable));
 		scrollPane.setViewportView(puntosTable);
-		
+
 		JScrollPane diferenciasScrollPane = new JScrollPane();
-		diferenciasScrollPane.setBounds(129,135,305,200);
+		diferenciasScrollPane.setBounds(129, 135, 305, 200);
 		contentPane.add(diferenciasScrollPane);
-		
+
 		diferenciasTable = new JTable();
 		diferenciasTable.setEnabled(false);
 		diferenciasTable.setBackground(Color.LIGHT_GRAY);
 		diferenciasTable.setBorder(new LineBorder(new Color(0, 0, 0)));
-		diferenciasTable.setModel(new DefaultTableModel(new Object[][] {}, cabeceroDiferenciasTable ));
+		diferenciasTable.setModel(new DefaultTableModel(new Object[][] {}, cabeceroDiferenciasTable));
 		diferenciasScrollPane.setViewportView(diferenciasTable);
-		if(tipoMetodo != InterpolacionEnum.InterpolacionNewton) 
-		{
+		if (tipoMetodo != InterpolacionEnum.InterpolacionNewton) {
 			diferenciasScrollPane.setVisible(false);
 		}
-		
+
 		JLabel lblValorDeX = new JLabel("Valor de X:");
 		lblValorDeX.setBounds(19, 45, 79, 16);
 		contentPane.add(lblValorDeX);
-		
+
 		xValue_textField = new JTextField();
 		xValue_textField.setBounds(101, 40, 130, 26);
 		contentPane.add(xValue_textField);
 		xValue_textField.setColumns(10);
-		
+
 		JLabel lblValorDeY = new JLabel("Solucion:");
 		lblValorDeY.setBounds(19, 82, 79, 16);
 		contentPane.add(lblValorDeY);
-		
+
 		answer_TextField = new JTextField();
 		answer_TextField.setEditable(false);
 		answer_TextField.setColumns(10);
 		answer_TextField.setBounds(101, 77, 130, 26);
 		contentPane.add(answer_TextField);
-		
+
 		/* LIMPIAR */
 		JButton btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				x_TextField.setText("0");
-				y_TextField.setText("0");
-				xValue_textField.setText("0");
-				puntosTable.setModel(new DefaultTableModel(new Object[][] {},cabeceroPuntosTable));
-				diferenciasTable.setModel(new DefaultTableModel(new Object[][] {}, cabeceroDiferenciasTable ));
-				answer_TextField.setText("");
-				puntos = new ArrayList<Double[]>();
+				try {
+					x_TextField.setText("0");
+					y_TextField.setText("0");
+					xValue_textField.setText("0");
+					puntosTable.setModel(new DefaultTableModel(new Object[][] {}, cabeceroPuntosTable));
+					diferenciasTable.setModel(new DefaultTableModel(new Object[][] {}, cabeceroDiferenciasTable));
+					answer_TextField.setText("");
+					puntos = new ArrayList<Double[]>();
+				} catch (Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar limpiar.");
+					System.out.println(error.getMessage());
+				}
 			}
 		});
 		btnLimpiar.setBounds(400, 77, 150, 29);
 		contentPane.add(btnLimpiar);
-		
+
 		// INICIALIZAR VALORES
 		x_TextField.setText("0");
 		y_TextField.setText("0");

@@ -88,7 +88,7 @@ public class EditarMatriz extends JFrame {
 					matriz.setVisible(true);
 					setVisible(false);
 					dispose();
-				} catch(Exception error) {
+				} catch (Exception error) {
 					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar cerrar la ventana.");
 					System.out.println(error.getMessage());
 				}
@@ -249,106 +249,117 @@ public class EditarMatriz extends JFrame {
 					}
 
 					switch (bandera) {
-
-					case "mO": {
-						if (tipoMetodo == MetodoMatrizEnum.GAUSS) {
-							Gauss gauss = new Gauss(matrizOrignial.clone());
-
-							matrizFinal = gauss.triangulateMatrix(matrizOrignial.clone());
-							solucion = gauss.calculateSolution(matrizFinal.clone());
-
-							matrices.add(matrizOrignial.clone());
-							matrices.add(matrizFinal.clone());
-						} else if (tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
-							GaussJordan gaussJordan = new GaussJordan(matrizOrignial.clone());
-
-							matrizFinal = gaussJordan.solve(matrizOrignial.clone());
-							solucion = gaussJordan.solution(matrizFinal.clone());
-
-							matrices.add(matrizOrignial.clone());
-							matrices.add(matrizFinal.clone());
-						} else if (tipoMetodo == MetodoMatrizEnum.MONTANTE) {
-							Montante montante = new Montante(matrizOrignial.clone());
-
-							matrizFinal = montante.solve(montante.getOriginalMatrix());
-							solucion = montante.solution(matrizFinal.clone());
-
-							matrices.add(matrizOrignial.clone());
-							matrices.add(matrizFinal.clone());
-						} else if (tipoMetodo == MetodoMatrizEnum.CRAMER) {
-							Cramer cramer = new Cramer();
-
-							matrices.add(matrizOrignial.clone());
-							matrizFinal = cramer.solve(matrizOrignial.clone(), solucion, matrices);
-						} else if (tipoMetodo == MetodoMatrizEnum.JACOBI) {
-							Jacobi jacobi = new Jacobi();
-							System.out.println("Error permisible: " + errorPermisible);
-							matrices.add(jacobi.solve(matrizOrignial.clone(), matrizOrignial.clone().length,
-									errorPermisible, 100));
-						} else if (tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) {
-							GaussSeidel gaussSeidel = new GaussSeidel();
-							System.out.println("Error permisible: " + errorPermisible);
-							matrices.add(gaussSeidel.solve(matrizOrignial.clone(), errorPermisible));
+						case "mO": {
+							try {
+								if (tipoMetodo == MetodoMatrizEnum.GAUSS) {
+									Gauss gauss = new Gauss(matrizOrignial.clone());
+	
+									matrizFinal = gauss.triangulateMatrix(matrizOrignial.clone());
+									solucion = gauss.calculateSolution(matrizFinal.clone());
+	
+									matrices.add(matrizOrignial.clone());
+									matrices.add(matrizFinal.clone());
+								} else if (tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
+									GaussJordan gaussJordan = new GaussJordan(matrizOrignial.clone());
+	
+									matrizFinal = gaussJordan.solve(matrizOrignial.clone());
+									solucion = gaussJordan.solution(matrizFinal.clone());
+	
+									matrices.add(matrizOrignial.clone());
+									matrices.add(matrizFinal.clone());
+								} else if (tipoMetodo == MetodoMatrizEnum.MONTANTE) {
+									Montante montante = new Montante(matrizOrignial.clone());
+	
+									matrizFinal = montante.solve(montante.getOriginalMatrix());
+									solucion = montante.solution(matrizFinal.clone());
+	
+									matrices.add(matrizOrignial.clone());
+									matrices.add(matrizFinal.clone());
+								} else if (tipoMetodo == MetodoMatrizEnum.CRAMER) {
+									Cramer cramer = new Cramer();
+	
+									matrices.add(matrizOrignial.clone());
+									matrizFinal = cramer.solve(matrizOrignial.clone(), solucion, matrices);
+								} else if (tipoMetodo == MetodoMatrizEnum.JACOBI) {
+									Jacobi jacobi = new Jacobi();
+									System.out.println("Error permisible: " + errorPermisible);
+									matrices.add(jacobi.solve(matrizOrignial.clone(), matrizOrignial.clone().length,
+											errorPermisible, 100));
+								} else if (tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) {
+									GaussSeidel gaussSeidel = new GaussSeidel();
+									System.out.println("Error permisible: " + errorPermisible);
+									matrices.add(gaussSeidel.solve(matrizOrignial.clone(), errorPermisible));
+								}
+	
+								Matriz matriz = new Matriz(matrices, solucion, tipoMetodo, errorPermisible);
+								matriz.setVisible(true);
+								setVisible(false);
+								dispose();
+							} catch (Exception error) {
+								JOptionPane.showMessageDialog(getContentPane(),
+										"Ocurrio un error al intentar resolver la matriz.");
+								System.out.println(error.getMessage());
+							}
+							break;
 						}
-
-						Matriz matriz = new Matriz(matrices, solucion, tipoMetodo, errorPermisible);
-						matriz.setVisible(true);
-						setVisible(false);
-						dispose();
-					}
-
-					case "mA": {
-						if (tipoMetodo == MetodoMatrizEnum.GAUSS) {
-							Gauss gauss = new Gauss(matrizAux.clone());
-
-							matrizFinal = gauss.triangulateMatrix(matrizAux.clone());
-							solucion = gauss.calculateSolution(matrizFinal.clone());
-
-							matrices.add(matrizAux.clone());
-							matrices.add(matrizFinal.clone());
-						} else if (tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
-							GaussJordan gaussJordan = new GaussJordan(matrizAux.clone());
-
-							matrizFinal = gaussJordan.solve(matrizAux.clone());
-							solucion = gaussJordan.solution(matrizFinal.clone());
-
-							matrices.add(matrizAux.clone());
-							matrices.add(matrizFinal.clone());
-						} else if (tipoMetodo == MetodoMatrizEnum.MONTANTE) {
-							Montante montante = new Montante(matrizAux.clone());
-
-							matrizFinal = montante.solve(matrizAux.clone());
-							solucion = montante.solution(matrizFinal.clone());
-
-							matrices.add(matrizAux.clone());
-							matrices.add(matrizFinal.clone());
-						} else if (tipoMetodo == MetodoMatrizEnum.CRAMER) {
-							Cramer cramer = new Cramer();
-
-							matrices.add(matrizAux.clone());
-							matrizFinal = cramer.solve(matrizAux.clone(), solucion, matrices);
-						} else if (tipoMetodo == MetodoMatrizEnum.JACOBI) {
-							Jacobi jacobi = new Jacobi();
-							System.out.println("Error permisible: " + errorPermisible);
-							matrices.add(
-									jacobi.solve(matrizAux.clone(), matrizAux.clone().length, errorPermisible, 100));
-						} else if (tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) {
-							GaussSeidel gaussSeidel = new GaussSeidel();
-							System.out.println("Error permisible: " + errorPermisible);
-							matrices.add(gaussSeidel.solve(matrizAux.clone(), errorPermisible));
+	
+						case "mA": {
+							try {
+								if (tipoMetodo == MetodoMatrizEnum.GAUSS) {
+									Gauss gauss = new Gauss(matrizAux.clone());
+	
+									matrizFinal = gauss.triangulateMatrix(matrizAux.clone());
+									solucion = gauss.calculateSolution(matrizFinal.clone());
+	
+									matrices.add(matrizAux.clone());
+									matrices.add(matrizFinal.clone());
+								} else if (tipoMetodo == MetodoMatrizEnum.GAUSS_JORDAN) {
+									GaussJordan gaussJordan = new GaussJordan(matrizAux.clone());
+	
+									matrizFinal = gaussJordan.solve(matrizAux.clone());
+									solucion = gaussJordan.solution(matrizFinal.clone());
+	
+									matrices.add(matrizAux.clone());
+									matrices.add(matrizFinal.clone());
+								} else if (tipoMetodo == MetodoMatrizEnum.MONTANTE) {
+									Montante montante = new Montante(matrizAux.clone());
+	
+									matrizFinal = montante.solve(matrizAux.clone());
+									solucion = montante.solution(matrizFinal.clone());
+	
+									matrices.add(matrizAux.clone());
+									matrices.add(matrizFinal.clone());
+								} else if (tipoMetodo == MetodoMatrizEnum.CRAMER) {
+									Cramer cramer = new Cramer();
+	
+									matrices.add(matrizAux.clone());
+									matrizFinal = cramer.solve(matrizAux.clone(), solucion, matrices);
+								} else if (tipoMetodo == MetodoMatrizEnum.JACOBI) {
+									Jacobi jacobi = new Jacobi();
+									System.out.println("Error permisible: " + errorPermisible);
+									matrices.add(jacobi.solve(matrizAux.clone(), matrizAux.clone().length, errorPermisible,
+											100));
+								} else if (tipoMetodo == MetodoMatrizEnum.GAUSS_SEIDEL) {
+									GaussSeidel gaussSeidel = new GaussSeidel();
+									System.out.println("Error permisible: " + errorPermisible);
+									matrices.add(gaussSeidel.solve(matrizAux.clone(), errorPermisible));
+								}
+	
+								Matriz matrizA = new Matriz(matrices, solucion, tipoMetodo, errorPermisible);
+								matrizA.setVisible(true);
+								setVisible(false);
+								dispose();
+							} catch (Exception error) {
+								JOptionPane.showMessageDialog(getContentPane(),
+										"Ocurrio un error al intentar resolver la matriz.");
+								System.out.println(error.getMessage());
+							}
+							break;
 						}
-
-						Matriz matrizA = new Matriz(matrices, solucion, tipoMetodo, errorPermisible);
-						matrizA.setVisible(true);
-						setVisible(false);
-						dispose();
-					}
 					}
 				} catch (Exception error) {
-					JOptionPane.showMessageDialog(getContentPane(),
-							"Ocurrio un error al intentar resolver la matriz.");
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar resolver la matriz.");
 					System.out.println(error.getMessage());
-					
 				}
 			}
 		});
@@ -362,6 +373,7 @@ public class EditarMatriz extends JFrame {
 		gbc_btnGuardar.gridx = columns - 1;
 		gbc_btnGuardar.gridy = 4;
 
+		/* GUARDAR MATRIZ */
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -374,7 +386,7 @@ public class EditarMatriz extends JFrame {
 						}
 					}
 					Menu_principal.setMatrixOriginal(matrizOriginal);
-				} catch(Exception error) {
+				} catch (Exception error) {
 					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar guardar la matriz.");
 					System.out.println(error.getMessage());
 				}

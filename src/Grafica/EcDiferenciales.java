@@ -1,6 +1,5 @@
 package Grafica;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,11 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Projectofinal.DerivacionNumericaPorLimites;
 import Projectofinal.EcDiferencialesEnum;
 import Projectofinal.Euler;
 import Projectofinal.EulerMejorado;
-import Projectofinal.Funcion;
 
 public class EcDiferenciales extends JFrame {
 
@@ -199,11 +196,15 @@ public class EcDiferenciales extends JFrame {
 		JButton btnLimpiar = new JButton("Limpiar");
 		btnLimpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FxyTextField.setText("0");
-				XinicialTextField.setText("0");
-				XaEncontarTextField.setText("");
-				solucionFormattedTextField.setText("");
-				table.setModel(new DefaultTableModel(new Object[][] {}, cabecerosTabla));
+				try {
+					FxyTextField.setText("0");
+					XinicialTextField.setText("0");
+					XaEncontarTextField.setText("");
+					solucionFormattedTextField.setText("");
+					table.setModel(new DefaultTableModel(new Object[][] {}, cabecerosTabla));
+				} catch(Exception error) {
+					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar limpiar.");
+				}
 			}
 		});
 		btnLimpiar.setBounds(377, 11, 117, 29);
