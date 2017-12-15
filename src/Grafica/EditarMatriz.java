@@ -299,6 +299,8 @@ public class EditarMatriz extends JFrame {
 								JOptionPane.showMessageDialog(getContentPane(),
 										"Ocurrio un error al intentar resolver la matriz.");
 								System.out.println(error.getMessage());
+								System.out.println(error.getLocalizedMessage());
+								error.printStackTrace();
 							}
 							break;
 						}
