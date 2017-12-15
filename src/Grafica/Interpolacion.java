@@ -44,6 +44,9 @@ public class Interpolacion extends JFrame {
 	private Double diferenciaEntrePuntos;
 	private Graficadora GraficaPuntos;
 	private JComboBox<Integer> Orden;
+    private JPanel Grafica;
+    private JTable table;
+    private JTable SumatoriasTable;
 
 	/**
 	 * Launch the application.
@@ -196,15 +199,11 @@ public class Interpolacion extends JFrame {
 
 							for (int i = 0; i < puntos.size(); i++) {
 								tableModel[i] = puntos.get(i);
-							}
-							GraficaPuntos = new Graficadora(tableModel);
-							JPanel Grafica = GraficaPuntos.obtieneGrafica();
-							contentPane.add(Grafica);
-							Grafica.setBounds(150, 115, 450, 300);
-							Grafica.setVisible(true);
 
+							}
+							
 							puntosTable.setModel(new DefaultTableModel(tableModel, cabeceroPuntosTable));
-							break;
+                           	break;
 
 						}
 
@@ -217,6 +216,7 @@ public class Interpolacion extends JFrame {
 		}
 
 		);
+
 		btnAgregarPunto.setBounds(400, 6, 150, 29);
 		contentPane.add(btnAgregarPunto);
 
@@ -281,13 +281,62 @@ public class Interpolacion extends JFrame {
 									OrdenFuncion);
 							Double soulucion = Cuadrados.Solve(Double.parseDouble(xValue_textField.getText()));
 							answer_TextField.setText(soulucion.toString());
+							
 						}
 					}
+
 				} catch (Exception error) {
 					JOptionPane.showMessageDialog(getContentPane(), "Ocurrio un error al intentar resolver.");
 					System.out.println(error.getMessage());
+
+
+					
+				
+				}if(tipoMetodo == InterpolacionEnum.Interpolacion_Lagrange)
+				{ 
+					Interpolacion_Lagrange InterpolacionLagrange= new Interpolacion_Lagrange(tableModel);
+					Double soulucion =InterpolacionLagrange.solve(Double.parseDouble(xValue_textField.getText()));
+					answer_TextField.setText(soulucion.toString());
 				}
-			}
+				else if(tipoMetodo == InterpolacionEnum.Interpolacion_CuadradrosMinimos)
+				{
+				Integer OrdenFuncion = (Integer)Orden.getSelectedItem();
+				Interpolacion_CuadradosMinimos Cuadrados;
+			
+					try {
+						Cuadrados = new Interpolacion_CuadradosMinimos(tableModel,OrdenFuncion);
+
+           Double soulucion =Cuadrados.Solve(Double.parseDouble(xValue_textField.getText()));
+           answer_TextField.setText(soulucion.toString());
+           Double[][] Resultados=Cuadrados.Resultados();
+           String [] cabeseros = {"x","y","x^2","x^3","x^4","xy","x^2y"};
+           Cuadrados.Resultados();
+           diferenciasTable.setModel(new DefaultTableModel(Resultados, cabeseros));
+        
+
+   		   JScrollPane ScrollPane = new JScrollPane();
+   		   ScrollPane.setBounds(129, 135, 399, 208);
+   		   contentPane.add(ScrollPane);
+   		   ScrollPane.setViewportView(diferenciasTable);
+           ScrollPane.setVisible(true);
+           Grafica.setVisible(false);
+        
+          
+           
+           
+           
+           
+           
+           
+           
+					} catch (NumberFormatException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			}}
 		});
 		btnResolver.setBounds(400, 40, 150, 29);
 		contentPane.add(btnResolver);
@@ -304,7 +353,7 @@ public class Interpolacion extends JFrame {
 		scrollPane.setViewportView(puntosTable);
 
 		JScrollPane diferenciasScrollPane = new JScrollPane();
-		diferenciasScrollPane.setBounds(129, 135, 305, 200);
+		diferenciasScrollPane.setBounds(129, 135, 399, 208);
 		contentPane.add(diferenciasScrollPane);
 
 		diferenciasTable = new JTable();
@@ -361,5 +410,13 @@ public class Interpolacion extends JFrame {
 		x_TextField.setText("0");
 		y_TextField.setText("0");
 		xValue_textField.setText("0");
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(559, 135, -424, 232);
+		contentPane.add(scrollPane_1);
+		
+		table = new JTable();
+		table.setBounds(510, 209, -301, 40);
+		contentPane.add(table);
 	}
 }
