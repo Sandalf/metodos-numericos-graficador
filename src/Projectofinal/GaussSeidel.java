@@ -15,12 +15,17 @@ public class GaussSeidel {
 		// TODO Auto-generated method stub
 		GaussSeidel gaussSeidel = new GaussSeidel();
 		Double[][] m = {{4.0,-1.0,1.0,3.0},{-1.0,4.0,1.0,-2.0},{2.0,1.0,5.0,3.0}};
-		gaussSeidel.solve(m, 0.001);
+		try {
+			gaussSeidel.solve(m, 0.001);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		displayMatrix(gaussSeidel.getTabla());
 		//solve(m);
 	}
 	
-	public Double[][] solve(Double[][] matrix, Double ep) {
+	public Double[][] solve(Double[][] matrix, Double ep) throws Exception {
 		int xVars = matrix.length;
 		Double[] row = new Double[(xVars*2)+1];
 		Double[] x = new Double[xVars];
@@ -66,6 +71,11 @@ public class GaussSeidel {
 			datos.add(row);
 			
 			iterador++;
+			
+			if (iterador > 100000) {
+				throw new Exception(); 
+			}
+			
 		}while(!fin);
 		
 		this.setTabla(datos);

@@ -19,8 +19,11 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Projectofinal.DerivacionEnum;
 import Projectofinal.Gauss;
 import Projectofinal.MetodoMatrizEnum;
+import javax.swing.JPanel;
+import javax.swing.ScrollPaneConstants;
 
 public class Matriz extends JFrame {
 
@@ -73,7 +76,29 @@ public class Matriz extends JFrame {
 		setBounds(100, 130, 580, 500);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		System.out.println("Tipo de metodo " + tipoMetodo);
+		// TITULO DE VENTANA
+		switch(tipoMetodo) {
+			case GAUSS:
+				setTitle("Gauss");
+				break;
+			case GAUSS_JORDAN:
+				setTitle("Gauss Jordan");
+				break;
+			case MONTANTE:
+				setTitle("Montante");
+				break;
+			case CRAMER:
+				setTitle("Cramer");
+				break;
+			case JACOBI:
+				setTitle("Jacobi");
+				break;
+			case GAUSS_SEIDEL:
+				setTitle("Gauss Seidel");
+				break;
+			default:
+				break;
+		}
 		
 		// CONTROLAR SALIDA
 		addWindowListener(new java.awt.event.WindowAdapter() {
@@ -166,7 +191,7 @@ public class Matriz extends JFrame {
 						dispose();
 					}
 				} catch(Exception error) {
-					JOptionPane.showMessageDialog(getContentPane(), "no tiene niguna metriz guardada en la matriz auxiliar.");
+					JOptionPane.showMessageDialog(getContentPane(), "No tiene niguna matriz guardada en la matriz auxiliar.");
 					System.out.println(error.getMessage());
 				}
 				
@@ -302,6 +327,4 @@ public class Matriz extends JFrame {
 			}
 		}
 	}
-
-	
 }

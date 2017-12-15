@@ -24,7 +24,7 @@ public class GaussJordan {
 		System.out.print("\n");
 	}
 	
-	public Double[][] solve(Double[][] matrix) {	
+	public Double[][] solve(Double[][] matrix) throws Exception {	
 		double fm = 0;// FACTOR MULTIPLICADOR
 		
 		this.solutionMatrix = new Double[matrix.length][];
