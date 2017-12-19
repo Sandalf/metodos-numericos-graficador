@@ -36,3 +36,8 @@ Programa en java para el cálculo de los siguientes métodos numéricos:
 * Ecuaciones Difereciales
   - Euler
   - Euler Mejorado
+  
+  # Capturas de pantalla
+  
+  ![Imgur](https://i.imgur.com/rhjvxBr.png)
+  ![Imgur](https://i.imgur.com/dvKjABQ.png)
